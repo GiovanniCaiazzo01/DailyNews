@@ -1,0 +1,39 @@
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 10%;
+  background-color: #1c1f26;
+  border-right: solid 1px #936af51c;
+  padding: 1rem;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+}
+
+.sidebar-list {
+  margin-bottom: 2rem;
+}
+
+.sidebar-list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-list h2 {
+  color: #a8b3cfa3;
+  margin-bottom: 1rem;
+}
+
+.sidebar-list h5 {
+  color: #fff;
+  margin: 0;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.sidebar-list h5:hover {
+  background-color: #444b5d;
+}

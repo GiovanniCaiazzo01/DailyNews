@@ -2,10 +2,14 @@ const { DB_NAME, DB_URI, PORT } = require("./config/config.js");
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const app = express();
+const cors = require("cors");
 
+// middleware
+app.use(cors());
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
 app.use("/news", require("./components/news/newsAPI"));
+
 const start = async () => {
   const dba = await MongoClient.connect(DB_URI, {
     useNewUrlParser: true,

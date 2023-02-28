@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+const { uuid } = require("uuidv4");
 const checkForDuplicate = async (to_save) => {
   const check = await global.db
     .collection("user_news")
@@ -32,7 +32,7 @@ module.exports = {
     try {
       const save_news = await global.db
         .collection("user_news")
-        .insertOne({ ...to_save.trim(), ncode: uuidv4() });
+        .insertOne({ ...to_save.trim(), ncode: uuid() });
 
       if (!save_news) {
         throw new Error("Error occured");

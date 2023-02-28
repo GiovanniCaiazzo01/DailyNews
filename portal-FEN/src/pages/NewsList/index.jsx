@@ -1,6 +1,7 @@
 import React from "react";
+import { Card } from "../../common/components";
 
 const NewsList = () => {
-  return <div>news list!</div>;
+  return <Card />;
 };
 export { NewsList };

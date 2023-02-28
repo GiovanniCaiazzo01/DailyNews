@@ -3,9 +3,11 @@
   padding-right: 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: #1c1f26;
   color: white;
+  border-bottom-style: solid;
+  border-bottom-color: #936af51c;
 }
 
 .nav-text-logo {

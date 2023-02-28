@@ -5,8 +5,10 @@ import "./style.css";
 const Content = ({ component: Component }) => {
   return (
     <>
-      <SideBar />
-      <Component />
+      <div className="content-container">
+        <SideBar />
+        <Component />
+      </div>
     </>
   );
 };
