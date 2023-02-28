@@ -1,5 +1,5 @@
 const express = require("express");
-const { list, get } = require("./user_newsController");
+const { list, save } = require("./user_newsController");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -7,9 +7,17 @@ router.get("/", async (req, res) => {
   return res.send(news);
 });
 
-router.get("/get/:id", async (req, res) => {
-  const { id } = req.params;
-  const news = await get(id);
-  return res.send(news);
+router.post("/save", async (req, res) => {
+  const payload = {
+    ...req.body.news,
+  };
+  const save_news = await save(payload);
+  return res.send(save_news);
 });
+
+// router.get("/get/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const news = await get(id);
+//   return res.send(news);
+// });
 module.exports = router;

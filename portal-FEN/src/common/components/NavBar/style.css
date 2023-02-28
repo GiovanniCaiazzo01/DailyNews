@@ -1,0 +1,29 @@
+.nav-container {
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1c1f26;
+  color: white;
+}
+
+.nav-text-logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.nav-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-items ul {
+  margin-right: 20px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.nav-items:hover {
+  text-decoration: underline;
+}
