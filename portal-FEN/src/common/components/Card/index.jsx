@@ -33,7 +33,11 @@ const Card = () => {
         <div
           className="blog"
           style={{
-            backgroundImage: `url(${item.image})`,
+            backgroundImage: `url(${
+              item.image
+                ? item.image
+                : "https://picsum.photos/seed/picsum/800/600"
+            })`,
           }}
         >
           <div className="title-box">

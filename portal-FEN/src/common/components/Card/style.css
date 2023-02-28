@@ -1,36 +1,3 @@
-/* #container {
-  max-width: 350px;
-  max-height: 450px;
-  padding: 2ch;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 10px;
-  box-shadow: 0 0 50px #4c1c57;
-  margin: 20px;
-}
-
-#post-header {
-  color: white;
-  font-size: 3rem;
-  font-family: Helvetica;
-}
-
-#post-content {
-  color: white;
-  margin-bottom: 1ch;
-  font-size: 1.2rem;
-}
-
-#image-content {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 6px;
-} */
-
 .blog {
   margin-left: 250px;
   margin-top: 50px;
