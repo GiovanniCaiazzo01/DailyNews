@@ -1,0 +1,22 @@
+.input {
+  margin-bottom: 20px;
+}
+.input input {
+  all: unset;
+  text-align: center;
+  color: black;
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.input input:focus {
+  transition: 0.6s ease;
+  box-shadow: 0px 0px 30px rgb(172, 59, 248);
+}
+
+.input-error input {
+  color: red;
+  box-shadow: 0px 0px 30px red;
+}
