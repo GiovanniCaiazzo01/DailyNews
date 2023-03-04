@@ -1,5 +1,6 @@
 .login {
   height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   background-image: url(https://w.wallhaven.cc/full/w8/wallhaven-w87xeq.png);
