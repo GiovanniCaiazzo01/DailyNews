@@ -76,8 +76,13 @@ module.exports = {
     password,
     ["Repeat Password"]: repeatPassword,
   }) => {
-    if (age === "0") {
+    console.log(age);
+    if (age <= 0 || age >= 200) {
       return { result: false, message: "Please insert a valid age" };
+    }
+
+    if (name.length > 50) {
+      return { result: false, message: "The name seems to be to long!" };
     }
 
     const missingField = checkForMissingField({

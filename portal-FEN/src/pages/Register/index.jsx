@@ -29,6 +29,7 @@ const Register = () => {
       ...userCredentials,
     });
 
+    console.log(user);
     if (user.result) {
       return navigate("/login");
     }
