@@ -1,11 +1,8 @@
 import React from "react";
 import "./style.css";
-const Button = ({ label, onClick }) => {
-  const onUserClick = (e) => {
-    onClick(e);
-  };
+const Button = ({ label, type }) => {
   return (
-    <button className="button normal-btn" onClick={(e) => onUserClick(e.type)}>
+    <button className="button normal-btn" type={type}>
       {label}
     </button>
   );

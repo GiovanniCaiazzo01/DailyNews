@@ -23,12 +23,14 @@ const Register = () => {
     }));
   };
 
-  const onUserRegister = async () => {
+  const onUserRegister = async (e) => {
+    e.preventDefault();
     const user = await HTTPClient.post("/users/register", {
       ...userCredentials,
     });
+
     if (user.result) {
-      return navigate("/");
+      return navigate("/login");
     }
   };
 
@@ -36,56 +38,55 @@ const Register = () => {
     <section className="register">
       <div className="register-container">
         <div className="register-header">Register</div>
-        <div className="register-inputs-container">
-          <div className="register-input-suffix">Name</div>
-          <Input
-            label="Your Name"
-            type="text"
-            name="name"
-            onUserInput={onUserInput}
-          />
-          <div className="register-input-suffix">Surname</div>
-          <Input
-            label="Your Surname"
-            type="text"
-            name="surname"
-            onUserInput={onUserInput}
-          />
-          <div className="register-input-suffix">Age</div>
-          <Input
-            label="Your Age"
-            type="number"
-            name="age"
-            onUserInput={onUserInput}
-          />
-          <div className="register-input-suffix">E-mail</div>
-          <Input
-            label="Your email"
-            type="email"
-            name="email"
-            onUserInput={onUserInput}
-          />
-          <div className="register-input-suffix">Password</div>
-          <Input
-            label="Your Password"
-            type="password"
-            name="password"
-            onUserInput={onUserInput}
-          />
-          <div className="register-input-suffix">Repeat Password</div>
-          <Input
-            label="Repeat Password"
-            type="password"
-            name="Repeat Password"
-            onUserInput={onUserInput}
-          />
-          <div className="register-footer">
-            <Button
-              label={"Register"}
-              onClick={(e) => (e ? onUserRegister() : null)}
+        <form onSubmit={onUserRegister}>
+          <div className="register-inputs-container">
+            <div className="register-input-suffix">Name</div>
+            <Input
+              label="Your Name"
+              type="text"
+              name="name"
+              onUserInput={onUserInput}
             />
+            <div className="register-input-suffix">Surname</div>
+            <Input
+              label="Your Surname"
+              type="text"
+              name="surname"
+              onUserInput={onUserInput}
+            />
+            <div className="register-input-suffix">Age</div>
+            <Input
+              label="Your Age"
+              type="number"
+              name="age"
+              onUserInput={onUserInput}
+            />
+            <div className="register-input-suffix">E-mail</div>
+            <Input
+              label="Your email"
+              type="email"
+              name="email"
+              onUserInput={onUserInput}
+            />
+            <div className="register-input-suffix">Password</div>
+            <Input
+              label="Your Password"
+              type="password"
+              name="password"
+              onUserInput={onUserInput}
+            />
+            <div className="register-input-suffix">Repeat Password</div>
+            <Input
+              label="Repeat Password"
+              type="password"
+              name="Repeat Password"
+              onUserInput={onUserInput}
+            />
+            <div className="register-footer">
+              <Button label={"Register"} type={"submit"} />
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </section>
   );

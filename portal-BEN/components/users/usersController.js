@@ -27,22 +27,46 @@ const cryptPassword = (password) => {
   });
 };
 
+const comparePassword = async (incomingPassword, storedPassword) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(incomingPassword, storedPassword, function (err, result) {
+      if (err) reject(err);
+      else if (result) {
+        resolve(result);
+      } else {
+        resolve(false);
+      }
+    });
+  });
+};
+
 module.exports = {
   login: async ({ email, password }) => {
-    if (!(email && password)) {
-      return { result: false, message: "Missing Field" };
+    const missingField = checkForMissingField({ email, password });
+    if (missingField.result) {
+      return {
+        result: false,
+        message: `Please fill the ${missingField.field} field `,
+      };
     }
 
     try {
-      const user = await global.db.collection("users").findOne({ email });
+      const user = await global.db
+        .collection("users")
+        .findOne({ email }, { $project: { _id: 0, email: 1, password: 1 } });
       if (!user) {
-        throw new Error("Email or password incorrect");
+        return { result: false, message: "Email or password are incorrect" };
       }
-    } catch (error) {
-      return { result: false, message: error };
-    }
 
-    return "non ho ancora finito il login";
+      const comparedPassword = await comparePassword(password, user.password);
+      if (!comparedPassword) {
+        return { result: false, message: "Email or password are incorrect" };
+      }
+      return { result: true };
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
   register: async ({
     name,
@@ -63,6 +87,7 @@ module.exports = {
       password,
       repeatPassword,
     });
+
     if (missingField) {
       return {
         result: false,

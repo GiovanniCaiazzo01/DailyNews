@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "./style.css";
 import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const onUserInput = (name, value) => {
     setUserCredentials((prev) => ({
@@ -16,38 +18,39 @@ const Login = () => {
     }));
   };
 
-  const onUserLogin = async () => {
+  const onUserLogin = async (e) => {
+    e.preventDefault();
     const user = await HTTPClient.post("/users/login", {
       ...userCredentials,
     });
+    if (user.result) navigate("/");
   };
 
   return (
     <section className="login">
       <div className="login-container">
         <div className="login-header">Login</div>
-        <div className="login-inputs-container">
-          <div className="login-input-suffix">E-mail</div>
-          <Input
-            label="Your email"
-            type="email"
-            name="email"
-            onUserInput={onUserInput}
-          />
-          <div className="login-input-suffix">Password</div>
-          <Input
-            label="Your password"
-            type="password"
-            name="password"
-            onUserInput={onUserInput}
-          />
-          <div className="login-footer">
-            <Button
-              label={"Login"}
-              onClick={(e) => (e ? onUserLogin() : null)}
+        <form onSubmit={onUserLogin}>
+          <div className="login-inputs-container">
+            <div className="login-input-suffix">E-mail</div>
+            <Input
+              label="Your email"
+              type="email"
+              name="email"
+              onUserInput={onUserInput}
             />
+            <div className="login-input-suffix">Password</div>
+            <Input
+              label="Your password"
+              type="password"
+              name="password"
+              onUserInput={onUserInput}
+            />
+            <div className="login-footer">
+              <Button label="Login" type="submit" />
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </section>
   );
