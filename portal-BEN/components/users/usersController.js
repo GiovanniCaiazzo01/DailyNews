@@ -1,8 +1,7 @@
 const { uuid } = require("uuidv4");
 const bcrypt = require("bcrypt");
 
-const checkForMissingField = (name, age, email, password, repeatPassword) => {
-  const credentials = { name, age, email, password, repeatPassword };
+const checkForMissingField = (credentials) => {
   for (const field in credentials) {
     if (!credentials[field] || credentials[field].length < 1) {
       return { result: true, field };
@@ -53,13 +52,17 @@ module.exports = {
     password,
     ["Repeat Password"]: repeatPassword,
   }) => {
-    const missingField = checkForMissingField(
+    if (age === "0") {
+      return { result: false, message: "Please insert a valid age" };
+    }
+
+    const missingField = checkForMissingField({
       name,
       age,
       email,
       password,
-      repeatPassword
-    );
+      repeatPassword,
+    });
     if (missingField) {
       return {
         result: false,
