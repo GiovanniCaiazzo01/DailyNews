@@ -8,13 +8,13 @@ const SideBar = () => {
   return (
     <div
       onClick={() => setOpen(() => (open ? false : true))}
-      class={open ? "sidebar open" : "sidebar"}
+      className={open ? "sidebar open" : "sidebar"}
     >
-      <div class="toggle">
-        <i class="bx bx-chevron-right"></i>
+      <div className="toggle">
+        <i className="bx bx-chevron-right"></i>
       </div>
 
-      <div class="logo">
+      <div className="logo">
         <img
           src="https://png.pngtree.com/template/20191017/ourlarge/pngtree-letter-n-logo-vector-designs-initials-n-logo-image_320358.jpg"
           alt="..."
@@ -23,30 +23,34 @@ const SideBar = () => {
       </div>
 
       <nav>
-        <div class="nav-title">Management</div>
+        <div className="nav-title">Management</div>
 
         <ul>
-          <li class={pathname === "/" ? "nav-item active" : "nav-item"}>
-            <i class="bx bxs-dashboard"></i>
+          <li className={pathname === "/" ? "nav-item active" : "nav-item"}>
+            <i className="bx bxs-dashboard"></i>
             <span>Dashboard</span>
           </li>
-          <li class={pathname === "/settings" ? "nav-item active" : "nav-item"}>
-            <i class="bx bxs-cog"></i>
+          <li
+            className={
+              pathname === "/settings" ? "nav-item active" : "nav-item"
+            }
+          >
+            <i className="bx bxs-cog"></i>
             <span>Settings</span>
           </li>
         </ul>
 
         <hr />
 
-        <div class="nav-title">Supports</div>
+        <div className="nav-title">Supports</div>
 
         <ul>
-          <li class="nav-item">
-            <i class="bx bxs-help-circle"></i>
+          <li className="nav-item">
+            <i className="bx bxs-help-circle"></i>
             <span>Get Help</span>
           </li>
-          <li class="nav-item">
-            <i class="bx bxs-message-dots"></i>
+          <li className="nav-item">
+            <i className="bx bxs-message-dots"></i>
             <span>Send Feedback</span>
           </li>
         </ul>

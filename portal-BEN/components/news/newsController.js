@@ -9,7 +9,7 @@ module.exports = {
       );
 
       if (!news) {
-        throw new Error("non è stato possibile recuperare le informazioni");
+        throw new Error("It was not possible to retrieve the latest news");
       }
       const to_return = news.data.data;
       return { result: true, data: to_return, length: news.data.length };

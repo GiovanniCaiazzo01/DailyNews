@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
+
 const Login = () => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
@@ -16,7 +17,9 @@ const Login = () => {
   };
 
   const onUserLogin = async () => {
-    const user = await HTTPClient.post("/user/login", userCredentials);
+    const user = await HTTPClient.post("/users/login", {
+      ...userCredentials,
+    });
   };
 
   return (
