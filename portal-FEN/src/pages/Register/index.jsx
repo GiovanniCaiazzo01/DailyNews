@@ -4,7 +4,7 @@ import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ bg }) => {
   const [userCredentials, setUserCredentials] = useState({
     name: "",
     surname: "",
@@ -34,15 +34,8 @@ const Register = () => {
     }
   };
 
-  const pickRandomImage = () => {
-    const randomNumber = Math.floor(Math.random() * 100) + 1;
-    return `https://picsum.photos/id/${randomNumber}/1920/1080`;
-  };
   return (
-    <section
-      className="register"
-      style={{ backgroundImage: `url(${pickRandomImage()}` }}
-    >
+    <section className="register" style={{ backgroundImage: `url(${bg}` }}>
       <div className="register-container">
         <div className="register-header">Register</div>
         <form onSubmit={onUserRegister}>

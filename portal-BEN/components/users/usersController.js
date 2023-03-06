@@ -1,5 +1,6 @@
 const { uuid } = require("uuidv4");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const checkForMissingField = (credentials) => {
   for (const field in credentials) {
@@ -40,6 +41,35 @@ const comparePassword = async (incomingPassword, storedPassword) => {
   });
 };
 
+const createToken = (name, age, email) => {
+  const payload = {
+    name,
+    age,
+    email,
+  };
+
+  const { SECRET_KEY } = process.env;
+  const options = { expiresIn: "30s" };
+
+  const token = jwt.sign(payload, SECRET_KEY, options);
+
+  return token;
+};
+
+const verifyToken = async (token, name, email, age) => {
+  return new Promise((resolve, reject) => {
+    const { SECRET_KEY } = process.env;
+    jwt.verify(token, SECRET_KEY, function (err, decoded) {
+      const expired = "TokenExpiredError";
+      if (err.name === expired) {
+        const new_token = createToken(name, age, email);
+        new_token ? resolve(new_token) : reject("Error occurred");
+      }
+      return resolve(decoded);
+    });
+  });
+};
+
 module.exports = {
   login: async ({ email, password }) => {
     const missingField = checkForMissingField({ email, password });
@@ -51,9 +81,19 @@ module.exports = {
     }
 
     try {
-      const user = await global.db
-        .collection("users")
-        .findOne({ email }, { $project: { _id: 0, email: 1, password: 1 } });
+      const user = await global.db.collection("users").findOne(
+        { email },
+        {
+          $project: {
+            _id: 0,
+            name: 1,
+            age: 1,
+            email: 1,
+            password: 1,
+            token: 1,
+          },
+        }
+      );
       if (!user) {
         return { result: false, message: "Email or password are incorrect" };
       }
@@ -62,7 +102,15 @@ module.exports = {
       if (!comparedPassword) {
         return { result: false, message: "Email or password are incorrect" };
       }
-      return { result: true };
+
+      const isValidToken = await verifyToken(
+        user.token,
+        user.name,
+        user.email,
+        user.age
+      );
+
+      return { result: true, data: user };
     } catch (error) {
       console.log(error);
       return false;
@@ -120,6 +168,7 @@ module.exports = {
       return false;
     }
 
+    const token = createToken(name, age, email);
     try {
       const cryptedPassword = await cryptPassword(password);
       const register = await global.db.collection("users").insertOne({
@@ -129,6 +178,7 @@ module.exports = {
         email: email.trim(),
         password: cryptedPassword,
         ucode: uuid(),
+        token,
       });
 
       if (!register.acknowledged) return new Error("Error Occured re-try");

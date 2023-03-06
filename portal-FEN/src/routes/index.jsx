@@ -17,8 +17,28 @@ const MainRoutes = () => {
   return (
     <Routes>
       <Route exact path="/" element={<PublicRoute component={NewsList} />} />
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/register" element={<Register />} />
+      <Route
+        exact
+        path="/login"
+        element={
+          <Login
+            bg={`https://picsum.photos/id/${
+              Math.floor(Math.random() * 100) + 1
+            }/1920/1080`}
+          />
+        }
+      />
+      <Route
+        exact
+        path="/register"
+        element={
+          <Register
+            bg={`https://picsum.photos/id/${
+              Math.floor(Math.random() * 100) + 1
+            }/1920/1080`}
+          />
+        }
+      />
     </Routes>
   );
 };

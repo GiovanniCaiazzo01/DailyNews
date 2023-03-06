@@ -31,12 +31,13 @@ const Card = () => {
     <>
       {news.map((item) => (
         <div
+          key={item.title}
           className="blog"
           style={{
             backgroundImage: `url(${
               item.image
                 ? item.image
-                : "https://picsum.photos/seed/picsum/800/600"
+                : "https://picsum.photos/seed/picsum/1920/1080"
             })`,
           }}
         >
@@ -55,7 +56,6 @@ const Card = () => {
               <span>
                 <i className="fa fa-comment-o"></i>
                 <span>12</span>
-                <space></space>
                 <i className="fa fa-calendar"></i>
                 <span>03.12.2015</span>
               </span>
