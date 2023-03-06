@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [userCredentials, setUserCredentials] = useState({
@@ -12,6 +13,8 @@ const Register = () => {
     password: "",
     "Repeat Password": "",
   });
+
+  const navigate = useNavigate();
 
   const onUserInput = (name, value) => {
     setUserCredentials((prev) => ({
@@ -24,7 +27,9 @@ const Register = () => {
     const user = await HTTPClient.post("/users/register", {
       ...userCredentials,
     });
-    console.log(user);
+    if (user.result) {
+      return navigate("/");
+    }
   };
 
   return (

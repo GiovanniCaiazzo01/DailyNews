@@ -9,8 +9,8 @@ const Card = () => {
   const fetchNews = async () => {
     try {
       const response = await HTTPClient.get("/news/");
-      const data = await response.json();
-      setnews(data.data);
+      const retrived_news = response.data;
+      setnews(() => retrived_news);
     } catch (error) {
       console.error(error);
     }
