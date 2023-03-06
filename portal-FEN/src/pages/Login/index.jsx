@@ -26,8 +26,16 @@ const Login = () => {
     if (user.result) navigate("/");
   };
 
+  const pickRandomImage = () => {
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    return `https://picsum.photos/id/${randomNumber}/1920/1080`;
+  };
+
   return (
-    <section className="login">
+    <section
+      className="login"
+      style={{ backgroundImage: `url(${pickRandomImage()}` }}
+    >
       <div className="login-container">
         <div className="login-header">Login</div>
         <form onSubmit={onUserLogin}>

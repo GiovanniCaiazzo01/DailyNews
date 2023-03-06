@@ -29,14 +29,20 @@ const Register = () => {
       ...userCredentials,
     });
 
-    console.log(user);
     if (user.result) {
       return navigate("/login");
     }
   };
 
+  const pickRandomImage = () => {
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    return `https://picsum.photos/id/${randomNumber}/1920/1080`;
+  };
   return (
-    <section className="register">
+    <section
+      className="register"
+      style={{ backgroundImage: `url(${pickRandomImage()}` }}
+    >
       <div className="register-container">
         <div className="register-header">Register</div>
         <form onSubmit={onUserRegister}>
