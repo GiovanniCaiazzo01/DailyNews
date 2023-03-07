@@ -24,7 +24,8 @@ const Login = ({ bg }) => {
     const user = await HTTPClient.post("/users/login", {
       ...userCredentials,
     });
-
+    localStorage.setItem("token", user.data.token);
+    localStorage.setItem("name", user.data.name);
     if (user.result) navigate("/");
   };
 
