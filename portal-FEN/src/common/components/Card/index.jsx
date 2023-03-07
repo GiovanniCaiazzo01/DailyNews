@@ -29,42 +29,44 @@ const Card = () => {
 
   return (
     <>
-      {news.map((item) => (
-        <div
-          key={item.title}
-          className="blog"
-          style={{
-            backgroundImage: `url(${
-              item.image
-                ? item.image
-                : "https://picsum.photos/seed/picsum/1920/1080"
-            })`,
-          }}
-        >
-          <div className="title-box">
-            <h3>{truncateWords(item.title, 6)}</h3>
-            <hr />
-            <div className="intro">
-              {item.author ? truncateWords(item.author, 10) : ""}
-            </div>
-          </div>
-          <div className="info">
-            <span>{truncateWords(item.description, 20)}</span>
-          </div>
-          <div className="footer">
-            <div className="icon-holder">
-              <span>
-                <i className="fa fa-comment-o"></i>
-                <span>12</span>
-                <i className="fa fa-calendar"></i>
-                <span>03.12.2015</span>
-              </span>
-            </div>
-          </div>
+      {news
+        ? news.map((item) => (
+            <div
+              key={item.title}
+              className="blog"
+              style={{
+                backgroundImage: `url(${
+                  item.image
+                    ? item.image
+                    : "https://picsum.photos/seed/picsum/1920/1080"
+                })`,
+              }}
+            >
+              <div className="title-box">
+                <h3>{truncateWords(item.title, 6)}</h3>
+                <hr />
+                <div className="intro">
+                  {item.author ? truncateWords(item.author, 10) : ""}
+                </div>
+              </div>
+              <div className="info">
+                <span>{truncateWords(item.description, 20)}</span>
+              </div>
+              <div className="footer">
+                <div className="icon-holder">
+                  <span>
+                    <i className="fa fa-comment-o"></i>
+                    <span>12</span>
+                    <i className="fa fa-calendar"></i>
+                    <span>03.12.2015</span>
+                  </span>
+                </div>
+              </div>
 
-          <div className="color-overlay"></div>
-        </div>
-      ))}
+              <div className="color-overlay"></div>
+            </div>
+          ))
+        : ""}
     </>
   );
 };

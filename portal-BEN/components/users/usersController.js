@@ -1,4 +1,4 @@
-const { uuid } = require("uuidv4");
+const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -61,9 +61,14 @@ const verifyToken = async (token, name, email, age) => {
     const { SECRET_KEY } = process.env;
     jwt.verify(token, SECRET_KEY, function (err, decoded) {
       const expired = "TokenExpiredError";
-      if (err.name === expired) {
+
+      if (err?.name === expired) {
         const new_token = createToken(name, age, email);
         new_token ? resolve(new_token) : reject("Error occurred");
+      }
+
+      if (err) {
+        return reject(err);
       }
       return resolve(decoded);
     });
@@ -103,14 +108,18 @@ module.exports = {
         return { result: false, message: "Email or password are incorrect" };
       }
 
-      const isValidToken = await verifyToken(
+      const validToken = await verifyToken(
         user.token,
         user.name,
         user.email,
         user.age
       );
-
-      return { result: true, data: user };
+      user.token = validToken;
+      const to_return = {
+        name: user.name,
+        token: user.token,
+      };
+      return { result: true, data: to_return };
     } catch (error) {
       console.log(error);
       return false;
@@ -124,7 +133,6 @@ module.exports = {
     password,
     ["Repeat Password"]: repeatPassword,
   }) => {
-    console.log(age);
     if (age <= 0 || age >= 200) {
       return { result: false, message: "Please insert a valid age" };
     }
@@ -177,7 +185,7 @@ module.exports = {
         age,
         email: email.trim(),
         password: cryptedPassword,
-        ucode: uuid(),
+        ucode: uuidv4(),
         token,
       });
 

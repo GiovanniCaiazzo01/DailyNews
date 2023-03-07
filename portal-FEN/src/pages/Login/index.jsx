@@ -24,7 +24,7 @@ const Login = ({ bg }) => {
     const user = await HTTPClient.post("/users/login", {
       ...userCredentials,
     });
-    console.log(user);
+
     if (user.result) navigate("/");
   };
 

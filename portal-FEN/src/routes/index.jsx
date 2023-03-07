@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import loadable from "@loadable/component";
-import { PublicRoute } from "../common/components/PublicRoute";
+import { PublicRoute, PrivateRoute } from "../common/components/";
 
 const NewsList = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.NewsList,
@@ -12,11 +12,19 @@ const Login = loadable(() => import("../pages/"), {
 const Register = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.Register,
 });
+const ProfileSettings = loadable(() => import("../pages/"), {
+  resolveComponent: (components) => components.ProfileSettings,
+});
 
 const MainRoutes = () => {
   return (
     <Routes>
       <Route exact path="/" element={<PublicRoute component={NewsList} />} />
+      <Route
+        exact
+        path="/profile-settings"
+        element={<PrivateRoute component={ProfileSettings} />}
+      />
       <Route
         exact
         path="/login"
