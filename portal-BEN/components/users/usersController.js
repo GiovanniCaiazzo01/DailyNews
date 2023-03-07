@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { createToken } = require("../../utils/utils");
 
 const checkForMissingField = (credentials) => {
   for (const field in credentials) {
@@ -40,22 +41,6 @@ const comparePassword = async (incomingPassword, storedPassword) => {
     });
   });
 };
-
-const createToken = (name, age, email) => {
-  const payload = {
-    name,
-    age,
-    email,
-  };
-
-  const { SECRET_KEY } = process.env;
-  const options = { expiresIn: "30s" };
-
-  const token = jwt.sign(payload, SECRET_KEY, options);
-
-  return token;
-};
-
 const verifyToken = async (token, name, email, age) => {
   return new Promise((resolve, reject) => {
     const { SECRET_KEY } = process.env;
@@ -118,6 +103,8 @@ module.exports = {
       const to_return = {
         name: user.name,
         token: user.token,
+        email: user.email,
+        age: user.age,
       };
       return { result: true, data: to_return };
     } catch (error) {

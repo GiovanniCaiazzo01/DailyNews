@@ -1,24 +1,42 @@
-const base_url = "http://localhost:3000";
+const BASE_URL = "http://localhost:3000";
 
 const HTTPClient = {
-  get: async (path) => {
-    return await fetch(base_url + path, {
-      method: "get",
-    })
-      .then((result) => result.json())
-      .catch((error) => console.log(error));
+  get: async (path, queryParams) => {
+    let url = `${BASE_URL}${path}`;
+    if (queryParams) {
+      const query = new URLSearchParams(queryParams);
+      url += `?${query.toString()}`;
+    }
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   },
   post: async (path, body) => {
-    return await fetch(base_url + path, {
-      method: "post",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((result) => result.json())
-      .catch((error) => console.log(error));
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    try {
+      const response = await fetch(`${BASE_URL}${path}`, {
+        method: "post",
+        mode: "cors",
+        headers,
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   },
 };
 

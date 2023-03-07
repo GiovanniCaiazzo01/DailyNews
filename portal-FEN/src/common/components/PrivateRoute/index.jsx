@@ -7,13 +7,6 @@ const SideBar = loadable(() => import("../"), {
 });
 
 const PrivateRoute = ({ component: Component }) => {
-  let token = false;
-
-  const localStorageToken = localStorage.getItem("token");
-  localStorageToken && localStorageToken !== "undefined"
-    ? (token = true)
-    : (token = false);
-
   return token ? (
     <>
       <SideBar />

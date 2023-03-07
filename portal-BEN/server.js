@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
 app.use("/news", require("./components/news/newsAPI"));
 app.use("/users", require("./components/users/usersAPI"));
+app.use("/auth", require("./components/auth/authAPI"));
 
 const start = async () => {
   const dba = await MongoClient.connect(DB_URI, {
