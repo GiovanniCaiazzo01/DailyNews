@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./style.css";
 import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Login = ({ bg }) => {
+  const navigate = useNavigate();
+  const { isLogged } = useAuth();
+  isLogged && navigate("/");
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
   });
-
-  const navigate = useNavigate();
 
   const onUserInput = (name, value) => {
     setUserCredentials((prev) => ({

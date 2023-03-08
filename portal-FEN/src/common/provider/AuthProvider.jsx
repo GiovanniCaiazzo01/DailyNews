@@ -3,13 +3,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
-  const [validToken, setValidToken] = useState();
+  const [isLogged, setIsLogged] = useState(false);
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const token = localStorage.getItem("token");
   const checkUserToken = async () => {
-    const token = localStorage.getItem("token");
-    if (!token || token === "undefined") return navigate("/login");
+    if (token && token !== "undefined") return navigate("/");
+    else if (!token) return setIsLogged(() => false);
 
     const userInfo = {
       name: localStorage.getItem("name"),
@@ -18,7 +20,7 @@ const AuthProvider = ({ children }) => {
     };
 
     const base_url = "http://localhost:3000";
-    const isVerifiedToken = await fetch(`${base_url}/auth/verify-token`, {
+    await fetch(`${base_url}/auth/verify-token`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,19 +29,21 @@ const AuthProvider = ({ children }) => {
       body: JSON.stringify({ userInfo }),
     })
       .then((response) => response.json())
-      .then((isValid) => setValidToken(isValid));
+      .then((response) => setIsLogged(() => response));
 
-    if (!validToken) {
-      localStorage.clear();
+    if (!isLogged) {
+      return localStorage.clear();
     }
   };
 
   useEffect(() => {
     checkUserToken();
-  }, [pathname]);
+  }, [pathname, token]);
 
-  console.log("reset", pathname);
-  return <AuthContext.Provider value={""}>{children}</AuthContext.Provider>;
+  console.log("reset", pathname, isLogged);
+  return (
+    <AuthContext.Provider value={{ isLogged }}>{children}</AuthContext.Provider>
+  );
 };
 
-export default AuthProvider;
+export { AuthProvider, AuthContext };

@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
-const { createToken } = require("../../utils/utils");
 module.exports = {
-  verify_token: async (token, name, email, age) => {
+  verify_token: async (token) => {
     token = token.split(" ")[1];
     return new Promise((resolve, reject) => {
       const { SECRET_KEY } = process.env;
