@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 import "./style.css";
 
 const SideBar = () => {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const name = localStorage.getItem("name") || "D.News";
+
+  const { isLogged } = useAuth();
   return (
     <div
       onClick={() => setOpen(() => (open ? false : true))}
@@ -19,7 +23,8 @@ const SideBar = () => {
           src="https://png.pngtree.com/template/20191017/ourlarge/pngtree-letter-n-logo-vector-designs-initials-n-logo-image_320358.jpg"
           alt="..."
         />
-        <h3>D.News</h3>
+
+        <h3>{name}</h3>
       </div>
 
       <nav>
@@ -38,6 +43,18 @@ const SideBar = () => {
             <i className="bx bxs-cog"></i>
             <span>Settings</span>
           </li>
+          {isLogged ? (
+            <li className="nav-item">
+              <i className="bx bx-log-out"></i>
+              <span>Log-out</span>
+            </li>
+          ) : (
+            <li className="nav-item">
+              <i className="bx bx-log-in"></i>
+
+              <span>Log-in</span>
+            </li>
+          )}
         </ul>
 
         <hr />
