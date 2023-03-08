@@ -5,42 +5,42 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
 
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const token = localStorage.getItem("token");
   const checkUserToken = async () => {
-    if (token && token !== "undefined") return navigate("/");
-    else if (!token) return setIsLogged(() => false);
-
     const userInfo = {
       name: localStorage.getItem("name"),
       email: localStorage.getItem("email"),
       age: localStorage.getItem("age"),
     };
 
+    if (!(token && userInfo.name && userInfo.email && userInfo.age)) {
+      localStorage.clear();
+      return setIsLogged(() => false);
+    }
+
     const base_url = "http://localhost:3000";
-    await fetch(`${base_url}/auth/verify-token`, {
+    const result = await fetch(`${base_url}/auth/verify-token`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ userInfo }),
-    })
-      .then((response) => response.json())
-      .then((response) => setIsLogged(() => response));
+    }).then((response) => response.json());
 
-    if (!isLogged) {
-      return localStorage.clear();
+    if (!result) {
+      localStorage.clear();
+      return setIsLogged(() => false);
     }
+    setIsLogged(() => result);
   };
 
   useEffect(() => {
     checkUserToken();
-  }, [pathname, token]);
+  }, [pathname]);
 
-  console.log("reset", pathname, isLogged);
   return (
     <AuthContext.Provider value={{ isLogged }}>{children}</AuthContext.Provider>
   );
