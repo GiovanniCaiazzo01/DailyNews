@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const AuthContext = createContext();
 const AuthProvider = ({ children }) => {

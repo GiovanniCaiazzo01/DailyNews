@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
