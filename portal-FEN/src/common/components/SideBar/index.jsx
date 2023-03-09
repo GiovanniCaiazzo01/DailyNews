@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import "./style.css";
 
 const SideBar = () => {
   const [open, setOpen] = useState(false);
-  const { pathname } = useLocation();
   const name = localStorage.getItem("name") || "D.News";
 
+  const { pathname } = useLocation();
   const { isLogged } = useAuth();
+  const navigate = useNavigate();
   return (
     <div
       onClick={() => setOpen(() => (open ? false : true))}
@@ -31,7 +32,10 @@ const SideBar = () => {
         <div className="nav-title">Management</div>
 
         <ul>
-          <li className={pathname === "/" ? "nav-item active" : "nav-item"}>
+          <li
+            className={pathname === "/" ? "nav-item active" : "nav-item"}
+            onClick={() => navigate("/")}
+          >
             <i className="bx bxs-dashboard"></i>
             <span>Dashboard</span>
           </li>
@@ -39,6 +43,7 @@ const SideBar = () => {
             className={
               pathname === "/settings" ? "nav-item active" : "nav-item"
             }
+            onClick={() => navigate("/profile-settings")}
           >
             <i className="bx bxs-cog"></i>
             <span>Settings</span>
@@ -49,7 +54,7 @@ const SideBar = () => {
               <span>Log-out</span>
             </li>
           ) : (
-            <li className="nav-item">
+            <li className="nav-item" onClick={() => navigate("/login")}>
               <i className="bx bx-log-in"></i>
 
               <span>Log-in</span>
