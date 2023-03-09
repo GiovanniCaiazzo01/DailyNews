@@ -12,8 +12,8 @@ const Login = loadable(() => import("../pages/"), {
 const Register = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.Register,
 });
-const ProfileSettings = loadable(() => import("../pages/"), {
-  resolveComponent: (components) => components.ProfileSettings,
+const Profile = loadable(() => import("../pages/"), {
+  resolveComponent: (components) => components.Profile,
 });
 
 const MainRoutes = () => {
@@ -22,8 +22,8 @@ const MainRoutes = () => {
       <Route exact path="/" element={<PublicRoute component={NewsList} />} />
       <Route
         exact
-        path="/profile-settings"
-        element={<PrivateRoute component={ProfileSettings} />}
+        path="/profile"
+        element={<PublicRoute component={Profile} />}
       />
       <Route
         exact
