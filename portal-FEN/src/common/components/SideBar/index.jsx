@@ -43,7 +43,7 @@ const SideBar = () => {
             className={
               pathname === "/settings" ? "nav-item active" : "nav-item"
             }
-            onClick={() => navigate("/profile-settings")}
+            onClick={() => navigate("/profile")}
           >
             <i className="bx bxs-cog"></i>
             <span>Settings</span>

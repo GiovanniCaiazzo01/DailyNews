@@ -23,7 +23,7 @@ const MainRoutes = () => {
       <Route
         exact
         path="/profile"
-        element={<PublicRoute component={Profile} />}
+        element={<PrivateRoute component={Profile} />}
       />
       <Route
         exact
