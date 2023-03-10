@@ -15,4 +15,12 @@ module.exports = {
 
     return token;
   },
+  checkForMissingField: (credentials) => {
+    for (const field in credentials) {
+      if (!credentials[field] || credentials[field].length < 1) {
+        return { result: true, field };
+      }
+    }
+    return false;
+  },
 };

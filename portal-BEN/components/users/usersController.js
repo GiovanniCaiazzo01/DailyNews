@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-const { createToken } = require("../../utils/utils");
+const { createToken, checkForMissingField } = require("../../utils/utils");
 
 const checkEqualityPasswords = (password, repeatPassword) => {
   if (password !== repeatPassword) return false;
@@ -19,6 +19,17 @@ const cryptPassword = (password) => {
   });
 };
 
+const validateNameAndAge = (name, age) => {
+  if (parseInt(age) <= 0 || parseInt(age) >= 200) {
+    console.log(age);
+    return { result: false, message: "Please insert a valid age" };
+  }
+
+  if (name.length > 50) {
+    return { result: false, message: "The name seems to be to long!" };
+  }
+};
+
 module.exports = {
   register: async ({
     name,
@@ -28,14 +39,6 @@ module.exports = {
     password,
     ["Repeat Password"]: repeatPassword,
   }) => {
-    if (age <= 0 || age >= 200) {
-      return { result: false, message: "Please insert a valid age" };
-    }
-
-    if (name.length > 50) {
-      return { result: false, message: "The name seems to be to long!" };
-    }
-
     const missingField = checkForMissingField({
       name,
       age,
@@ -43,7 +46,11 @@ module.exports = {
       password,
       repeatPassword,
     });
+    const validate = validateNameAndAge(name, age);
 
+    if (validate?.result === false) {
+      return validate;
+    }
     if (missingField) {
       return {
         result: false,
@@ -72,6 +79,7 @@ module.exports = {
     }
 
     const token = createToken(name, age, email);
+
     try {
       const cryptedPassword = await cryptPassword(password);
       const register = await global.db.collection("users").insertOne({
@@ -84,10 +92,40 @@ module.exports = {
         token,
       });
 
-      if (!register.acknowledged) return new Error("Error Occured re-try");
+      if (!register.acknowledged) throw new Error("Error Occured re-try");
       return { result: true, message: "User Created" };
     } catch (error) {
       return { result: false, message: error };
+    }
+  },
+  update: async ({ name, surname, age, email }) => {
+    const missingField = checkForMissingField({
+      name,
+      age,
+      email,
+    });
+
+    if (missingField) {
+      return {
+        result: false,
+        message: `Please fill the ${missingField.field} field `,
+      };
+    }
+    const validate = validateNameAndAge(name, age);
+    if (validate?.result === false) {
+      return validate;
+    }
+
+    try {
+      const update_user = await global.db
+        .collection("users")
+        .updateOne({ email }, { $set: { name, surname, age, email } });
+      if (!update_user.acknowledged) throw new Error("Error Occured re-try");
+
+      return { result: true, message: "User update successfully" };
+    } catch (error) {
+      console.error(error);
+      return false;
     }
   },
 };

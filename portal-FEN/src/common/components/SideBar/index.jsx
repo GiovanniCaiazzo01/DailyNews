@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import "./style.css";
 
 const SideBar = () => {
   const [open, setOpen] = useState(false);
-  const name = localStorage.getItem("name") || "D.News";
-
+  const [name, setName] = useState(localStorage.getItem("name") || "");
   const { pathname } = useLocation();
   const { isLogged } = useAuth();
   const navigate = useNavigate();
+
+  console.log(name);
+  useEffect(() => {
+    console.log(name);
+    setName(localStorage.getItem("name") || "");
+  }, [name, open]);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleNavItemOnClick = (path) => {
+    navigate(path);
+    setOpen(false);
+  };
+
   return (
-    <div
-      onClick={() => setOpen(() => (open ? false : true))}
-      className={open ? "sidebar open" : "sidebar"}
-    >
+    <div onClick={handleToggle} className={`sidebar ${open ? "open" : ""}`}>
       <div className="toggle">
         <i className="bx bx-chevron-right"></i>
       </div>
@@ -33,17 +45,15 @@ const SideBar = () => {
 
         <ul>
           <li
-            className={pathname === "/" ? "nav-item active" : "nav-item"}
-            onClick={() => navigate("/")}
+            className={`nav-item ${pathname === "/" ? "active" : ""}`}
+            onClick={() => handleNavItemOnClick("/")}
           >
             <i className="bx bxs-dashboard"></i>
             <span>Dashboard</span>
           </li>
           <li
-            className={
-              pathname === "/settings" ? "nav-item active" : "nav-item"
-            }
-            onClick={() => navigate("/profile")}
+            className={`nav-item ${pathname === "/settings" ? "active" : ""}`}
+            onClick={() => handleNavItemOnClick("/profile")}
           >
             <i className="bx bxs-cog"></i>
             <span>Settings</span>
@@ -54,7 +64,10 @@ const SideBar = () => {
               <span>Log-out</span>
             </li>
           ) : (
-            <li className="nav-item" onClick={() => navigate("/login")}>
+            <li
+              className="nav-item"
+              onClick={() => handleNavItemOnClick("/login")}
+            >
               <i className="bx bx-log-in"></i>
 
               <span>Log-in</span>

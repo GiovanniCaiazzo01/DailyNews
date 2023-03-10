@@ -27,12 +27,13 @@ const Login = () => {
     const user = await HTTPClient.post("/auth/login", {
       ...userCredentials,
     });
-    console.log(user);
-    localStorage.setItem("token", user.data?.token);
-    localStorage.setItem("name", user.data?.name);
-    localStorage.setItem("email", user.data?.email);
-    localStorage.setItem("age", user.data?.age);
-    if (user.result) navigate("/");
+
+    localStorage.setItem("token", user.data?.token || "");
+    localStorage.setItem("name", user.data?.name || "");
+    localStorage.setItem("email", user.data?.email || "");
+    localStorage.setItem("age", user.data?.age || "");
+    console.log(user.result);
+    if (user.result === true) navigate("/");
   };
 
   const field = [
@@ -50,6 +51,23 @@ const Login = () => {
     },
   ];
 
+  if (
+    !localStorage.getItem("token") ||
+    localStorage.getItem("token") === undefined
+  ) {
+    return (
+      <BackGround about="Background for a login page">
+        <Form
+          header="Login"
+          field={field}
+          onSubmit={onSubmit}
+          onUserInput={onUserInput}
+          btnLabel="Login"
+          btnType="submit"
+        />
+      </BackGround>
+    );
+  }
   return (
     <BackGround about="Background for a login page">
       <Form

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { HTTPClient } from "../../api/HTTPClients";
 import { Form } from "../../common/components/Form";
 import "./style.css";
 
 const Profile = () => {
   const [user, setUser] = useState({
-    name: localStorage.getItem("name") || "",
-    surname: localStorage.getItem("surname") || "",
-    email: localStorage.getItem("email") || "",
-    age: localStorage.getItem("age") || "",
+    name: localStorage.getItem("name"),
+    surname: localStorage.getItem("surname"),
+    email: localStorage.getItem("email"),
+    age: localStorage.getItem("age"),
   });
 
   const onUserInput = (name, value) => {
@@ -15,11 +16,28 @@ const Profile = () => {
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-  };
 
-  console.log(user);
+    // TODO: SOTTO QUESTO CONTROLLO DOBBIAMO FAR RITORNARE UN MESSAGGIO DI ERROR
+    if (
+      user.name === localStorage.getItem("name") &&
+      user.surname === localStorage.getItem("surname") &&
+      user.email === localStorage.getItem("email") &&
+      user.age === localStorage.getItem("age")
+    ) {
+      return console.log("Messaggio di errore");
+    }
+    const updateUser = await HTTPClient.put("/users/update", user);
+    console.log(updateUser);
+    const { name, surname, email, age } = user;
+    if (updateUser) {
+      localStorage.setItem("name", name);
+      localStorage.setItem("surname", surname);
+      localStorage.setItem("email", email);
+      localStorage.setItem("age", age);
+    }
+  };
   const field = [
     {
       upperLabel: "Name",

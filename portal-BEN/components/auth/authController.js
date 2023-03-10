@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { createToken } = require("../../utils/utils");
+const { createToken, checkForMissingField } = require("../../utils/utils");
 
 const comparePassword = async (incomingPassword, storedPassword) => {
   return new Promise((resolve, reject) => {
@@ -31,15 +31,6 @@ const verifyToken = async (token, name, email, age) => {
       return resolve(decoded);
     });
   });
-};
-
-const checkForMissingField = (credentials) => {
-  for (const field in credentials) {
-    if (!credentials[field] || credentials[field].length < 1) {
-      return { result: true, field };
-    }
-  }
-  return false;
 };
 
 module.exports = {
@@ -88,6 +79,7 @@ module.exports = {
         email: user.email,
         age: user.age,
       };
+
       return { result: true, data: to_return };
     } catch (error) {
       console.log(error);
@@ -100,8 +92,11 @@ module.exports = {
       const { SECRET_KEY } = process.env;
       jwt.verify(token, SECRET_KEY, function (err, decoded) {
         const expired = "TokenExpiredError";
-
+        const jwtError = "JsonWebTokenError";
         if (err?.name === expired) {
+          resolve(false);
+        }
+        if (err?.name === jwtError) {
           resolve(false);
         }
 

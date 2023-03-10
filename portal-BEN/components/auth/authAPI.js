@@ -13,11 +13,13 @@ router.post("/login", async (req, res) => {
 
 router.post("/verify-token", async (req, res) => {
   const { authorization } = req.headers;
+  if (!authorization) return res.send(false);
+
   try {
     const result = await verify_token(authorization);
     return res.send(result);
   } catch (error) {
-    console.log(error);
+    console.log("VERIFY TOKEN => ", error);
   }
 });
 module.exports = router;
