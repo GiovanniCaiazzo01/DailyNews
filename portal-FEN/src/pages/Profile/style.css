@@ -1,22 +1,43 @@
 .profile-container {
   display: flex;
   flex-direction: column;
-
   align-items: center;
-  margin: 0 auto;
   padding: 30px;
-  max-height: 90%;
-  backdrop-filter: blur(3px);
-  background-color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .profile-content h4 {
   padding: 5px;
   margin-top: 20px;
-  color: gray;
+  color: #fff; /* New text color for h4 elements */
 }
 
-.profile-header {
-  color: white;
+.profile-header h1 {
+  color: #fff; /* New text color for h1 element */
+}
+
+.profile-content Input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.profile-footer {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 20px;
 }

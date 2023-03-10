@@ -13,6 +13,7 @@ const PublicRoute = ({ component: Component }) => {
         style={{
           display: "flex",
           flexWrap: "wrap",
+          width: "100%",
           justifyContent: "space-around",
         }}
       >
