@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./style.css";
 import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
-
+import useAuth from "../../hooks/useAuth";
+import "./style.css";
 const Register = ({ bg }) => {
   const [userCredentials, setUserCredentials] = useState({
     name: "",
@@ -14,7 +14,10 @@ const Register = ({ bg }) => {
     "Repeat Password": "",
   });
 
+  const { isLogged } = useAuth();
   const navigate = useNavigate();
+
+  isLogged && navigate("/");
 
   const onUserInput = (name, value) => {
     setUserCredentials((prev) => ({

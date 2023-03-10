@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./style.css";
-import { Button, Input } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { Form } from "../../common/components/Form";
+import { BackGround } from "../../common/components";
 
-const Login = ({ bg }) => {
+const Login = () => {
   const navigate = useNavigate();
   const { isLogged } = useAuth();
   isLogged && navigate("/");
@@ -21,7 +22,7 @@ const Login = ({ bg }) => {
     }));
   };
 
-  const onUserLogin = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const user = await HTTPClient.post("/users/login", {
       ...userCredentials,
@@ -34,33 +35,29 @@ const Login = ({ bg }) => {
     if (user.result) navigate("/");
   };
 
+  const field = [
+    {
+      upperLabel: "E-mail",
+      label: "example@example.com",
+      type: "email",
+      name: "email",
+    },
+    {
+      upperLabel: "Password",
+      label: "Your Password",
+      type: "password",
+      name: "password",
+    },
+  ];
   return (
-    <section className="login" style={{ backgroundImage: `url(${bg})` }}>
-      <div className="login-container">
-        <div className="login-header">Login</div>
-        <form onSubmit={onUserLogin}>
-          <div className="login-inputs-container">
-            <div className="login-input-suffix">E-mail</div>
-            <Input
-              label="Your email"
-              type="email"
-              name="email"
-              onUserInput={onUserInput}
-            />
-            <div className="login-input-suffix">Password</div>
-            <Input
-              label="Your password"
-              type="password"
-              name="password"
-              onUserInput={onUserInput}
-            />
-            <div className="login-footer">
-              <Button label="Login" type="submit" />
-            </div>
-          </div>
-        </form>
-      </div>
-    </section>
+    <BackGround about="Background for a login page">
+      <Form
+        header="Login"
+        field={field}
+        onSubmit={onSubmit}
+        onUserInput={onUserInput}
+      />
+    </BackGround>
   );
 };
 
