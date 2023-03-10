@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { Form } from "../../common/components/Form";
 import "./style.css";
-import { Button, Input } from "../../common/components";
 
 const Profile = () => {
   const [user, setUser] = useState({
@@ -15,54 +15,47 @@ const Profile = () => {
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
   };
 
+  const field = [
+    {
+      upperLabel: "Name",
+      label: "Your Name",
+      type: "text",
+      name: "name",
+    },
+    {
+      upperLabel: "Surname",
+      label: "Your Surname",
+      type: "text",
+      name: "surname",
+    },
+    {
+      upperLabel: "Age",
+      label: "Your Age",
+      type: "number",
+      name: "age",
+    },
+    {
+      upperLabel: "E-mail",
+      label: "example@example.com",
+      type: "email",
+      name: "email",
+    },
+  ];
+
   return (
-    <div className="profile-container">
-      <div className="profile-header">
-        <h1>Your Profile</h1>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="profile-content">
-          <h4>Name</h4>
-          <Input
-            label="Giovanni"
-            type="text"
-            name="name"
-            onUserInput={onUserInput}
-          />
-
-          <h4>Surname</h4>
-          <Input
-            label="Caiazzo"
-            type="text"
-            name="surname"
-            onUserInput={onUserInput}
-          />
-
-          <h4>Email</h4>
-          <Input
-            label="example@example.com"
-            type="email"
-            name="email"
-            onUserInput={onUserInput}
-          />
-
-          <h4>Age</h4>
-          <Input
-            label="18"
-            type="number"
-            name="age"
-            onUserInput={onUserInput}
-          />
-
-          <div className="profile-footer">
-            <Button label="Update" type="submit" />
-          </div>
-        </div>
-      </form>
+    <div>
+      <Form
+        header="Your Profile Info"
+        field={field}
+        onSubmit={onSubmit}
+        onUserInput={onUserInput}
+        btnLabel="Salva"
+        btnType="submit"
+      />
     </div>
   );
 };

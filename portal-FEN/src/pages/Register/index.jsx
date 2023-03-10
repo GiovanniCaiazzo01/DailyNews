@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Button, Input } from "../../common/components";
+import { Form } from "../../common/components/Form";
+import { BackGround } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import "./style.css";
+
 const Register = ({ bg }) => {
   const [userCredentials, setUserCredentials] = useState({
     name: "",
@@ -26,7 +28,7 @@ const Register = ({ bg }) => {
     }));
   };
 
-  const onUserRegister = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const user = await HTTPClient.post("/users/register", {
       ...userCredentials,
@@ -37,62 +39,55 @@ const Register = ({ bg }) => {
     }
   };
 
+  const field = [
+    {
+      upperLabel: "Name",
+      label: "Your Name",
+      type: "text",
+      name: "name",
+    },
+    {
+      upperLabel: "Surname",
+      label: "Your Surname",
+      type: "text",
+      name: "surname",
+    },
+    {
+      upperLabel: "Age",
+      label: "Your Age",
+      type: "number",
+      name: "age",
+    },
+    {
+      upperLabel: "E-mail",
+      label: "example@example.com",
+      type: "email",
+      name: "email",
+    },
+    {
+      upperLabel: "Password",
+      label: "Your Password",
+      type: "password",
+      name: "password",
+    },
+    {
+      upperLabel: "Confirm Password",
+      label: "Repeat Password",
+      type: "password",
+      name: "Repeat Password",
+    },
+  ];
   return (
-    <section className="register" style={{ backgroundImage: `url(${bg}` }}>
-      <div className="register-container">
-        <div className="register-header">Register</div>
-        <form onSubmit={onUserRegister}>
-          <div className="register-inputs-container">
-            <div className="register-input-suffix">Name</div>
-            <Input
-              label="Your Name"
-              type="text"
-              name="name"
-              onUserInput={onUserInput}
-            />
-            <div className="register-input-suffix">Surname</div>
-            <Input
-              label="Your Surname"
-              type="text"
-              name="surname"
-              onUserInput={onUserInput}
-            />
-            <div className="register-input-suffix">Age</div>
-            <Input
-              label="Your Age"
-              type="number"
-              name="age"
-              onUserInput={onUserInput}
-            />
-            <div className="register-input-suffix">E-mail</div>
-            <Input
-              label="Your email"
-              type="email"
-              name="email"
-              onUserInput={onUserInput}
-            />
-            <div className="register-input-suffix">Password</div>
-            <Input
-              label="Your Password"
-              type="password"
-              name="password"
-              onUserInput={onUserInput}
-            />
-            <div className="register-input-suffix">Repeat Password</div>
-            <Input
-              label="Repeat Password"
-              type="password"
-              name="Repeat Password"
-              onUserInput={onUserInput}
-            />
-            <div className="register-footer">
-              <Button label={"Register"} type={"submit"} />
-            </div>
-          </div>
-        </form>
-      </div>
-    </section>
+    <BackGround about="Background for a register page">
+      <Form
+        header="Register"
+        field={field}
+        onSubmit={onSubmit}
+        onUserInput={onUserInput}
+        btnLabel="Register"
+        btnType="submit"
+      />
+    </BackGround>
   );
 };
-
 export { Register };

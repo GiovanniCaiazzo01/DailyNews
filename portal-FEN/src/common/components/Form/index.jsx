@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import "./style.css";
-const Form = ({ header, field, onSubmit, onUserInput }) => {
+const Form = ({ header, field, onSubmit, onUserInput, btnLabel, btnType }) => {
   const handleSubmit = (e) => {
     onSubmit(e);
   };
@@ -29,7 +29,7 @@ const Form = ({ header, field, onSubmit, onUserInput }) => {
             );
           })}
           <div className="form-footer">
-            <Button label="Login" type="submit" />
+            <Button label={btnLabel} type={btnType} />
           </div>
         </div>
       </form>

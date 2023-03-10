@@ -49,6 +49,7 @@ const Login = () => {
       name: "password",
     },
   ];
+
   return (
     <BackGround about="Background for a login page">
       <Form
@@ -56,6 +57,8 @@ const Login = () => {
         field={field}
         onSubmit={onSubmit}
         onUserInput={onUserInput}
+        btnLabel="Login"
+        btnType="submit"
       />
     </BackGround>
   );

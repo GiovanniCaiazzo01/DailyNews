@@ -17,6 +17,7 @@ const PrivateRoute = ({ component: Component }) => {
           display: "flex",
           flexWrap: "wrap",
           width: "100%",
+          alignContent: "center",
           justifyContent: "space-around",
         }}
       >
