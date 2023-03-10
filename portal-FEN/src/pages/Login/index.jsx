@@ -24,7 +24,7 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const user = await HTTPClient.post("/users/login", {
+    const user = await HTTPClient.post("/auth/login", {
       ...userCredentials,
     });
     console.log(user);
