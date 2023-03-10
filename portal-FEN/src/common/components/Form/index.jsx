@@ -18,12 +18,15 @@ const Form = ({ header, field, onSubmit, onUserInput, btnLabel, btnType }) => {
           {field.map((f) => {
             return (
               <>
-                <div className="form-input-upper-label">{f.upperLabel}</div>
+                <div className="form-input-upper-label" key={f.upperLabel}>
+                  {f.upperLabel}
+                </div>
                 <Input
                   label={f.label}
                   type={f.type}
                   name={f.name}
                   onUserInput={handleUserInput}
+                  value={f.value}
                 />
               </>
             );

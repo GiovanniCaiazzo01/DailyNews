@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
 
-const Input = ({ label, type, name, onUserInput }) => {
+const Input = ({ label, type, name, onUserInput, value }) => {
   const [showPlaceholder, setShowPlaceholder] = useState(true);
 
   const onType = (name, value) => {
@@ -24,6 +24,7 @@ const Input = ({ label, type, name, onUserInput }) => {
       <input
         name={name}
         type={type}
+        value={value}
         placeholder={showPlaceholder ? label : "Please fill this field"}
         onChange={(e) => onType(e.target.name, e.target.value)}
         onFocus={onFocus}
