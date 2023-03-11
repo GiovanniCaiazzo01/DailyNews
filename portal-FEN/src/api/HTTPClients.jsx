@@ -1,18 +1,22 @@
+import React from "react";
 const BASE_URL = "http://localhost:3000";
 
 const HTTPClient = {
-  get: async (path, queryParams) => {
+  get: async (path) => {
     let url = `${BASE_URL}${path}`;
-    if (queryParams) {
-      const query = new URLSearchParams(queryParams);
-      url += `?${query.toString()}`;
-    }
+    const headers = {
+      "Content-Type": "application/json",
+    };
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      const response = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        headers,
+      })
+        .then((result) => result.json())
+        .catch((error) => new Error(`HTTP error! status: ${error.result}`));
+
+      return await response;
     } catch (error) {
       console.error(error);
       throw error;
@@ -28,11 +32,10 @@ const HTTPClient = {
         mode: "cors",
         headers,
         body: JSON.stringify(body),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      })
+        .then((result) => result.json())
+        .catch((error) => new Error(`HTTP error! status: ${error.result}`));
+      return await response;
     } catch (error) {
       console.error(error);
       throw error;
@@ -48,11 +51,11 @@ const HTTPClient = {
         mode: "cors",
         headers,
         body: JSON.stringify(body),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      })
+        .then((result) => result.json())
+        .catch((error) => new Error(`HTTP error! status: ${error.result}`));
+
+      return await response;
     } catch (error) {
       console.error(error);
       throw error;

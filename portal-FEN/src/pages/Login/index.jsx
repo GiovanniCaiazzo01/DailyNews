@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import { Form } from "../../common/components/Form";
-import { BackGround } from "../../common/components";
+import { Alert, BackGround } from "../../common/components";
 import useAuth from "../../hooks/useAuth";
 import "./style.css";
 
@@ -13,6 +13,10 @@ const Login = () => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
+  });
+  const [submitState, setSubmitState] = useState({
+    result: Boolean,
+    message: "",
   });
 
   const setLocalStorage = async (userInfo) => {
@@ -39,6 +43,10 @@ const Login = () => {
       ...userCredentials,
     });
 
+    if (!user.result) {
+      setSubmitState((prev) => ({ ...prev, ["result"]: user.result }));
+      setSubmitState((prev) => ({ ...prev, ["message"]: user.message }));
+    }
     await setLocalStorage(user);
     if (user.result === true) {
       return navigate("/");
@@ -61,25 +69,9 @@ const Login = () => {
     },
   ];
 
-  if (
-    !localStorage.getItem("token") ||
-    localStorage.getItem("token") === undefined
-  ) {
-    return (
-      <BackGround about="Background for a login page">
-        <Form
-          header="Login"
-          field={field}
-          onSubmit={onSubmit}
-          onUserInput={onUserInput}
-          btnLabel="Login"
-          btnType="submit"
-        />
-      </BackGround>
-    );
-  }
   return (
     <BackGround about="Background for a login page">
+      {submitState.result === false && <Alert message={submitState.message} />}
       <Form
         header="Login"
         field={field}

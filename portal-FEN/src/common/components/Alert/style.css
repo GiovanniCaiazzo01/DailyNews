@@ -1,0 +1,44 @@
+.alert {
+  padding: 16px;
+  margin: 8px;
+  max-width: 20%;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: rgba(255, 56, 56, 0.679);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  animation: slide-in 0.5s ease-out forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+.alert {
+  opacity: 1;
+}
+
+.alert-title {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+}
+
+.alert-content {
+  margin: 0;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  color: #f5f5f5;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
