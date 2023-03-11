@@ -20,14 +20,8 @@ const Login = () => {
   });
 
   const setLocalStorage = async (userInfo) => {
-    // data: age: "2";
-    // email: "d@gmail.com";
-    // name: "d";
-    // token: "eyJhbGc";
-
-    for (const item in userInfo.data) {
-      localStorage.setItem(item, userInfo.data[item]);
-    }
+    console.log(userInfo);
+    localStorage.setItem("token", userInfo.data.token);
   };
 
   const onUserInput = (name, value) => {

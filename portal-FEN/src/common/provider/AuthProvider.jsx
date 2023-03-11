@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
@@ -8,10 +9,18 @@ const AuthProvider = ({ children }) => {
 
   const checkUserToken = async () => {
     const token = localStorage.getItem("token");
+
+    const dToken = jwt_decode(token);
+
+    const { name, age, email } = dToken;
+    localStorage.setItem("name", name);
+    localStorage.setItem("age", age);
+    localStorage.setItem("email", email);
+
     const userInfo = {
-      name: localStorage.getItem("name"),
-      email: localStorage.getItem("email"),
-      age: localStorage.getItem("age"),
+      name,
+      age,
+      email,
     };
 
     if (!token) {
@@ -19,6 +28,7 @@ const AuthProvider = ({ children }) => {
       return setIsLogged(() => false);
     }
 
+    console.log(token);
     const base_url = "http://localhost:3000";
     const result = await fetch(`${base_url}/auth/verify-token`, {
       method: "POST",
@@ -29,7 +39,6 @@ const AuthProvider = ({ children }) => {
       body: JSON.stringify({ userInfo }),
     }).then((response) => response.json());
 
-    console.log("result", result);
     if (!result) {
       localStorage.clear();
       return setIsLogged(() => false);

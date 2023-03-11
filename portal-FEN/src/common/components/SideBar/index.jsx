@@ -10,9 +10,7 @@ const SideBar = () => {
   const { isLogged } = useAuth();
   const navigate = useNavigate();
 
-  console.log(name);
   useEffect(() => {
-    console.log(name);
     setName(localStorage.getItem("name") || "");
   }, [name, open]);
 
