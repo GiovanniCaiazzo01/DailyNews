@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import "./style.css";
 
-const Register = ({ bg }) => {
+const Register = () => {
   const [userCredentials, setUserCredentials] = useState({
     name: "",
     surname: "",
@@ -19,6 +19,7 @@ const Register = ({ bg }) => {
   const { isLogged } = useAuth();
   const navigate = useNavigate();
 
+  console.log(isLogged);
   isLogged && navigate("/");
 
   const onUserInput = (name, value) => {

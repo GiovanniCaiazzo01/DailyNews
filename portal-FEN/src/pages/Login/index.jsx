@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./style.css";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import { Form } from "../../common/components/Form";
 import { BackGround } from "../../common/components";
+import useAuth from "../../hooks/useAuth";
+import "./style.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +14,17 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const setLocalStorage = async (userInfo) => {
+    // data: age: "2";
+    // email: "d@gmail.com";
+    // name: "d";
+    // token: "eyJhbGc";
+
+    for (const item in userInfo.data) {
+      localStorage.setItem(item, userInfo.data[item]);
+    }
+  };
 
   const onUserInput = (name, value) => {
     setUserCredentials((prev) => ({
@@ -28,12 +39,11 @@ const Login = () => {
       ...userCredentials,
     });
 
-    localStorage.setItem("token", user.data?.token || "");
-    localStorage.setItem("name", user.data?.name || "");
-    localStorage.setItem("email", user.data?.email || "");
-    localStorage.setItem("age", user.data?.age || "");
-    console.log(user.result);
-    if (user.result === true) navigate("/");
+    await setLocalStorage(user);
+    if (user.result === true) {
+      return navigate("/");
+    }
+    // if (user.result === true) navigate("/");
   };
 
   const field = [
