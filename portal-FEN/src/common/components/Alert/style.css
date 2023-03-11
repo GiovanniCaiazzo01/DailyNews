@@ -7,7 +7,6 @@
   background-color: rgba(255, 56, 56, 0.679);
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
   animation: slide-in 0.5s ease-out forwards;
   animation-delay: 0.5s;

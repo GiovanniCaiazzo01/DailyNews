@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
+import { Alert } from "../../common/components";
 import { Form } from "../../common/components/Form";
 import "./style.css";
 
@@ -11,6 +12,11 @@ const Profile = () => {
     age: localStorage.getItem("age"),
   });
 
+  const [submitState, setSubmitState] = useState({
+    result: Boolean,
+    message: "",
+  });
+
   const onUserInput = (name, value) => {
     console.log(value);
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -20,16 +26,20 @@ const Profile = () => {
     event.preventDefault();
 
     // TODO: SOTTO QUESTO CONTROLLO DOBBIAMO FAR RITORNARE UN MESSAGGIO DI ERROR
-    if (
-      user.name === localStorage.getItem("name") &&
-      user.surname === localStorage.getItem("surname") &&
-      user.email === localStorage.getItem("email") &&
-      user.age === localStorage.getItem("age")
-    ) {
-      return console.log("Messaggio di errore");
-    }
+    // if (
+    //   user.name === localStorage.getItem("name") &&
+    //   user.surname === localStorage.getItem("surname") &&
+    //   user.email === localStorage.getItem("email") &&
+    //   user.age === localStorage.getItem("age")
+    // ) {
+    //   return console.log("Messaggio di errore");
+    // }
     const updateUser = await HTTPClient.put("/users/update", user);
-    console.log(updateUser);
+
+    if (!updateUser.result) {
+      setSubmitState((prev) => ({ ...prev, ["result"]: updateUser.result }));
+      setSubmitState((prev) => ({ ...prev, ["message"]: updateUser.message }));
+    }
     const { name, surname, email, age } = user;
     if (updateUser) {
       localStorage.setItem("name", name);
@@ -79,6 +89,7 @@ const Profile = () => {
         btnLabel="Salva"
         btnType="submit"
       />
+      {submitState.result === false && <Alert message={submitState.message} />}
     </div>
   );
 };
