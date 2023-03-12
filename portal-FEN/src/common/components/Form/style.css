@@ -8,7 +8,7 @@
   background-size: cover;
 } */
 
-.form-container {
+#form-container {
   width: fit-content;
   margin: 0 auto;
   padding: 20px 80px;

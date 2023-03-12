@@ -10,6 +10,7 @@ const Profile = () => {
     surname: localStorage.getItem("surname"),
     email: localStorage.getItem("email"),
     age: localStorage.getItem("age"),
+    language: localStorage.getItem("language"),
   });
 
   const [submitState, setSubmitState] = useState({
@@ -25,15 +26,6 @@ const Profile = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    // TODO: SOTTO QUESTO CONTROLLO DOBBIAMO FAR RITORNARE UN MESSAGGIO DI ERROR
-    // if (
-    //   user.name === localStorage.getItem("name") &&
-    //   user.surname === localStorage.getItem("surname") &&
-    //   user.email === localStorage.getItem("email") &&
-    //   user.age === localStorage.getItem("age")
-    // ) {
-    //   return console.log("Messaggio di errore");
-    // }
     const updateUser = await HTTPClient.put("/users/update", user);
 
     if (!updateUser.result) {
@@ -79,6 +71,22 @@ const Profile = () => {
     },
   ];
 
+  const languages = [
+    { value: "ar", label: "Arabic" },
+    { value: "de", label: "German" },
+    { value: "en", label: "English" },
+    { value: "es", label: "Spanish" },
+    { value: "fr", label: "French" },
+    { value: "he", label: "Hebrew" },
+    { value: "it", label: "Italian" },
+    { value: "nl", label: "Dutch" },
+    { value: "no", label: "Norwegian" },
+    { value: "pt", label: "Portuguese" },
+    { value: "ru", label: "Russian" },
+    { value: "se", label: "Swedish" },
+    { value: "zh", label: "Chinese" },
+  ];
+
   return (
     <div>
       <Form
@@ -88,6 +96,10 @@ const Profile = () => {
         onUserInput={onUserInput}
         btnLabel="Salva"
         btnType="submit"
+        haveSelect
+        selectData={languages}
+        defaultSelectValue={user.language || "es: Italian"}
+        upperSelect="Chose your news language"
       />
       {submitState.result === false && <Alert message={submitState.message} />}
     </div>
