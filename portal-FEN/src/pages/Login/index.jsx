@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import { Form } from "../../common/components/Form";
@@ -9,7 +9,6 @@ import "./style.css";
 const Login = () => {
   const navigate = useNavigate();
   const { isLogged } = useAuth();
-  isLogged && navigate("/");
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
@@ -63,6 +62,9 @@ const Login = () => {
     },
   ];
 
+  useEffect(() => {
+    isLogged && navigate("/");
+  }, []);
   return (
     <BackGround about="Background for a login page">
       {submitState.result === false && <Alert message={submitState.message} />}

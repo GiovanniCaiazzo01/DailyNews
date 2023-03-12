@@ -1,5 +1,3 @@
-// TODO: Remove "||" to: DB_URI
-
 require("dotenv").config({ path: "./.env" });
 module.exports = {
   PORT: process.env.PORT || 3000,

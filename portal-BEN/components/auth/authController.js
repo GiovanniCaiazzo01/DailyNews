@@ -28,7 +28,8 @@ const verifyToken = async (token, name, email, age) => {
       if (err) {
         return reject(err);
       }
-      return resolve(decoded);
+
+      return resolve(token);
     });
   });
 };
