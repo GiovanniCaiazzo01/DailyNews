@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
+  const [userEmail, setUserEmail] = useState();
   const { pathname } = useLocation();
 
   const checkUserToken = async () => {
@@ -28,7 +29,6 @@ const AuthProvider = ({ children }) => {
       return setIsLogged(() => false);
     }
 
-    console.log(token);
     const base_url = "http://localhost:3000";
     const result = await fetch(`${base_url}/auth/verify-token`, {
       method: "POST",
@@ -43,6 +43,7 @@ const AuthProvider = ({ children }) => {
       localStorage.clear();
       return setIsLogged(() => false);
     }
+    setUserEmail(() => email);
     setIsLogged(() => result);
   };
 
@@ -51,7 +52,9 @@ const AuthProvider = ({ children }) => {
   }, [pathname, isLogged]);
 
   return (
-    <AuthContext.Provider value={{ isLogged }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ isLogged, userEmail }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import useUser from "../../../hooks/useUser";
 import "./style.css";
 
 const SideBar = () => {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState(localStorage.getItem("name") || "");
+  const { user } = useUser();
   const { pathname } = useLocation();
   const { isLogged } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setName(localStorage.getItem("name") || "");
-  }, [name, open]);
-
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState();
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -22,6 +20,9 @@ const SideBar = () => {
     navigate(path);
     setOpen(false);
   };
+  useEffect(() => {
+    setName(() => user?.name);
+  }, [user?.name]);
 
   return (
     <div onClick={handleToggle} className={`sidebar ${open ? "open" : ""}`}>
@@ -51,11 +52,17 @@ const SideBar = () => {
           </li>
           {isLogged && (
             <li
-              className={`nav-item ${pathname === "/settings" ? "active" : ""}`}
+              className={`nav-item ${pathname === "/settings" && "active"}`}
               onClick={() => handleNavItemOnClick("/profile")}
             >
-              <i className="bx bxs-cog"></i>
+              <i className="bx bxs-user"></i>
               <span>Settings</span>
+            </li>
+          )}
+          {isLogged && (
+            <li className="nav-item">
+              <i className="bx bx-save"></i>
+              <span>Saved News</span>
             </li>
           )}
           {isLogged ? (

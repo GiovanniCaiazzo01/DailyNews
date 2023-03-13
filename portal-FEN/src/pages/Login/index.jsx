@@ -19,7 +19,6 @@ const Login = () => {
   });
 
   const setLocalStorage = async (userInfo) => {
-    console.log(userInfo);
     localStorage.setItem("token", userInfo.data.token);
   };
 

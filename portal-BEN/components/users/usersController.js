@@ -31,6 +31,34 @@ const validateNameAndAge = (name, age) => {
 };
 
 module.exports = {
+  get: async (email) => {
+    if (!email) {
+      return {
+        result: false,
+        message: "The information could not be retrieved EMAIL",
+      };
+    }
+
+    try {
+      const user = await global.db.collection("users").findOne({ email });
+      if (!user) {
+        throw new Error("The information could not be retrieved LA MADONNA");
+      }
+      console.log("user", { user });
+      const to_return = {
+        ucode: user.ucode,
+        name: user.name,
+        age: user.age,
+        surname: user.surname,
+        email: user.email,
+        language: user.language,
+      };
+      return { result: true, data: to_return };
+    } catch (error) {
+      console.log(error);
+      return { result: false, message: error };
+    }
+  },
   register: async ({
     name,
     surname,

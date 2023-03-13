@@ -1,9 +1,17 @@
-import Reac, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 const BackGround = ({ about, children }) => {
-  const [bg, setBg] = useState(
-    `https://picsum.photos/id/${Math.floor(Math.random() * 100) + 1}/1920/1080`
-  );
+  const [bg, setBg] = useState();
+
+  useEffect(() => {
+    setBg(
+      () =>
+        `https://picsum.photos/id/${
+          Math.floor(Math.random() * 100) + 1
+        }/1920/1080`
+    );
+  }, []);
+
   return (
     <section
       className="background"

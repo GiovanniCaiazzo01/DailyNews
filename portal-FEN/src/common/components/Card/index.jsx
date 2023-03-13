@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../../api/HTTPClients";
-
 import "./style.css";
 
-const Card = () => {
-  const [news, setnews] = useState([
+const Card = ({ saved }) => {
+  const [news, setNews] = useState([
     {
       title: "bla bla bla",
       author: "Filippo",
@@ -17,14 +16,24 @@ const Card = () => {
     try {
       const response = await HTTPClient.get("/news/");
       const retrived_news = response?.data;
-      setnews(() => retrived_news);
+      setNews(() => retrived_news);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const userSavedNews = async () => {
+    try {
+      const response = await HTTPClient.get(`/user/saved-news/${"ucode"}`);
+      const saved_news = response.data;
+      setNews(() => saved_news);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    // fetchNews();
+    saved ? fetchNews() : userSavedNews();
   }, []);
 
   const truncateWords = (string, limit) => {
@@ -45,7 +54,7 @@ const Card = () => {
                 backgroundImage: `url(${
                   item.image
                     ? item.image
-                    : "https://picsum.photos/seed/picsum/1920/1080"
+                    : "https://w.wallhaven.cc/full/qz/wallhaven-qzdqvr.jpg"
                 })`,
               }}
             >

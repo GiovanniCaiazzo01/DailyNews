@@ -6,6 +6,11 @@ import { PublicRoute, PrivateRoute } from "../common/components/";
 const NewsList = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.NewsList,
 });
+
+const SavedNews = loadable(() => import("../pages/"), {
+  resolveComponent: (components) => components.NewsList,
+});
+
 const Login = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.Login,
 });

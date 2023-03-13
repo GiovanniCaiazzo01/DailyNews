@@ -1,6 +1,15 @@
 const express = require("express");
-const { register, update } = require("./usersController");
+const { register, update, get } = require("./usersController");
 const router = express.Router();
+
+router.get("/:email", async (req, res) => {
+  const { email } = req.params;
+  console.log(email);
+  const payload = email;
+
+  const result = await get(payload);
+  return res.send(result);
+});
 
 router.post("/register", async (req, res) => {
   const payload = {

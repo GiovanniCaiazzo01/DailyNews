@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { HTTPClient } from "../../api/HTTPClients";
 import { Alert } from "../../common/components";
 import { Form } from "../../common/components/Form";
+import useAuth from "../../hooks/useAuth";
+import useUser from "../../hooks/useUser";
 import "./style.css";
 
 const Profile = () => {
+  const userInfo = useUser();
+  const { isLogged } = useAuth();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
-    name: localStorage.getItem("name"),
-    surname: localStorage.getItem("surname"),
-    email: localStorage.getItem("email"),
-    age: localStorage.getItem("age"),
-    language: localStorage.getItem("language"),
+    name: userInfo.user?.name,
+    surname: userInfo.user?.surname,
+    email: userInfo.user?.email,
+    age: userInfo.user?.age,
+    language: userInfo.user?.language,
   });
 
   const [submitState, setSubmitState] = useState({
@@ -19,7 +26,6 @@ const Profile = () => {
   });
 
   const onUserInput = (name, value) => {
-    console.log(value);
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -34,10 +40,7 @@ const Profile = () => {
     }
     const { name, surname, email, age } = user;
     if (updateUser) {
-      localStorage.setItem("name", name);
       localStorage.setItem("surname", surname);
-      localStorage.setItem("email", email);
-      localStorage.setItem("age", age);
     }
   };
   const field = [
@@ -86,6 +89,10 @@ const Profile = () => {
     { value: "se", label: "Swedish" },
     { value: "zh", label: "Chinese" },
   ];
+
+  useEffect(() => {
+    !isLogged && navigate("/login");
+  }, []);
 
   return (
     <div>

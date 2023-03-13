@@ -1,4 +1,3 @@
-import React from "react";
 const BASE_URL = "http://localhost:3000";
 
 const HTTPClient = {
