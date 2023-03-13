@@ -98,11 +98,12 @@ module.exports = {
       return { result: false, message: error };
     }
   },
-  update: async ({ name, surname, age, email }) => {
+  update: async ({ name, surname, age, email, language }) => {
     const missingField = checkForMissingField({
       name,
       age,
       email,
+      language,
     });
 
     if (missingField) {
@@ -119,7 +120,10 @@ module.exports = {
     try {
       const update_user = await global.db
         .collection("users")
-        .updateOne({ email }, { $set: { name, surname, age, email } });
+        .updateOne(
+          { email },
+          { $set: { name, surname, age, email, language } }
+        );
       if (!update_user.acknowledged) throw new Error("Error Occured re-try");
 
       return { result: true, message: "User update successfully" };

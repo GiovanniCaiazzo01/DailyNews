@@ -7,11 +7,14 @@ const checkForDuplicate = async (to_save) => {
 };
 
 module.exports = {
-  list: async () => {
+  list: async (ucode) => {
+    if (!ucode || ucode.length < 1) {
+      return { result: false, message: "Something went wrong" };
+    }
     try {
-      const news = await global.db.collection("user_news").find({});
-      if (!news) throw new Error("Error occurred");
-      return { result: true, data: news, length: news.length };
+      const user_news = await global.db.collection("").find({ ucode });
+      if (!user_news) throw new Error("Error occured during the search");
+      return { result: true, data: user_news };
     } catch (error) {
       return { result: false, message: error };
     }
@@ -42,14 +45,4 @@ module.exports = {
       return { result: false, message: error };
     }
   },
-  // get: async ({ id }) => {
-  //   if (!id) return { result: false, message: "Missing news id" };
-  //   try {
-  //     const news = await global.db.collection("user_news").findOne({ id });
-  //     if (!news) throw new Error("Error occurred");
-  //     return { result: true, data: news, length: news.length };
-  //   } catch (error) {
-  //     return { result: false, message: error };
-  //   }
-  // },
 };

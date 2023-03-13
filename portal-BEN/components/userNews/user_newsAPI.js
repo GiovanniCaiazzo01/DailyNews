@@ -2,8 +2,9 @@ const express = require("express");
 const { list, save } = require("./user_newsController");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const news = await list();
+router.get("/:ucode", async (req, res) => {
+  const { ucode } = req.params;
+  const news = await list(ucode);
   return res.send(news);
 });
 
