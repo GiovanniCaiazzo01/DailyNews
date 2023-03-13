@@ -4,7 +4,14 @@ import { HTTPClient } from "../../../api/HTTPClients";
 import "./style.css";
 
 const Card = () => {
-  const [news, setnews] = useState([]);
+  const [news, setnews] = useState([
+    {
+      title: "bla bla bla",
+      author: "Filippo",
+      description: "jsalkdjsalkdjsalkjdsalkjdaslkjdalkdjalksjdalkj",
+      image: "",
+    },
+  ]);
 
   const fetchNews = async () => {
     try {
@@ -17,7 +24,7 @@ const Card = () => {
   };
 
   useEffect(() => {
-    fetchNews();
+    // fetchNews();
   }, []);
 
   const truncateWords = (string, limit) => {

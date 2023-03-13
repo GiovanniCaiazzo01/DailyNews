@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form } from "../../common/components/Form";
-import { BackGround } from "../../common/components";
+import { Alert, BackGround } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
@@ -14,6 +14,11 @@ const Register = () => {
     email: "",
     password: "",
     "Repeat Password": "",
+  });
+
+  const [submitState, setSubmitState] = useState({
+    result: Boolean,
+    message: "",
   });
 
   const { isLogged } = useAuth();
@@ -34,6 +39,11 @@ const Register = () => {
     const user = await HTTPClient.post("/users/register", {
       ...userCredentials,
     });
+
+    if (!user.result) {
+      setSubmitState((prev) => ({ ...prev, ["result"]: user.result }));
+      setSubmitState((prev) => ({ ...prev, ["message"]: user.message }));
+    }
 
     if (user.result) {
       return navigate("/login");
@@ -80,6 +90,8 @@ const Register = () => {
   ];
   return (
     <BackGround about="Background for a register page">
+      {submitState.result === false && <Alert message={submitState.message} />}
+
       <Form
         header="Register"
         field={field}
