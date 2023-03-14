@@ -5,13 +5,13 @@ import useUser from "../../../hooks/useUser";
 import "./style.css";
 
 const SideBar = () => {
-  const { user } = useUser();
-  const { pathname } = useLocation();
+  const [open, setOpen] = useState(false);
+
+  const { name } = useUser();
   const { isLogged } = useAuth();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState();
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -20,9 +20,6 @@ const SideBar = () => {
     navigate(path);
     setOpen(false);
   };
-  useEffect(() => {
-    setName(() => user?.name);
-  }, [user?.name]);
 
   return (
     <div onClick={handleToggle} className={`sidebar ${open ? "open" : ""}`}>

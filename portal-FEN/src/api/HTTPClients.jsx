@@ -1,28 +1,30 @@
 const BASE_URL = "http://localhost:3000";
 
 const HTTPClient = {
-  doLogin: async (path, body) => {
-    const url = `${BASE_URL}${path}`;
+  checkToken: async () => {
+    const token = localStorage.getItem("token");
+    const url = `${BASE_URL}/auth/verify-token`;
     const headers = {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
     try {
       const response = await fetch(url, {
-        method: "GET",
-        mode: "cors",
+        method: "POST",
         headers,
+        body: JSON.stringify({ token }),
       })
-        .then((result) => result.json())
+        .then((response) => response.json())
         .catch((error) => new Error(`HTTP error! status: ${error.result}`));
 
-      return await response;
+      return response ? response : localStorage.clear();
     } catch (error) {
       console.error(error);
       throw error;
     }
   },
-  get: async (path) => {
-    let url = `${BASE_URL}${path}`;
+  get: async (path, params) => {
+    let url = `${BASE_URL}${path}/${params}`;
     const headers = {
       "Content-Type": "application/json",
     };

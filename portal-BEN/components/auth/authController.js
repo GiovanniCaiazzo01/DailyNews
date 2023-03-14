@@ -75,10 +75,7 @@ module.exports = {
       );
       user.token = validToken;
       const to_return = {
-        name: user.name,
         token: user.token,
-        email: user.email,
-        age: user.age,
       };
 
       return { result: true, data: to_return };

@@ -1,31 +1,26 @@
 import React, { createContext, useEffect, useState } from "react";
+import { HTTPClient } from "../../api/HTTPClients";
 import useAuth from "../../hooks/useAuth";
-
+import jwtDecode from "jwt-decode";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const { userEmail } = useAuth();
+  const { isLogged } = useAuth();
 
   const fetch_user = async () => {
-    const BASE_URL = "http://localhost:3000";
-    if (userEmail) {
-      console.log("sono entrato", userEmail);
-      const user = await fetch(`${BASE_URL}/users/${userEmail}`).then(
-        (response) => response.json()
-      );
-      setUser(() => user.data);
-    }
+    const token = localStorage.getItem("token");
+    const { email } = await jwtDecode(token);
+    const response = await HTTPClient.get(`/users`, email);
+    const user = response.data;
+    setUser(() => user);
   };
-  useEffect(() => {
-    if (userEmail) {
-      fetch_user();
-    }
-  }, [userEmail]);
 
-  return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
-  );
+  useEffect(() => {
+    fetch_user();
+  }, [isLogged]);
+
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
 
 export { UserProvider, UserContext };
