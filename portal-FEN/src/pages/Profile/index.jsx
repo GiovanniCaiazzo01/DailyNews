@@ -92,7 +92,7 @@ const Profile = () => {
 
   useEffect(() => {
     !isLogged && navigate("/login");
-  }, []);
+  }, [isLogged]);
 
   return (
     <div>
