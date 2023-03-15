@@ -2,6 +2,10 @@ import React from "react";
 import { Card } from "../../common/components";
 
 const NewsList = () => {
-  return <Card />;
+  return (
+    <>
+      <Card />
+    </>
+  );
 };
 export { NewsList };

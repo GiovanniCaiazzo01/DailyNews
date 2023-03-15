@@ -16,6 +16,246 @@ module.exports = {
 
         language: "english",
       },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
+      {
+        title: "Seventeen Perish In Bauchi Road Crash",
+        description:
+          "The other crash at Manaba on Zaki-Gamawa road involved 25, killing 11 people and 13 seriously wounded.",
+        pubication_date: "2023-03-15",
+        creator: null,
+        source_id: "tori",
+        link: "https://www.tori.ng/news/230164/seventeen-perish-in-bauchi-road-crash.html",
+        image_url: null,
+
+        language: "english",
+      },
     ];
     return { result: true, data: to_return };
     // try {

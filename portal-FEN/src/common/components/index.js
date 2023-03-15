@@ -1,3 +1,4 @@
+export { PageHeader } from "./PageHeader";
 export { Alert } from "./Alert";
 export { BackGround } from "./Background";
 export { Form } from "react-router-dom";
