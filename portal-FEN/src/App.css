@@ -12,3 +12,9 @@
   background-color: #1c1f26;
   display: flex;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}

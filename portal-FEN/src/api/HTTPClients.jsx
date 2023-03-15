@@ -24,7 +24,10 @@ const HTTPClient = {
     }
   },
   get: async (path, params) => {
-    let url = `${BASE_URL}${path}/${params}`;
+    let url;
+    params
+      ? (url = `${BASE_URL}${path}/${params}`)
+      : (url = `${BASE_URL}${path}`);
     const headers = {
       "Content-Type": "application/json",
     };

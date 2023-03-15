@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../../api/HTTPClients";
+import { Link } from "react-router-dom";
 import "./style.css";
 
-const Card = ({ saved }) => {
-  const [news, setNews] = useState([
-    {
-      title: "bla bla bla",
-      author: "Filippo",
-      description: "jsalkdjsalkdjsalkjdsalkjdaslkjdalkdjalksjdalkj",
-      image: "",
-    },
-  ]);
+const Card = () => {
+  const [news, setNews] = useState([]);
 
   const fetchNews = async () => {
     try {
       const response = await HTTPClient.get("/news/");
       const retrived_news = response?.data;
+      console.log(response);
       setNews(() => retrived_news);
     } catch (error) {
       console.error(error);
@@ -33,7 +28,7 @@ const Card = ({ saved }) => {
   };
 
   useEffect(() => {
-    saved ? fetchNews() : userSavedNews();
+    fetchNews();
   }, []);
 
   const truncateWords = (string, limit) => {
@@ -47,40 +42,46 @@ const Card = ({ saved }) => {
     <>
       {news
         ? news.map((item) => (
-            <div
-              key={item.title}
-              className="blog"
-              style={{
-                backgroundImage: `url(${
-                  item.image
-                    ? item.image
-                    : "https://w.wallhaven.cc/full/qz/wallhaven-qzdqvr.jpg"
-                })`,
-              }}
-            >
-              <div className="title-box">
-                <h3>{truncateWords(item.title, 6)}</h3>
-                <hr />
-                <div className="intro">
-                  {item.author ? truncateWords(item.author, 10) : ""}
+            <Link to={item.link} target="_blank" key={item.title}>
+              <div
+                key={item.title}
+                className="post"
+                style={{
+                  backgroundImage: `url(${
+                    item.image_url
+                      ? item.image_url
+                      : "https://w.wallhaven.cc/full/nr/wallhaven-nr7v5j.jpg"
+                  })`,
+                }}
+              >
+                <div className="title-box">
+                  <h3>{truncateWords(item.title, 6)}</h3>
+                  <hr />
+                  <div className="intro">
+                    {item.creator
+                      ? truncateWords(item.creator, 10)
+                      : truncateWords(item.source_id, 10)}
+                  </div>
                 </div>
-              </div>
-              <div className="info">
-                <span>{truncateWords(item.description, 20)}</span>
-              </div>
-              <div className="footer">
-                <div className="icon-holder">
-                  <span>
-                    <i className="fa fa-comment-o"></i>
-                    <span>12</span>
-                    <i className="fa fa-calendar"></i>
-                    <span>03.12.2015</span>
-                  </span>
+                <div className="info">
+                  <span>{truncateWords(item.description, 20)}</span>
                 </div>
+                <div className="footer">
+                  <div className="icon-holder">
+                    <span>
+                      <i className="fa fa-comment-o"></i>
+                      <span>
+                        Save <input type={"checkbox"} ck />
+                      </span>
+                      <span className="space"></span>
+                      <i className="fa fa-calendar"></i>
+                      <span>{item.pubication_date}</span>
+                    </span>
+                  </div>
+                </div>
+                <div className="color-overlay"></div>
               </div>
-
-              <div className="color-overlay"></div>
-            </div>
+            </Link>
           ))
         : ""}
     </>

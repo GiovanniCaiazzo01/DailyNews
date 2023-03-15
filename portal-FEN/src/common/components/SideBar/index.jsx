@@ -7,7 +7,7 @@ import "./style.css";
 const SideBar = () => {
   const [open, setOpen] = useState(false);
 
-  const { name } = useUser();
+  const user = useUser();
   const { isLogged } = useAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const SideBar = () => {
           alt="..."
         />
 
-        <h3>{name}</h3>
+        <h3>{user?.name}</h3>
       </div>
 
       <nav>

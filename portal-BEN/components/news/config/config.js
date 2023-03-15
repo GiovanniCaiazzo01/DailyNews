@@ -1,4 +1,4 @@
 require("dotenv").config({ path: "../../.env" });
 module.exports = {
-  KEY_MEDIASTACK: process.env.KEY_MEDIASTACK,
+  KEY_NEWSDATA: process.env.KEY_NEWSDATA,
 };
