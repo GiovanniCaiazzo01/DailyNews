@@ -7,15 +7,24 @@ const checkForDuplicate = async (to_save) => {
 };
 
 module.exports = {
-  list: async (ucode) => {
-    if (!ucode || ucode.length < 1) {
-      return { result: false, message: "Something went wrong" };
+  list: async ({ ucode }) => {
+    if (!ucode) {
+      return { result: false, message: "Error occurred" };
     }
+
     try {
-      const user_news = await global.db.collection("").find({ ucode });
-      if (!user_news) throw new Error("Error occured during the search");
+      const user_news = await global.db
+        .collection("user_news")
+        .findOne({ ucode });
+
+      if (!user_news) {
+        throw new Error("Your saved news could not be retrieved");
+      }
+
+      console.log(user_news);
       return { result: true, data: user_news };
     } catch (error) {
+      console.log(error);
       return { result: false, message: error };
     }
   },

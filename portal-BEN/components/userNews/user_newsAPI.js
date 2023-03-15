@@ -4,7 +4,10 @@ const router = express.Router();
 
 router.get("/:ucode", async (req, res) => {
   const { ucode } = req.params;
-  const news = await list(ucode);
+  const payload = {
+    ucode,
+  };
+  const news = await list(payload);
   return res.send(news);
 });
 

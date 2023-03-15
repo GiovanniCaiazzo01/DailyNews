@@ -7,6 +7,7 @@ const PageHeader = () => {
   const label = {
     "/": "Latest News",
     "/profile": "Your Profile",
+    "/saved": "Your Saved News",
   };
   return <div id="page-header">{label[pathname]}</div>;
 };

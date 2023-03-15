@@ -30,6 +30,12 @@ const MainRoutes = () => {
         path="/profile"
         element={<PrivateRoute component={Profile} />}
       />
+      <Route
+        exact
+        path="/saved"
+        element={<PrivateRoute component={SavedNews} />}
+      />
+
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
     </Routes>

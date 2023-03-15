@@ -44,7 +44,6 @@ module.exports = {
       if (!user) {
         throw new Error("The information could not be retrieved LA MADONNA");
       }
-      console.log("user", { user });
       const to_return = {
         ucode: user.ucode,
         name: user.name,

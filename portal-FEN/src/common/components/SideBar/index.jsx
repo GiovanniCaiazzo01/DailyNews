@@ -48,19 +48,22 @@ const SideBar = () => {
             <span>Dashboard</span>
           </li>
           {isLogged && (
-            <li
-              className={`nav-item ${pathname === "/settings" && "active"}`}
-              onClick={() => handleNavItemOnClick("/profile")}
-            >
-              <i className="bx bxs-user"></i>
-              <span>Settings</span>
-            </li>
-          )}
-          {isLogged && (
-            <li className="nav-item">
-              <i className="bx bx-save"></i>
-              <span>Saved News</span>
-            </li>
+            <>
+              <li
+                className={`nav-item ${pathname === "/settings" && "active"}`}
+                onClick={() => handleNavItemOnClick("/profile")}
+              >
+                <i className="bx bxs-user"></i>
+                <span>Settings</span>
+              </li>
+              <li
+                className="nav-item"
+                onClick={() => handleNavItemOnClick("/saved")}
+              >
+                <i className="bx bx-save"></i>
+                <span>Saved News</span>
+              </li>
+            </>
           )}
           {isLogged ? (
             <li className="nav-item">

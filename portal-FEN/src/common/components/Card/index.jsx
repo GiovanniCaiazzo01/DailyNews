@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../../api/HTTPClients";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import useUser from "../../../hooks/useUser";
+import useAuth from "../../../hooks/useAuth";
 import "./style.css";
-
-const Card = () => {
+const Card = ({ onSelectedNews }) => {
   const [news, setNews] = useState([]);
+  const user = useUser();
+  const { isLogged } = useAuth();
+  const { pathname } = useLocation();
 
   const fetchNews = async () => {
     try {
       const response = await HTTPClient.get("/news/");
       const retrived_news = response?.data;
-      console.log(response);
       setNews(() => retrived_news);
     } catch (error) {
       console.error(error);
@@ -19,8 +22,9 @@ const Card = () => {
 
   const userSavedNews = async () => {
     try {
-      const response = await HTTPClient.get(`/user/saved-news/${"ucode"}`);
-      const saved_news = response.data;
+      if (!user?.ucode) return;
+      const response = await HTTPClient.get(`/user/saved-news`, user.ucode);
+      const saved_news = response.data.news;
       setNews(() => saved_news);
     } catch (error) {
       console.log(error);
@@ -28,8 +32,8 @@ const Card = () => {
   };
 
   useEffect(() => {
-    fetchNews();
-  }, []);
+    pathname === "/saved" ? userSavedNews() : fetchNews();
+  }, [isLogged]);
 
   const truncateWords = (string, limit) => {
     const words = string.split(" ");
@@ -70,9 +74,19 @@ const Card = () => {
                   <div className="icon-holder">
                     <span>
                       <i className="fa fa-comment-o"></i>
-                      <span>
-                        Save <input type={"checkbox"} ck />
-                      </span>
+                      {isLogged && (
+                        <span>
+                          Save{" "}
+                          <input
+                            type="checkbox"
+                            id={item.title}
+                            name={item.title}
+                            onClick={(e) =>
+                              onSelectedNews(e.target.checked, item)
+                            }
+                          />
+                        </span>
+                      )}
                       <span className="space"></span>
                       <i className="fa fa-calendar"></i>
                       <span>{item.pubication_date}</span>
