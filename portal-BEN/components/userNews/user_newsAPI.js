@@ -12,11 +12,12 @@ router.get("/:ucode", async (req, res) => {
 });
 
 router.post("/save", async (req, res) => {
-  const payload = {
-    ...req.body.news,
-  };
-  const save_news = await save(payload);
-  return res.send(save_news);
+  console.log(req.body);
+  // const payload = {
+  //   ...req.body.news,
+  // };
+  // const save_news = await save(payload);
+  return res.send("");
 });
 
 // router.get("/get/:id", async (req, res) => {

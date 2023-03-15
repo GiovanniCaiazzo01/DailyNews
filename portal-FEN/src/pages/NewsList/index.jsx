@@ -20,11 +20,9 @@ const NewsList = () => {
   };
 
   const onSaveNews = async () => {
-    const response = await HTTPClient.post(
-      "/user/saved-news/save",
-      selectedNews
-    );
-    console.log(response);
+    const response = await HTTPClient.post("/user/saved-news/save", {
+      ...selectedNews,
+    });
   };
   return (
     <>
