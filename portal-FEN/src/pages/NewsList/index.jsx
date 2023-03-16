@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import { Button, Card, Modal, PageHeader } from "../../common/components";
+import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
   let [selectedNews, setSelectedNews] = useState([]);
+  const user = useUser();
   const onSelectedNews = (checked, item) => {
     if (!checked) {
       setSelectedNews((selectedNews) =>
@@ -20,10 +22,23 @@ const NewsList = () => {
   };
 
   const onSaveNews = async () => {
-    const response = await HTTPClient.post("/user/saved-news/save", {
-      ...selectedNews,
+    const news_to_send = [];
+    let tmp = {};
+    selectedNews.forEach((news) => {
+      news.news.ucode = user.ucode;
+      delete news.checked;
+      delete news.id;
+      tmp = news.news;
+      news_to_send.push(tmp);
+      tmp = {};
     });
+
+    const response = await HTTPClient.post(
+      "/user/saved-news/save",
+      news_to_send
+    );
   };
+
   return (
     <>
       <PageHeader />

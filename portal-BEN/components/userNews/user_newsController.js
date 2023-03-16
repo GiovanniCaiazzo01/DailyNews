@@ -1,9 +1,15 @@
 const { uuid } = require("uuidv4");
-const checkForDuplicate = async (to_save) => {
-  const check = await global.db
+
+// todo QUESTO CHECK NON FUNZIONA
+const checkForDuplicate = async (news) => {
+  const titles = [];
+  news.forEach((element) => titles.push(element.title));
+  const duplicate = await global.db
     .collection("user_news")
-    .findOne({ title: { $in: [to_save.title] } });
-  check ? true : false;
+    .find({ title: { $in: [...titles] } })
+    .toArray();
+  console.log(duplicate);
+  duplicate || duplicate.length ? true : false;
 };
 
 module.exports = {
@@ -29,22 +35,33 @@ module.exports = {
     }
   },
 
-  save: async (news) => {
-    if (!news) {
-      return { result: false, message: "Missing fields" };
-    }
+  save: async ({ news }) => {
+    news.forEach((element) => {
+      if (!element) {
+        return { result: false, message: "Missing fields" };
+      }
+    });
 
-    const to_save = { ...news };
-    const duplicateCheck = await checkForDuplicate(to_save);
+    const duplicateCheck = await checkForDuplicate(news);
 
     if (duplicateCheck) {
       return { result: false, message: "This News is already saved" };
     }
 
+    const ucode = news[0].ucode;
+
+    news.forEach((element) => {
+      element.ncode = uuid();
+    });
+
+    const news_to_save = {
+      ucode,
+      news: [...news],
+    };
     try {
       const save_news = await global.db
         .collection("user_news")
-        .insertOne({ ...to_save.trim(), ncode: uuid() });
+        .insertOne({ ...news_to_save });
 
       if (!save_news) {
         throw new Error("Error occured");

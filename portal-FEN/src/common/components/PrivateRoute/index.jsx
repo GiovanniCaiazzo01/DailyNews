@@ -14,7 +14,6 @@ const PrivateRoute = ({ component: Component }) => {
     <>
       <SideBar />
       <div style={{ marginTop: "50px", marginLeft: " 75px" }}>
-        <PageHeader />
         <div
           style={{
             display: "flex",
