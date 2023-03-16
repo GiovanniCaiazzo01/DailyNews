@@ -16,7 +16,7 @@ router.post("/save", async (req, res) => {
     news: req.body,
   };
   const save_news = await save(payload);
-  return res.send("");
+  return res.send(save_news);
 });
 
 // router.get("/get/:id", async (req, res) => {

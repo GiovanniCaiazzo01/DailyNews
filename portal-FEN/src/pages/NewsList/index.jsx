@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
-import { Button, Card, Modal, PageHeader } from "../../common/components";
+import {
+  Alert,
+  Button,
+  Card,
+  Modal,
+  PageHeader,
+} from "../../common/components";
 import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
   let [selectedNews, setSelectedNews] = useState([]);
+  const [submitState, setSubmitState] = useState({
+    result: Boolean,
+    message: "",
+  });
+
   const user = useUser();
   const onSelectedNews = (checked, item) => {
     if (!checked) {
@@ -37,6 +48,12 @@ const NewsList = () => {
       "/user/saved-news/save",
       news_to_send
     );
+
+    if (response.result) {
+      console.log("sto qua");
+      setSubmitState((prev) => ({ ...prev, ["result"]: response.result }));
+      setSubmitState((prev) => ({ ...prev, ["message"]: response.message }));
+    }
   };
 
   return (
@@ -61,6 +78,11 @@ const NewsList = () => {
           justifyContent: "space-around",
         }}
       >
+        {submitState.result === true ? (
+          <Alert message={submitState.message} />
+        ) : (
+          <Alert message={submitState.message} />
+        )}
         <Card onSelectedNews={onSelectedNews} />
       </div>
     </>

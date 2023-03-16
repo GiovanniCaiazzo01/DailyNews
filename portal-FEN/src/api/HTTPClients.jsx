@@ -15,7 +15,7 @@ const HTTPClient = {
         body: JSON.stringify({ token }),
       })
         .then((response) => response.json())
-        .catch((error) => new Error(`HTTP error! status: ${error.result}`));
+        .catch((error) => new Error(`HTTP error! status: ${error}`));
 
       return response ? response : localStorage.clear();
     } catch (error) {
@@ -38,7 +38,7 @@ const HTTPClient = {
         headers,
       })
         .then((result) => result.json())
-        .catch((error) => new Error(`HTTP error! status: ${error.result}`));
+        .catch((error) => new Error(`HTTP error! status: ${error}`));
 
       return await response;
     } catch (error) {
@@ -58,7 +58,7 @@ const HTTPClient = {
         body: JSON.stringify(body),
       })
         .then((result) => result.json())
-        .catch((error) => new Error(`HTTP error! status: ${error.result}`));
+        .catch((error) => new Error(`HTTP error! status: ${error}`));
       return await response;
     } catch (error) {
       console.error(error);
@@ -77,7 +77,7 @@ const HTTPClient = {
         body: JSON.stringify(body),
       })
         .then((result) => result.json())
-        .catch((error) => new Error(`HTTP error! status: ${error.result}`));
+        .catch((error) => new Error(`HTTP error! status: ${error}`));
 
       return await response;
     } catch (error) {

@@ -66,7 +66,7 @@ module.exports = {
       if (!save_news) {
         throw new Error("Error occured");
       }
-      return { result: true, message: "Saved" };
+      return { result: true, message: "We have saved your news" };
     } catch (error) {
       return { result: false, message: error };
     }

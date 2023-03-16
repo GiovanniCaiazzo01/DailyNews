@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HTTPClient } from "../../api/HTTPClients";
-import { Alert } from "../../common/components";
+import { Alert, PageHeader } from "../../common/components";
 import { Form } from "../../common/components/Form";
 import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
@@ -34,7 +34,7 @@ const Profile = () => {
 
     const updateUser = await HTTPClient.put("/users/update", user);
 
-    if (!updateUser.result) {
+    if (updateUser.result) {
       setSubmitState((prev) => ({ ...prev, ["result"]: updateUser.result }));
       setSubmitState((prev) => ({ ...prev, ["message"]: updateUser.message }));
     }
@@ -96,6 +96,7 @@ const Profile = () => {
 
   return (
     <div>
+      <PageHeader />
       <Form
         header="Your Profile Info"
         field={field}
@@ -108,6 +109,7 @@ const Profile = () => {
         defaultSelectValue={user.language || "es: Italian"}
         upperSelect="Chose your news language"
       />
+      {submitState.result === true && <Alert message={submitState.message} />}
       {submitState.result === false && <Alert message={submitState.message} />}
     </div>
   );
