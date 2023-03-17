@@ -11,7 +11,7 @@ import useAuth from "../../hooks/useAuth";
 import { HTTPClient } from "../../api/HTTPClients";
 
 const SavedNews = () => {
-  const user = useUser();
+  const { user } = useUser();
   const { isLogged } = useAuth();
   const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);

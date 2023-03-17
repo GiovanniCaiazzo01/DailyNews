@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
@@ -7,7 +7,7 @@ import "./style.css";
 const SideBar = () => {
   const [open, setOpen] = useState(false);
 
-  const user = useUser();
+  const { user } = useUser();
   const { isLogged } = useAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -66,7 +66,10 @@ const SideBar = () => {
             </>
           )}
           {isLogged ? (
-            <li className="nav-item">
+            <li
+              className="nav-item"
+              onClick={() => handleNavItemOnClick("/logout")}
+            >
               <i className="bx bx-log-out"></i>
               <span>Log-out</span>
             </li>

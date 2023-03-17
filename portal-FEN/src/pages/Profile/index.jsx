@@ -13,15 +13,15 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    name: userInfo?.name,
-    surname: userInfo?.surname,
-    email: userInfo?.email,
-    age: userInfo?.age,
-    language: userInfo?.language,
+    name: userInfo.user?.name,
+    surname: userInfo.user?.surname,
+    email: userInfo.user?.email,
+    age: userInfo.user?.age,
+    language: userInfo.user?.language,
   });
 
   const [submitState, setSubmitState] = useState({
-    result: Boolean,
+    result: false,
     message: "",
   });
 
@@ -34,8 +34,15 @@ const Profile = () => {
     event.preventDefault();
 
     const updateUser = await HTTPClient.put("/users/update", user);
-    console.log(updateUser);
+
+    setSubmitState((prev) => ({
+      ...prev,
+      result: updateUser.result,
+      message: updateUser.message,
+    }));
+    userInfo.fetch_user();
   };
+
   const field = [
     {
       upperLabel: "Name",

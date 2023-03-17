@@ -19,7 +19,7 @@ const NewsList = () => {
     message: "",
   });
 
-  const user = useUser();
+  const { user } = useUser();
   const onSelectedNews = (checked, item) => {
     if (!checked) {
       setSelectedNews((selectedNews) =>

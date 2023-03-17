@@ -18,9 +18,13 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     fetch_user();
-  }, [isLogged, user]);
+  }, [isLogged]);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, fetch_user }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export { UserProvider, UserContext };
