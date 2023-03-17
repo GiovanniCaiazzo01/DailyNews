@@ -1,13 +1,16 @@
 import React from "react";
 import "./style.css";
-const Alert = ({ message, show }) => {
+
+const Alert = ({ message, type }) => {
+  console.log(message);
   return (
-    show && (
-      <div className="alert alert-3-danger">
-        <h3 className="alert-title">Arg..</h3>
-        <p className="alert-content">{message}</p>
-      </div>
-    )
+    <div
+      className="alert"
+      style={{ backgroundColor: type ? "green" : "#ff3838ad" }}
+    >
+      <h3 className="alert-title">{type ? "Success" : "Mmmm"}</h3>
+      <p className="alert-content">{message}</p>
+    </div>
   );
 };
 

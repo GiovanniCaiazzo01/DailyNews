@@ -13,11 +13,11 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    name: userInfo.user?.name,
-    surname: userInfo.user?.surname,
-    email: userInfo.user?.email,
-    age: userInfo.user?.age,
-    language: userInfo.user?.language,
+    name: userInfo?.name,
+    surname: userInfo?.surname,
+    email: userInfo?.email,
+    age: userInfo?.age,
+    language: userInfo?.language,
   });
 
   const [submitState, setSubmitState] = useState({
@@ -26,6 +26,7 @@ const Profile = () => {
   });
 
   const onUserInput = (name, value) => {
+    console.log(name, value);
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -33,15 +34,7 @@ const Profile = () => {
     event.preventDefault();
 
     const updateUser = await HTTPClient.put("/users/update", user);
-
-    if (updateUser.result) {
-      setSubmitState((prev) => ({ ...prev, ["result"]: updateUser.result }));
-      setSubmitState((prev) => ({ ...prev, ["message"]: updateUser.message }));
-    }
-    const { name, surname, email, age } = user;
-    if (updateUser) {
-      localStorage.setItem("surname", surname);
-    }
+    console.log(updateUser);
   };
   const field = [
     {
@@ -109,8 +102,8 @@ const Profile = () => {
         defaultSelectValue={user.language || "es: Italian"}
         upperSelect="Chose your news language"
       />
-      {submitState.result === true && <Alert message={submitState.message} />}
-      {submitState.result === false && <Alert message={submitState.message} />}
+      {/* {submitState.result === true && <Alert message={submitState.message} />}
+      {submitState.result === false && <Alert message={submitState.message} />} */}
     </div>
   );
 };

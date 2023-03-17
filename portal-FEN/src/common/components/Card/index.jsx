@@ -4,11 +4,10 @@ import "./style.css";
 const Card = ({ onSelectedNews, news, isLogged }) => {
   const { pathname } = useLocation();
   const truncateWords = (string, limit) => {
-    console.log(string);
-    const words = string.split(" ");
-    return (
-      words.slice(0, limit).join(" ") + (words.length > limit ? "..." : "")
-    );
+    const words = string ? string.split(" ") : "";
+    return words
+      ? words.slice(0, limit).join(" ") + (words.length > limit ? "..." : "")
+      : "";
   };
 
   return (
@@ -28,12 +27,12 @@ const Card = ({ onSelectedNews, news, isLogged }) => {
                 }}
               >
                 <div className="title-box">
-                  <h3>{truncateWords(item.title, 6)}</h3>
+                  <h3>{truncateWords(item?.title, 6)}</h3>
                   <hr />
                   <div className="intro">
                     {item.creator
-                      ? truncateWords(item.creator[0], 10)
-                      : truncateWords(item.source_id, 10)}
+                      ? truncateWords(item?.creator[0], 10)
+                      : truncateWords(item?.source_id, 10)}
                   </div>
                 </div>
                 <div className="info">
@@ -43,7 +42,7 @@ const Card = ({ onSelectedNews, news, isLogged }) => {
                   <div className="icon-holder">
                     <span>
                       <i className="fa fa-comment-o"></i>
-                      {isLogged && pathname === "/" ? (
+                      {isLogged && pathname === "/" && (
                         <span>
                           Save{" "}
                           <input
@@ -55,7 +54,8 @@ const Card = ({ onSelectedNews, news, isLogged }) => {
                             }
                           />
                         </span>
-                      ) : (
+                      )}
+                      {isLogged && pathname === "/saved" && (
                         <span>
                           Delete{" "}
                           <input

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Alert,
+  // Alert,
   Button,
   Card,
   Modal,
@@ -15,7 +15,7 @@ const SavedNews = () => {
   const { isLogged } = useAuth();
   const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);
-  const [showMessage, setShowMessage] = useState(false);
+  // const [showMessage, setShowMessage] = useState(false);
   const [submitState, setSubmitState] = useState({
     result: false,
     message: "",
@@ -98,7 +98,7 @@ const SavedNews = () => {
           justifyContent: "space-around",
         }}
       >
-        <Alert message={submitState.message} show={showMessage} />
+        {/* <Alert message={submitState.message} show={showMessage} /> */}
         <Card onSelectedNews={onSelectedNews} news={news} isLogged={isLogged} />
       </div>
     </>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import {
-  Alert,
+  // Alert,
   Button,
   Card,
   Modal,
@@ -14,7 +14,6 @@ const NewsList = () => {
   const { isLogged } = useAuth();
   const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);
-  const [showMessage, setShowMessage] = useState(false);
   const [submitState, setSubmitState] = useState({
     result: false,
     message: "",
@@ -54,24 +53,19 @@ const NewsList = () => {
     );
 
     setSelectedNews(() => []);
-    setShowMessage(() => true);
-    console.log(response);
     setSubmitState((prev) => ({
       ...prev,
       result: response.result,
       message: response.message,
     }));
 
-    setTimeout(() => {
-      setShowMessage(() => false);
-    }, 4000);
+    setShowMessage(true);
   };
 
   const fetchNews = async () => {
     try {
       const response = await HTTPClient.get("/news/");
       const retrived_news = response?.data ?? [];
-      console.log(response);
       setNews(() => retrived_news);
     } catch (error) {
       console.error(error);
@@ -81,7 +75,6 @@ const NewsList = () => {
   useEffect(() => {
     fetchNews();
   }, []);
-
   return (
     <>
       <PageHeader />
@@ -104,7 +97,10 @@ const NewsList = () => {
           justifyContent: "space-around",
         }}
       >
-        <Alert message={submitState.message} show={showMessage} />
+        {/* <Alert
+          message={showMessage && submitState.message}
+          type={showMessage && submitState.result}
+        /> */}
         <Card onSelectedNews={onSelectedNews} news={news} isLogged={isLogged} />
       </div>
     </>

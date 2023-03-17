@@ -13,11 +13,11 @@ const Login = () => {
     email: "",
     password: "",
   });
-
   const [submitState, setSubmitState] = useState({
-    result: Boolean,
+    result: false,
     message: "",
   });
+  const [showAlert, setShowAlert] = useState(false);
 
   const setLocalStorage = async (userInfo) => {
     localStorage.setItem("token", userInfo.data.token);
@@ -36,10 +36,12 @@ const Login = () => {
       ...userCredentials,
     });
 
-    if (!user.result) {
-      setSubmitState((prev) => ({ ...prev, ["result"]: user.result }));
-      setSubmitState((prev) => ({ ...prev, ["message"]: user.message }));
-    }
+    setSubmitState((prev) => ({
+      ...prev,
+      result: user.result,
+      message: user.message,
+    }));
+    setShowAlert(() => true);
     await setLocalStorage(user);
     if (user.result === true) {
       return navigate("/");
@@ -67,7 +69,9 @@ const Login = () => {
   }, []);
   return (
     <BackGround about="Background for a login page">
-      {submitState.result === false && <Alert message={submitState.message} />}
+      {submitState.result === false && (
+        <Alert message={submitState.message} type={submitState.result} />
+      )}
       <Form
         header="Login"
         field={field}
