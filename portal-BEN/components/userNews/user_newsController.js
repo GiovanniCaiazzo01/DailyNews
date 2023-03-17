@@ -110,4 +110,23 @@ module.exports = {
       return { result: false, message: error };
     }
   },
+  remove: async ({ ucode, titles }) => {
+    if (!ucode) {
+      return { result: false, message: "Error Occurred" };
+    }
+
+    try {
+      const delete_news = await global.db
+        .collection("user_news")
+        .updateOne({ ucode }, { $pull: { news: { title: { $in: titles } } } });
+
+      if (!delete_news.aacknowledged) {
+        throw new Error("Thee was a problem deleting your news");
+      }
+
+      return { result: true, message: "News deleted successfully" };
+    } catch (error) {
+      return { result: false, message: error };
+    }
+  },
 };

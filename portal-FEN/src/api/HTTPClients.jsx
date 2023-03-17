@@ -85,6 +85,27 @@ const HTTPClient = {
       throw error;
     }
   },
+
+  delete: async (path, param, body) => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    try {
+      const response = await fetch(`${BASE_URL}${path}${param || ""}`, {
+        method: "delete",
+        mode: "cors",
+        headers,
+        body: JSON.stringify(body),
+      })
+        .then((result) => result.json())
+        .catch((error) => new Error(`HTTP error! status: ${error}`));
+
+      return await response;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
 };
 
 export { HTTPClient };

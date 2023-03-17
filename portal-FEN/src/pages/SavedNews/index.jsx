@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Card, PageHeader } from "../../common/components";
+import {
+  Alert,
+  Button,
+  Card,
+  Modal,
+  PageHeader,
+} from "../../common/components";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
 import { HTTPClient } from "../../api/HTTPClients";
@@ -25,20 +31,60 @@ const SavedNews = () => {
       console.log(error);
     }
   };
+  const onSelectedNews = (checked, item) => {
+    if (!checked) {
+      setSelectedNews((selectedNews) =>
+        selectedNews.filter((element) => element.id !== item.title)
+      );
+    } else {
+      const to_insert = {
+        checked: checked,
+        id: item.title,
+        news: item,
+      };
+      setSelectedNews((current) => [...current, to_insert]);
+    }
+  };
 
-  const onSelectedNews = () => {};
+  const onDeleteNews = async () => {
+    const { ucode } = user;
+
+    const titles = [];
+    selectedNews.forEach((news) => {
+      const title = news.news.title;
+      titles.push(title);
+    });
+    const response = await HTTPClient.delete(
+      "/user/saved-news/delete/",
+      ucode,
+      { titles }
+    );
+    setSelectedNews(() => []);
+    setShowMessage(() => true);
+
+    setSubmitState((prev) => ({
+      ...prev,
+      result: response.result,
+      message: response.message,
+    }));
+
+    setTimeout(() => {
+      setShowMessage(() => false);
+    }, 4000);
+  };
+
   useEffect(() => {
     fetchSavedNews();
-  }, []);
+  }, [submitState]);
   return (
     <>
       <PageHeader />
       {selectedNews?.length ? (
         <>
           <Modal
-            label={`You have selected ${selectedNews.length} element, Click the button to save it`}
+            label={`You have selected ${selectedNews.length} element, click the button to delete this news!`}
           />
-          <Button label={"Save"} type="submit" onClick={() => onSaveNews()} />
+          <Button label={"Save"} type="submit" onClick={() => onDeleteNews()} />
         </>
       ) : (
         ""
