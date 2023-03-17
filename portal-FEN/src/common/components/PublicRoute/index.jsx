@@ -9,9 +9,7 @@ const PublicRoute = ({ component: Component }) => {
   return (
     <>
       <SideBar />
-      <div style={{ marginTop: "50px", marginLeft: " 75px" }}>
-        {/* <PageHeader />
-        <Modal /> */}
+      <div style={{ marginTop: "50px", marginLeft: " 75px", width: "100%" }}>
         <Component />
       </div>
     </>

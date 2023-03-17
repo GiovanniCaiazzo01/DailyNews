@@ -7,8 +7,8 @@ router.get("/:ucode", async (req, res) => {
   const payload = {
     ucode,
   };
-  console.log(payload);
   const news = await list(payload);
+  console.log(news);
   return res.send(news);
 });
 

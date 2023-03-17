@@ -8,7 +8,7 @@ const NewsList = loadable(() => import("../pages/"), {
 });
 
 const SavedNews = loadable(() => import("../pages/"), {
-  resolveComponent: (components) => components.NewsList,
+  resolveComponent: (components) => components.SavedNews,
 });
 
 const Login = loadable(() => import("../pages/"), {

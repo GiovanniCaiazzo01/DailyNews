@@ -13,18 +13,14 @@ const PrivateRoute = ({ component: Component }) => {
   return token ? (
     <>
       <SideBar />
-      <div style={{ marginTop: "50px", marginLeft: " 75px" }}>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            width: "100%",
-            alignContent: "center",
-            justifyContent: "space-around",
-          }}
-        >
-          <Component />
-        </div>
+      <div
+        style={{
+          marginTop: "50px",
+          marginLeft: " 75px",
+          width: "100%",
+        }}
+      >
+        <Component />
       </div>
     </>
   ) : (

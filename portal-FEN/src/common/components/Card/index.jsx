@@ -2,21 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./style.css";
 const Card = ({ onSelectedNews, news, isLogged }) => {
-  // const userSavedNews = async () => {
-  //   try {
-  //     if (!user?.ucode) return;
-  //     const response = await HTTPClient.get(`/user/saved-news`, user.ucode);
-  //     const saved_news = response.data.news;
-  //     setNews(() => saved_news);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   pathname === "/saved" ? userSavedNews() : fetchNews();
-  // }, [isLogged]);
-
+  const { pathname } = useLocation();
   const truncateWords = (string, limit) => {
     const words = string.split(" ");
     return (
@@ -56,9 +42,21 @@ const Card = ({ onSelectedNews, news, isLogged }) => {
                   <div className="icon-holder">
                     <span>
                       <i className="fa fa-comment-o"></i>
-                      {isLogged && (
+                      {isLogged && pathname === "/" ? (
                         <span>
                           Save{" "}
+                          <input
+                            type="checkbox"
+                            id={item.title}
+                            name={item.title}
+                            onClick={(e) =>
+                              onSelectedNews(e.target.checked, item)
+                            }
+                          />
+                        </span>
+                      ) : (
+                        <span>
+                          Delete{" "}
                           <input
                             type="checkbox"
                             id={item.title}
