@@ -71,6 +71,7 @@ const NewsList = () => {
     try {
       const response = await HTTPClient.get("/news/");
       const retrived_news = response?.data ?? [];
+      console.log(response);
       setNews(() => retrived_news);
     } catch (error) {
       console.error(error);
@@ -81,7 +82,6 @@ const NewsList = () => {
     fetchNews();
   }, []);
 
-  console.log(selectedNews);
   return (
     <>
       <PageHeader />

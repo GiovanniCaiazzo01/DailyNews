@@ -15,6 +15,7 @@ const Register = () => {
     password: "",
     "Repeat Password": "",
   });
+  const [showAllert, setShowAllert] = useState(false);
 
   const [submitState, setSubmitState] = useState({
     result: Boolean,
@@ -40,10 +41,13 @@ const Register = () => {
       ...userCredentials,
     });
 
-    if (!user.result) {
-      setSubmitState((prev) => ({ ...prev, ["result"]: user.result }));
-      setSubmitState((prev) => ({ ...prev, ["message"]: user.message }));
-    }
+    setShowAllert(() => true);
+    setSubmitState((prev) => ({ ...prev, ["result"]: user.result }));
+    setSubmitState((prev) => ({ ...prev, ["message"]: user.message }));
+
+    setTimeout(() => {
+      setShowMessage(() => false);
+    }, 4000);
 
     if (user.result) {
       return navigate("/login");
@@ -90,7 +94,9 @@ const Register = () => {
   ];
   return (
     <BackGround about="Background for a register page">
-      {submitState.result === false && <Alert message={submitState.message} />}
+      {submitState.result === false && (
+        <Alert message={submitState.message} show={showAllert} />
+      )}
 
       <Form
         header="Register"
