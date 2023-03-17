@@ -11,6 +11,7 @@ import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
   let [selectedNews, setSelectedNews] = useState([]);
+  const [showMessage, setShowMessage] = useState();
   const [submitState, setSubmitState] = useState({
     result: Boolean,
     message: "",
@@ -50,7 +51,7 @@ const NewsList = () => {
     );
 
     if (response.result) {
-      console.log("sto qua");
+      setShowMessage(() => true);
       setSubmitState((prev) => ({ ...prev, ["result"]: response.result }));
       setSubmitState((prev) => ({ ...prev, ["message"]: response.message }));
     }
@@ -78,7 +79,7 @@ const NewsList = () => {
           justifyContent: "space-around",
         }}
       >
-        {submitState.result === true ? (
+        {showMessage ? (
           <Alert message={submitState.message} />
         ) : (
           <Alert message={submitState.message} />

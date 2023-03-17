@@ -9,7 +9,7 @@ module.exports = {
     };
 
     const { SECRET_KEY } = process.env;
-    const options = { expiresIn: "30s" };
+    const options = { expiresIn: "5m" };
 
     const token = jwt.sign(payload, SECRET_KEY, options);
 

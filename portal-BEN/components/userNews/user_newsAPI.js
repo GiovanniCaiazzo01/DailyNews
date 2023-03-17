@@ -19,9 +19,4 @@ router.post("/save", async (req, res) => {
   return res.send(save_news);
 });
 
-// router.get("/get/:id", async (req, res) => {
-//   const { id } = req.params;
-//   const news = await get(id);
-//   return res.send(news);
-// });
 module.exports = router;
