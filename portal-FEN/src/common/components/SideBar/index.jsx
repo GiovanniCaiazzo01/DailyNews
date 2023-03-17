@@ -66,10 +66,7 @@ const SideBar = () => {
             </>
           )}
           {isLogged ? (
-            <li
-              className="nav-item"
-              onClick={() => handleNavItemOnClick("/logout")}
-            >
+            <li className="nav-item" onClick={() => localStorage.clear()}>
               <i className="bx bx-log-out"></i>
               <span>Log-out</span>
             </li>
