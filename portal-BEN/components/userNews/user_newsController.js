@@ -1,6 +1,6 @@
 const { uuid } = require("uuidv4");
 
-const insertNews = async (news, ucode) => {
+const insertNews = async (news, ucode, update) => {
   news.forEach((element) => {
     element.ncode = uuid();
   });
@@ -9,12 +9,20 @@ const insertNews = async (news, ucode) => {
     ucode,
     news: [...news],
   };
+  if (!update) {
+    const save_news = await global.db
+      .collection("user_news")
+      .insertOne({ ...news_to_save });
+    if (!save_news) {
+      throw new Error("Error occured");
+    }
+    return true;
+  }
 
-  const save_news = await global.db
+  const update_news = await global.db
     .collection("user_news")
-    .insertOne({ ...news_to_save });
-
-  if (!save_news) {
+    .updateOne({ ucode }, { $set: { news: news } });
+  if (!update_news) {
     throw new Error("Error occured");
   }
   return true;
@@ -59,7 +67,6 @@ module.exports = {
         throw new Error("Your saved news could not be retrieved");
       }
 
-      console.log(user_news);
       return { result: true, data: user_news };
     } catch (error) {
       console.log(error);
@@ -84,19 +91,20 @@ module.exports = {
         await insertNews(news, ucode);
         return { result: true, message: "We have saved your news" };
       }
-    } catch (error) {}
+    } catch (error) {
+      return { result: false, message: error };
+    }
 
     try {
       const duplicateNews = checkForDuplicateNews(user_news, news);
       if (duplicateNews.have_duplicate) {
-        console.log(duplicateNews);
         return {
           result: false,
           message: `We can't save the news with title ${duplicateNews.duplicated_value}, cause is already saved`,
         };
       }
-
-      await insertNews(news, ucode);
+      user_news.news.push(...news);
+      await insertNews(user_news.news, ucode, true);
       return { result: true, message: "We have saved your news" };
     } catch (error) {
       return { result: false, message: error };

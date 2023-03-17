@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import {
   Alert,
@@ -7,13 +7,16 @@ import {
   Modal,
   PageHeader,
 } from "../../common/components";
+import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
+  const { isLogged } = useAuth();
+  const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);
-  const [showMessage, setShowMessage] = useState();
+  const [showMessage, setShowMessage] = useState(false);
   const [submitState, setSubmitState] = useState({
-    result: Boolean,
+    result: false,
     message: "",
   });
 
@@ -50,13 +53,35 @@ const NewsList = () => {
       news_to_send
     );
 
-    if (response.result) {
-      setShowMessage(() => true);
-      setSubmitState((prev) => ({ ...prev, ["result"]: response.result }));
-      setSubmitState((prev) => ({ ...prev, ["message"]: response.message }));
+    setSelectedNews(() => []);
+    setShowMessage(() => true);
+    console.log(response);
+    setSubmitState((prev) => ({
+      ...prev,
+      result: response.result,
+      message: response.message,
+    }));
+
+    setTimeout(() => {
+      setShowMessage(() => false);
+    }, 4000);
+  };
+
+  const fetchNews = async () => {
+    try {
+      const response = await HTTPClient.get("/news/");
+      const retrived_news = response?.data ?? [];
+      setNews(() => retrived_news);
+    } catch (error) {
+      console.error(error);
     }
   };
 
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  console.log(selectedNews);
   return (
     <>
       <PageHeader />
@@ -79,12 +104,8 @@ const NewsList = () => {
           justifyContent: "space-around",
         }}
       >
-        {showMessage ? (
-          <Alert message={submitState.message} />
-        ) : (
-          <Alert message={submitState.message} />
-        )}
-        <Card onSelectedNews={onSelectedNews} />
+        <Alert message={submitState.message} show={showMessage} />
+        <Card onSelectedNews={onSelectedNews} news={news} isLogged={isLogged} />
       </div>
     </>
   );

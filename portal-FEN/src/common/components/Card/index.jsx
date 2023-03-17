@@ -1,39 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { HTTPClient } from "../../../api/HTTPClients";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import useUser from "../../../hooks/useUser";
-import useAuth from "../../../hooks/useAuth";
 import "./style.css";
-const Card = ({ onSelectedNews }) => {
-  const [news, setNews] = useState([]);
-  const user = useUser();
-  const { isLogged } = useAuth();
-  const { pathname } = useLocation();
+const Card = ({ onSelectedNews, news, isLogged }) => {
+  // const userSavedNews = async () => {
+  //   try {
+  //     if (!user?.ucode) return;
+  //     const response = await HTTPClient.get(`/user/saved-news`, user.ucode);
+  //     const saved_news = response.data.news;
+  //     setNews(() => saved_news);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchNews = async () => {
-    try {
-      const response = await HTTPClient.get("/news/");
-      const retrived_news = response?.data;
-      setNews(() => retrived_news);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const userSavedNews = async () => {
-    try {
-      if (!user?.ucode) return;
-      const response = await HTTPClient.get(`/user/saved-news`, user.ucode);
-      const saved_news = response.data.news;
-      setNews(() => saved_news);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    pathname === "/saved" ? userSavedNews() : fetchNews();
-  }, [isLogged]);
+  // useEffect(() => {
+  //   pathname === "/saved" ? userSavedNews() : fetchNews();
+  // }, [isLogged]);
 
   const truncateWords = (string, limit) => {
     const words = string.split(" ");
