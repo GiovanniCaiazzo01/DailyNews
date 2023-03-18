@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 // middleware
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://daily-news-vds8.onrender.com"],
+    origin: ["http://localhost:3000", "https://daily-news-ben.onrender.com"],
   })
 );
 app.use(bodyParser.json());
