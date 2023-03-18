@@ -1,4 +1,4 @@
-const BASE_URL = "https://daily-news-vds8.onrender.com/";
+const BASE_URL = "https://daily-news-vds8.onrender.com";
 
 const HTTPClient = {
   checkToken: async () => {
