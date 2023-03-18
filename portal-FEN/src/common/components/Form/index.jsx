@@ -7,10 +7,13 @@ const Form = ({
   header,
   field,
   onSubmit,
+  onClick,
   onUserInput,
   btnLabel,
   btnType,
   haveSelect,
+  haveSecondBtn,
+  secondBtnLabel,
   selectData,
   upperSelect,
   defaultSelectValue,
@@ -63,8 +66,23 @@ const Form = ({
             </>
           )}
           <div className="form-footer">
-            <Button label={btnLabel} type={btnType} />
+            <Button
+              label={btnLabel}
+              type={btnType}
+              name={btnLabel.toLowerCase()}
+              onClick={onClick}
+            />
           </div>
+          {haveSecondBtn && (
+            <div className="form-footer">
+              <Button
+                label={secondBtnLabel}
+                name={secondBtnLabel.toLowerCase()}
+                type={btnType}
+                onClick={onClick}
+              />
+            </div>
+          )}
         </div>
       </form>
     </div>

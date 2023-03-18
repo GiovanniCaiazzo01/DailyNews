@@ -79,6 +79,9 @@ const Login = () => {
         onUserInput={onUserInput}
         btnLabel="Login"
         btnType="submit"
+        haveSecondBtn
+        secondBtnLabel="Register"
+        onClick={(e) => e.target.name === "register" && navigate("/register")}
       />
     </BackGround>
   );
