@@ -102,6 +102,9 @@ const Register = () => {
         onUserInput={onUserInput}
         btnLabel="Register"
         btnType="submit"
+        haveSecondBtn
+        secondBtnLabel="Login"
+        onClick={(e) => e.target.name === "login" && navigate("/login")}
       />
     </BackGround>
   );
