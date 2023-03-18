@@ -12,7 +12,7 @@ import { HTTPClient } from "../../api/HTTPClients";
 
 const SavedNews = () => {
   const { user } = useUser();
-  const { isLogged } = useAuth();
+  const { isLogged, verify_auth } = useAuth();
   const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);
   // const [showMessage, setShowMessage] = useState(false);
@@ -76,6 +76,8 @@ const SavedNews = () => {
   useEffect(() => {
     fetchSavedNews();
   }, [submitState]);
+
+  verify_auth();
   return (
     <>
       <PageHeader />

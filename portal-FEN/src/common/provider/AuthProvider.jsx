@@ -6,9 +6,10 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const { pathname } = useLocation();
-
   const verify_auth = async () => {
-    await HTTPClient.checkToken().then((result) => setIsLogged(() => result));
+    return await HTTPClient.checkToken().then((result) =>
+      setIsLogged(() => result)
+    );
   };
 
   useEffect(() => {

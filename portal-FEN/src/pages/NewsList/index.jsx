@@ -11,7 +11,7 @@ import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
-  const { isLogged } = useAuth();
+  const { isLogged, verify_auth } = useAuth();
   const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);
   const [submitState, setSubmitState] = useState({
@@ -36,6 +36,7 @@ const NewsList = () => {
   };
 
   const onSaveNews = async () => {
+    verify_auth();
     const news_to_send = [];
     let tmp = {};
     selectedNews.forEach((news) => {

@@ -21,6 +21,10 @@ const Profile = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.Profile,
 });
 
+const Logout = loadable(() => import("../hooks/useLogout"), {
+  resolveComponent: (components) => components.default,
+});
+
 const MainRoutes = () => {
   return (
     <Routes>
@@ -29,6 +33,12 @@ const MainRoutes = () => {
         exact
         path="/profile"
         element={<PrivateRoute component={Profile} />}
+      />
+
+      <Route
+        exact
+        path="/logout"
+        element={<PrivateRoute component={Logout} />}
       />
       <Route
         exact

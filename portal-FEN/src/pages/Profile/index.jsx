@@ -26,7 +26,6 @@ const Profile = () => {
   });
 
   const onUserInput = (name, value) => {
-    console.log(name, value);
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -34,7 +33,7 @@ const Profile = () => {
     event.preventDefault();
 
     const updateUser = await HTTPClient.put("/users/update", user);
-
+    verify_auth();
     setSubmitState((prev) => ({
       ...prev,
       result: updateUser.result,

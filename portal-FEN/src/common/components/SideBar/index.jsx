@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import useLogout from "../../../hooks/useLogout";
 import useUser from "../../../hooks/useUser";
 import "./style.css";
 
@@ -66,7 +67,10 @@ const SideBar = () => {
             </>
           )}
           {isLogged ? (
-            <li className="nav-item" onClick={() => localStorage.clear()}>
+            <li
+              className="nav-item"
+              onClick={() => handleNavItemOnClick("/logout")}
+            >
               <i className="bx bx-log-out"></i>
               <span>Log-out</span>
             </li>
