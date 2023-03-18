@@ -9,7 +9,7 @@ import "./style.css";
 
 const Profile = () => {
   const userInfo = useUser();
-  const { isLogged } = useAuth();
+  const { isLogged, verify_auth } = useAuth();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({

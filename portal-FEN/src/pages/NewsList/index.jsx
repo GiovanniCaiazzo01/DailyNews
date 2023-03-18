@@ -65,7 +65,10 @@ const NewsList = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await HTTPClient.get("/news/");
+      const response =
+        isLogged && user?.language
+          ? await HTTPClient.get("/news/", user.language)
+          : await HTTPClient.get("/news/");
       const retrived_news = response?.data ?? [];
       setNews(() => retrived_news);
     } catch (error) {
@@ -74,7 +77,7 @@ const NewsList = () => {
   };
 
   useEffect(() => {
-    // fetchNews();
+    fetchNews();
   }, []);
   return (
     <>
