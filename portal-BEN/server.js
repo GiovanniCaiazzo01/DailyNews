@@ -6,7 +6,11 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://daily.news.onrender.com"],
+  })
+);
 app.use(bodyParser.json());
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
