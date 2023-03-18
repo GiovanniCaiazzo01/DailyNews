@@ -73,7 +73,7 @@ const NewsList = () => {
   };
 
   useEffect(() => {
-    fetchNews();
+    // fetchNews();
   }, []);
   return (
     <>

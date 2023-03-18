@@ -21,7 +21,6 @@ const cryptPassword = (password) => {
 
 const validateNameAndAge = (name, age) => {
   if (parseInt(age) <= 0 || parseInt(age) >= 200) {
-    console.log(age);
     return { result: false, message: "Please insert a valid age" };
   }
 

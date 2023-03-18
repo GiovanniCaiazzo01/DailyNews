@@ -24,7 +24,6 @@ const Register = () => {
   const { isLogged } = useAuth();
   const navigate = useNavigate();
 
-  console.log(isLogged);
   isLogged && navigate("/");
 
   const onUserInput = (name, value) => {

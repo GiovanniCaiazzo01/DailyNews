@@ -18,7 +18,6 @@ module.exports = {
         }
       );
       if (news.status !== 200) {
-        console.log(news);
         throw new Error("It was not possible to retrieve the latest news");
       }
 

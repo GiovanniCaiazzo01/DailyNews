@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get("/:email", async (req, res) => {
   const { email } = req.params;
-  console.log(email);
   const payload = email;
 
   const result = await get(payload);

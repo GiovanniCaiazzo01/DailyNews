@@ -2,7 +2,6 @@ import React from "react";
 import "./style.css";
 
 const Alert = ({ message, type }) => {
-  console.log(message);
   return (
     <div
       className="alert"
