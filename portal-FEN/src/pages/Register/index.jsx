@@ -3,8 +3,10 @@ import { Form } from "../../common/components/Form";
 import { Alert, BackGround } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import "./style.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [userCredentials, setUserCredentials] = useState({
@@ -15,16 +17,21 @@ const Register = () => {
     password: "",
     "Repeat Password": "",
   });
-  const [showAllert, setShowAllert] = useState(false);
-  const [submitState, setSubmitState] = useState({
-    result: false,
-    message: "",
-  });
 
   const { isLogged } = useAuth();
   const navigate = useNavigate();
 
   isLogged && navigate("/");
+
+  const handleAlert = (result, message) => {
+    result
+      ? toast.success(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      : toast.error(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  };
 
   const onUserInput = (name, value) => {
     setUserCredentials((prev) => ({
@@ -39,13 +46,7 @@ const Register = () => {
       ...userCredentials,
     });
 
-    setShowAllert(() => true);
-    setSubmitState((prev) => ({
-      ...prev,
-      result: user.result,
-      message: user.message,
-    }));
-
+    handleAlert(user.result, user.message);
     if (user.result) {
       return navigate("/login");
     }
@@ -91,10 +92,6 @@ const Register = () => {
   ];
   return (
     <BackGround about="Background for a register page">
-      {submitState.result === false && (
-        <Alert message={submitState.message} type={submitState.result} />
-      )}
-
       <Form
         header="Register"
         field={field}
@@ -106,6 +103,7 @@ const Register = () => {
         secondBtnLabel="Login"
         onClick={(e) => e.target.name === "login" && navigate("/login")}
       />
+      <ToastContainer />
     </BackGround>
   );
 };

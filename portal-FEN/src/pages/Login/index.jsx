@@ -3,6 +3,8 @@ import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import { Form } from "../../common/components/Form";
 import { Alert, BackGround } from "../../common/components";
+import { ToastContainer, toast } from "react-toastify";
+
 import useAuth from "../../hooks/useAuth";
 import "./style.css";
 
@@ -13,11 +15,16 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [submitState, setSubmitState] = useState({
-    result: false,
-    message: "",
-  });
-  const [showAlert, setShowAlert] = useState(false);
+
+  const handleAlert = (result, message) => {
+    result
+      ? toast.success(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      : toast.error(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  };
 
   const setLocalStorage = async (userInfo) => {
     localStorage.setItem("token", userInfo.data.token);
@@ -36,12 +43,8 @@ const Login = () => {
       ...userCredentials,
     });
 
-    setSubmitState((prev) => ({
-      ...prev,
-      result: user.result,
-      message: user.message,
-    }));
-    setShowAlert(() => true);
+    handleAlert(user.result, user.message);
+
     await setLocalStorage(user);
     if (user.result === true) {
       return navigate("/");
@@ -69,9 +72,6 @@ const Login = () => {
   }, []);
   return (
     <BackGround about="Background for a login page">
-      {submitState.result === false && (
-        <Alert message={submitState.message} type={submitState.result} />
-      )}
       <Form
         header="Login"
         field={field}
@@ -83,6 +83,7 @@ const Login = () => {
         secondBtnLabel="Register"
         onClick={(e) => e.target.name === "register" && navigate("/register")}
       />
+      <ToastContainer />
     </BackGround>
   );
 };
