@@ -79,10 +79,12 @@ TO START CLIENT
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`PORT`
-`DB_NAME`
-`DB_URI`
-`KEY_NEWSDATA`
-`SECRET_KEY`
+| Parameter     |Description                                        |
+| :------------ |:------------------------------------------------- |
+| `PORT`        |**Required**. The port where the server will listen |
+| `DB_NAME`     |**Required**. Your database name                   |
+| `DB_URI`      |**Required**. Your database URI                    |
+| `KEY_NEWSDATA`|**Required**. Your personal key retrieved on NewsData |
+| `SECRET_KEY`  |**Required**. Your secret JWT key                  |
 
 
