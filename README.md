@@ -26,7 +26,13 @@ While the application is functional and provides access to daily news from aroun
 ome of the planned improvements include adding filtering options to allow users to view news in specific categories, expanding the language options, and implementing a personalized news feed based on user preferences.
 ## Installation
 
-Install with npm
+Clone the project
+
+```bash
+git clone https://github.com/GiovanniCaiazzo01/DailyNews.git
+```
+
+Go to the project directory
 
 SERVER
 ```bash
@@ -40,15 +46,6 @@ CLIENT
   npm i
 ```
 ## Run Locally
-
-Clone the project
-
-```bash
-  git clone https://github.com/GiovanniCaiazzo01/DailyNews.git
-```
-
-Go to the project directory
-
 
 TO START SERVER
 
