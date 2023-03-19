@@ -27,7 +27,6 @@ router.delete("/delete/:ucode", async (req, res) => {
     titles,
   };
   const delete_news = await remove(payload);
-  console.log(delete_news);
   return res.send(delete_news);
 });
 module.exports = router;

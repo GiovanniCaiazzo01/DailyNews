@@ -67,7 +67,6 @@ const SavedNews = () => {
       { titles }
     );
 
-    console.log(delete_news);
     handleAlert(delete_news.result, delete_news.message);
     setSelectedNews(() => []);
   };
