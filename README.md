@@ -80,9 +80,9 @@ TO START CLIENT
 To run this project, you will need to add the following environment variables to your .env file
 
 `PORT`
-
-`DB_URI`
-
 `DB_NAME`
+`DB_URI`
+`KEY_NEWSDATA`
+`SECRET_KEY`
 
 
