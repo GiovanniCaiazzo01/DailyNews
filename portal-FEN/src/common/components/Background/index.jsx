@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
+
 const BackGround = ({ about, children }) => {
   const [bg, setBg] = useState();
 
@@ -13,11 +14,13 @@ const BackGround = ({ about, children }) => {
   }, []);
 
   return (
-    <section
-      className="background"
-      about={about}
-      style={{ backgroundImage: `url(${bg})` }}
-    >
+    <section className="background" about={about}>
+      <img
+        src={bg}
+        alt="background"
+        loading="lazy"
+        className="background-img"
+      />
       {children}
     </section>
   );
