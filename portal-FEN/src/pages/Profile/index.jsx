@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HTTPClient } from "../../api/HTTPClients";
-import { Alert, PageHeader } from "../../common/components";
+import { PageHeader } from "../../common/components";
+import { ToastContainer, toast } from "react-toastify";
 import { Form } from "../../common/components/Form";
 import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
@@ -20,10 +21,15 @@ const Profile = () => {
     language: userInfo.user?.language,
   });
 
-  const [submitState, setSubmitState] = useState({
-    result: false,
-    message: "",
-  });
+  const handleAlert = (result, message) => {
+    result
+      ? toast.success(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      : toast.error(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  };
 
   const onUserInput = (name, value) => {
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -34,11 +40,7 @@ const Profile = () => {
 
     const updateUser = await HTTPClient.put("/users/update", user);
     verify_auth();
-    setSubmitState((prev) => ({
-      ...prev,
-      result: updateUser.result,
-      message: updateUser.message,
-    }));
+    handleAlert(updateUser.result, updateUser.message);
     userInfo.fetch_user();
   };
 
@@ -108,8 +110,7 @@ const Profile = () => {
         defaultSelectValue={user.language || "es: Italian"}
         upperSelect="Chose your news language"
       />
-      {/* {submitState.result === true && <Alert message={submitState.message} />}
-      {submitState.result === false && <Alert message={submitState.message} />} */}
+      <ToastContainer />
     </div>
   );
 };

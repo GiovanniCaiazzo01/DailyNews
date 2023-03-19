@@ -8,18 +8,25 @@ import {
 } from "../../common/components";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
 import { HTTPClient } from "../../api/HTTPClients";
 
 const SavedNews = () => {
   const { user } = useUser();
   const { isLogged, verify_auth } = useAuth();
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(false);
   let [selectedNews, setSelectedNews] = useState([]);
-  // const [showMessage, setShowMessage] = useState(false);
-  const [submitState, setSubmitState] = useState({
-    result: false,
-    message: "",
-  });
+
+  const handleAlert = (result, message) => {
+    result
+      ? toast.success(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      : toast.error(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  };
 
   const fetchSavedNews = async () => {
     try {
@@ -54,28 +61,19 @@ const SavedNews = () => {
       const title = news.news.title;
       titles.push(title);
     });
-    const response = await HTTPClient.delete(
+    const delete_news = await HTTPClient.delete(
       "/user/saved-news/delete/",
       ucode,
       { titles }
     );
+
+    handleAlert(delete_news.result, delete_news.message);
     setSelectedNews(() => []);
-    setShowMessage(() => true);
-
-    setSubmitState((prev) => ({
-      ...prev,
-      result: response.result,
-      message: response.message,
-    }));
-
-    setTimeout(() => {
-      setShowMessage(() => false);
-    }, 4000);
   };
 
   useEffect(() => {
     fetchSavedNews();
-  }, [submitState]);
+  }, [selectedNews]);
 
   verify_auth();
   return (
@@ -100,8 +98,8 @@ const SavedNews = () => {
           justifyContent: "space-around",
         }}
       >
-        {/* <Alert message={submitState.message} show={showMessage} /> */}
         <Card onSelectedNews={onSelectedNews} news={news} isLogged={isLogged} />
+        <ToastContainer />
       </div>
     </>
   );

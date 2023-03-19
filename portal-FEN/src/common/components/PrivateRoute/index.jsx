@@ -1,8 +1,6 @@
 import React from "react";
 import loadable from "@loadable/component";
 import { Navigate } from "react-router-dom";
-import { PageHeader } from "../PageHeader";
-
 const SideBar = loadable(() => import("../"), {
   resolveComponent: (components) => components.SideBar,
 });

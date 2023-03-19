@@ -120,7 +120,7 @@ module.exports = {
         .collection("user_news")
         .updateOne({ ucode }, { $pull: { news: { title: { $in: titles } } } });
 
-      if (!delete_news.aacknowledged) {
+      if (!delete_news.acknowledged) {
         throw new Error("Thee was a problem deleting your news");
       }
 

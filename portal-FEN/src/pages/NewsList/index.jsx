@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
-import {
-  // Alert,
-  Button,
-  Card,
-  Modal,
-  PageHeader,
-} from "../../common/components";
+import { ToastContainer, toast } from "react-toastify";
+
+import { Button, Card, Modal, PageHeader } from "../../common/components";
 import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
   const { isLogged, verify_auth } = useAuth();
+  const { user } = useUser();
+
   const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);
-  const [submitState, setSubmitState] = useState({
-    result: false,
-    message: "",
-  });
 
-  const { user } = useUser();
+  const handleAlert = (result, message) => {
+    result
+      ? toast.success(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      : toast.error(message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  };
+
   const onSelectedNews = (checked, item) => {
     if (!checked) {
       setSelectedNews((selectedNews) =>
@@ -53,14 +56,9 @@ const NewsList = () => {
       news_to_send
     );
 
-    setSelectedNews(() => []);
-    setSubmitState((prev) => ({
-      ...prev,
-      result: response.result,
-      message: response.message,
-    }));
+    handleAlert(response.result, response.message);
 
-    setShowMessage(true);
+    setSelectedNews(() => []);
   };
 
   const fetchNews = async () => {
@@ -101,11 +99,8 @@ const NewsList = () => {
           justifyContent: "space-around",
         }}
       >
-        {/* <Alert
-          message={showMessage && submitState.message}
-          type={showMessage && submitState.result}
-        /> */}
         <Card onSelectedNews={onSelectedNews} news={news} isLogged={isLogged} />
+        <ToastContainer />
       </div>
     </>
   );
