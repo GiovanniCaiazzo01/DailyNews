@@ -21,7 +21,7 @@ const Register = () => {
   const { isLogged } = useAuth();
   const navigate = useNavigate();
 
-  isLogged && navigate("/");
+  isLogged === true && navigate("/");
 
   const handleAlert = (result, message) => {
     result

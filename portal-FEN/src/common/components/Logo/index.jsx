@@ -7,7 +7,7 @@ const Logo = () => {
       height="122px"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="209.4 14 81.19999999999999 122"
-      style={{ background: " rgba(114, 29, 29, 0);" }}
+      style={{ background: " rgba(114, 29, 29, 0)" }}
       preserveAspectRatio="xMidYMid"
       fontSize={"64px"}
       fontFamily={"Arial Black"}

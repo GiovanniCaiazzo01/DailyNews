@@ -68,7 +68,7 @@ const Login = () => {
   ];
 
   useEffect(() => {
-    isLogged && navigate("/");
+    isLogged === true && navigate("/");
   }, []);
   return (
     <BackGround about="Background for a login page">
