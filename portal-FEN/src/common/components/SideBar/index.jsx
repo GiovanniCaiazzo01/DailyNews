@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
+import { Logo } from "../Logo";
 import "./style.css";
-
 const SideBar = () => {
   const [open, setOpen] = useState(false);
 
@@ -28,8 +28,7 @@ const SideBar = () => {
       </div>
 
       <div className="logo" onClick={() => handleNavItemOnClick("/")}>
-        <img src="../../../../public/logo.svg" alt="..." />
-
+        <Logo />
         <h3>{user?.name}</h3>
       </div>
 
