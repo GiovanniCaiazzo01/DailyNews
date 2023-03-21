@@ -17,6 +17,7 @@ const Form = ({
   selectData,
   upperSelect,
   defaultSelectValue,
+  loading,
 }) => {
   const handleSubmit = (e) => {
     onSubmit(e);
@@ -47,6 +48,7 @@ const Form = ({
                   name={f.name}
                   onUserInput={handleUserInput}
                   value={f.value}
+                  loading={loading}
                 />
               </>
             );
@@ -71,6 +73,7 @@ const Form = ({
               type={btnType}
               name={btnLabel.toLowerCase()}
               onClick={onClick}
+              loading={loading}
             />
           </div>
           {haveSecondBtn && (

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import { ToastContainer, toast } from "react-toastify";
 
-import { Button, Card, Modal, PageHeader } from "../../common/components";
+import {
+  Button,
+  Card,
+  Loader,
+  Modal,
+  PageHeader,
+} from "../../common/components";
 import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
@@ -12,7 +18,7 @@ const NewsList = () => {
 
   const [news, setNews] = useState([]);
   let [selectedNews, setSelectedNews] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const handleAlert = (result, message) => {
     result
       ? toast.success(message, {
@@ -62,6 +68,7 @@ const NewsList = () => {
   };
 
   const fetchNews = async () => {
+    setLoading(() => true);
     try {
       const response =
         isLogged && user?.language
@@ -72,6 +79,7 @@ const NewsList = () => {
     } catch (error) {
       console.error(error);
     }
+    setLoading(() => false);
   };
 
   useEffect(() => {
@@ -90,6 +98,7 @@ const NewsList = () => {
       ) : (
         ""
       )}
+      {loading && <Loader />}
       <div
         style={{
           display: "flex",

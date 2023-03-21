@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import { Form } from "../../common/components/Form";
-import { Alert, BackGround } from "../../common/components";
+import { BackGround } from "../../common/components";
 import { ToastContainer, toast } from "react-toastify";
 
 import useAuth from "../../hooks/useAuth";
@@ -11,6 +11,7 @@ import "./style.css";
 const Login = () => {
   const navigate = useNavigate();
   const { isLogged } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
@@ -27,7 +28,7 @@ const Login = () => {
   };
 
   const setLocalStorage = async (userInfo) => {
-    localStorage.setItem("token", userInfo.data.token);
+    return localStorage.setItem("token", userInfo.data.token);
   };
 
   const onUserInput = (name, value) => {
@@ -38,6 +39,7 @@ const Login = () => {
   };
 
   const onSubmit = async (e) => {
+    setLoading(() => true);
     e.preventDefault();
     const user = await HTTPClient.post("/auth/login", {
       ...userCredentials,
@@ -45,11 +47,11 @@ const Login = () => {
 
     handleAlert(user.result, user.message);
 
-    await setLocalStorage(user);
     if (user.result === true) {
+      await setLocalStorage(user);
       return navigate("/");
     }
-    // if (user.result === true) navigate("/");
+    setLoading(() => false);
   };
 
   const field = [
@@ -68,7 +70,7 @@ const Login = () => {
   ];
 
   useEffect(() => {
-    isLogged && navigate("/");
+    isLogged === true && navigate("/");
   }, []);
   return (
     <BackGround about="Background for a login page">
@@ -81,6 +83,7 @@ const Login = () => {
         btnType="submit"
         haveSecondBtn
         secondBtnLabel="Register"
+        loading={loading}
         onClick={(e) => e.target.name === "register" && navigate("/register")}
       />
       <ToastContainer />

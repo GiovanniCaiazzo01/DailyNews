@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
@@ -43,7 +43,7 @@ const SideBar = () => {
             <i className="bx bxs-dashboard"></i>
             <span>Dashboard</span>
           </li>
-          {isLogged && (
+          {isLogged === true && (
             <>
               <li
                 className={`nav-item ${pathname === "/settings" && "active"}`}
@@ -61,7 +61,7 @@ const SideBar = () => {
               </li>
             </>
           )}
-          {isLogged ? (
+          {isLogged === true ? (
             <li
               className="nav-item"
               onClick={() => handleNavItemOnClick("/logout")}

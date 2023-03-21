@@ -1,15 +1,20 @@
 import React from "react";
+import { Loader } from "../Loader";
 import "./style.css";
-const Button = ({ label, type, name, onClick }) => {
+const Button = ({ label, type, name, onClick, loading }) => {
   return (
-    <button
-      className="button normal-btn"
-      name={name}
-      type={type}
-      onClick={onClick}
-    >
-      {label}
-    </button>
+    <div>
+      <button
+        className={`button normal-btn ${loading ? "disabled" : ""}`}
+        name={name}
+        type={type}
+        onClick={onClick}
+        disabled={loading ? true : false}
+      >
+        {loading ? "" : label}
+        {loading && <Loader />}
+      </button>
+    </div>
   );
 };
 
