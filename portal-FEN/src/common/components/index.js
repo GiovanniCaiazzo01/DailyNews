@@ -1,3 +1,4 @@
+export { Logo } from "./Logo";
 export { Modal } from "./Modal";
 export { PageHeader } from "./PageHeader";
 export { Alert } from "./Alert";

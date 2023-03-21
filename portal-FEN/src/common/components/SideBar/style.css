@@ -23,13 +23,13 @@
   justify-content: center;
 }
 
-.sidebar .logo img {
+.sidebar .logo svg {
   width: 56px;
   transition: 0.4s;
   cursor: pointer;
 }
 
-.sidebar.open .logo img {
+.sidebar.open .logo svg {
   width: 96px;
   overflow: hidden;
 }
