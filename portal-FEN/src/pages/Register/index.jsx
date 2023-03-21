@@ -9,6 +9,7 @@ import "./style.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [userCredentials, setUserCredentials] = useState({
     name: "",
     surname: "",
@@ -24,7 +25,7 @@ const Register = () => {
   isLogged === true && navigate("/");
 
   const handleAlert = (result, message) => {
-    result
+    return result
       ? toast.success(message, {
           position: toast.POSITION.TOP_RIGHT,
         })
@@ -41,6 +42,7 @@ const Register = () => {
   };
 
   const onSubmit = async (e) => {
+    setLoading(() => true);
     e.preventDefault();
     const user = await HTTPClient.post("/users/register", {
       ...userCredentials,
@@ -50,6 +52,7 @@ const Register = () => {
     if (user.result) {
       return navigate("/login");
     }
+    setLoading(() => false);
   };
 
   const field = [
@@ -102,6 +105,7 @@ const Register = () => {
         haveSecondBtn
         secondBtnLabel="Login"
         onClick={(e) => e.target.name === "login" && navigate("/login")}
+        loading={loading}
       />
       <ToastContainer />
     </BackGround>

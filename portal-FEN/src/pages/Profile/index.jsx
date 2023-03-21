@@ -13,6 +13,7 @@ const Profile = () => {
   const { isLogged, verify_auth } = useAuth();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     name: userInfo.user?.name,
     surname: userInfo.user?.surname,
@@ -36,12 +37,15 @@ const Profile = () => {
   };
 
   const onSubmit = async (event) => {
+    setLoading(() => true);
     event.preventDefault();
 
     const updateUser = await HTTPClient.put("/users/update", user);
     verify_auth();
     handleAlert(updateUser.result, updateUser.message);
+
     userInfo.fetch_user();
+    setLoading(() => false);
   };
 
   const field = [
@@ -99,6 +103,7 @@ const Profile = () => {
     <div>
       <PageHeader />
       <Form
+        loading={loading}
         header="Your Profile Info"
         field={field}
         onSubmit={onSubmit}
