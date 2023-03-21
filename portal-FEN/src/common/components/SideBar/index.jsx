@@ -27,7 +27,7 @@ const SideBar = () => {
         <i className="bx bx-chevron-right"></i>
       </div>
 
-      <div className="logo">
+      <div className="logo" onClick={() => handleNavItemOnClick("/")}>
         <img src="../../../../public/logo.svg" alt="..." />
 
         <h3>{user?.name}</h3>
