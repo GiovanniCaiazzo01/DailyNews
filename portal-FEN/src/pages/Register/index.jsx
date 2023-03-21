@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form } from "../../common/components/Form";
-import { Alert, BackGround } from "../../common/components";
+import { BackGround } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";

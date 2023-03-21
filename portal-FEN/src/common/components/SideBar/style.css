@@ -26,6 +26,7 @@
 .sidebar .logo img {
   width: 56px;
   transition: 0.4s;
+  cursor: pointer;
 }
 
 .sidebar.open .logo img {

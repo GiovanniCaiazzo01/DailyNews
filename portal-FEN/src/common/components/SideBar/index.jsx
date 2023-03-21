@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import useLogout from "../../../hooks/useLogout";
 import useUser from "../../../hooks/useUser";
 import "./style.css";
 
@@ -28,11 +27,8 @@ const SideBar = () => {
         <i className="bx bx-chevron-right"></i>
       </div>
 
-      <div className="logo">
-        <img
-          src="https://png.pngtree.com/template/20191017/ourlarge/pngtree-letter-n-logo-vector-designs-initials-n-logo-image_320358.jpg"
-          alt="..."
-        />
+      <div className="logo" onClick={() => handleNavItemOnClick("/")}>
+        <img src="../../../../public/logo.svg" alt="..." />
 
         <h3>{user?.name}</h3>
       </div>
