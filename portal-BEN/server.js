@@ -1,4 +1,5 @@
 const { DB_NAME, DB_URI, PORT } = require("./config/config.js");
+const compression = require("compression");
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const app = express();
@@ -11,6 +12,7 @@ app.use(
     origin: ["http://localhost:3000", "https://daily-news-vds8.onrender.com"],
   })
 );
+app.use(compression({ level: 6 }));
 app.use(bodyParser.json());
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
