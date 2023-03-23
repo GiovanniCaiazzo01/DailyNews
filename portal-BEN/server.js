@@ -1,4 +1,5 @@
 const { DB_NAME, DB_URI, PORT } = require("./config/config.js");
+const compression = require("compression");
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const app = express();
@@ -7,6 +8,7 @@ const bodyParser = require("body-parser");
 
 // middleware
 app.use(cors());
+app.use(compression({ level: 6 }));
 app.use(bodyParser.json());
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
