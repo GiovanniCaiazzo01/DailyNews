@@ -22,7 +22,9 @@ const Card = ({ onSelectedNews, news, isLogged }) => {
                   backgroundImage: `url(${
                     item.image_url
                       ? item.image_url
-                      : "https://w.wallhaven.cc/full/nr/wallhaven-nr7v5j.jpg"
+                      : `https://picsum.photos/id/${
+                          Math.floor(Math.random() * 100) + 1
+                        }/1920/1080`
                   })`,
                 }}
               >

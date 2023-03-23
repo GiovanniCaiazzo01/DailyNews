@@ -10,10 +10,12 @@ const UserProvider = ({ children }) => {
 
   const fetch_user = async () => {
     const token = localStorage.getItem("token");
-    const { email } = await jwtDecode(token);
-    const response = await HTTPClient.get(`/users`, email);
-    const user = response.data;
-    setUser(() => user);
+    if (token) {
+      const { email } = await jwtDecode(token);
+      const response = await HTTPClient.get(`/users`, email);
+      const user = response.data;
+      setUser(() => user);
+    }
   };
 
   useEffect(() => {
