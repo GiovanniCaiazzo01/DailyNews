@@ -12,6 +12,9 @@ app.use(
     origin: ["http://localhost:3000", "https://daily-news-vds8.onrender.com"],
   })
 );
+
+app.disable("x-powered-by");
+
 app.use(bodyParser.json());
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
