@@ -1,7 +1,7 @@
 const { DB_NAME, DB_URI, PORT } = require("./config/config.js");
+const { MongoClient } = require("mongodb");
 const compression = require("compression");
 const express = require("express");
-const { MongoClient } = require("mongodb");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -14,6 +14,29 @@ app.use(
 );
 
 app.disable("x-powered-by");
+
+// general securuty/cache releted headers + server header
+app.use((req, res, next) => {
+  let x_frame_options = "DENY";
+
+  if (
+    typeof process.env.X_FRAME_OPTIONS !== "undefined" &&
+    process.env.X_FRAME_OPTIONS
+  ) {
+    x_frame_options = process.env.X_FRAME_OPTIONS;
+  }
+
+  res.set({
+    "X-XSS-Protection": "1; mode=block",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": x_frame_options,
+    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    Pragma: "no-cache",
+    Expires: 0,
+  });
+
+  next();
+});
 
 app.use(bodyParser.json());
 // Endpoint Import
