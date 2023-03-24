@@ -12,11 +12,10 @@ app.use(
     origin: ["http://localhost:3000", "https://daily-news-vds8.onrender.com"],
   })
 );
-app.use(compression({ level: 6 }));
 app.use(bodyParser.json());
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
-app.use("/news", require("./components/news/newsAPI"));
+app.use("/news", compression(), require("./components/news/newsAPI"));
 app.use("/users", require("./components/users/usersAPI"));
 app.use("/auth", require("./components/auth/authAPI"));
 
