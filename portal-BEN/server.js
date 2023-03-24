@@ -1,18 +1,46 @@
 const { DB_NAME, DB_URI, PORT } = require("./config/config.js");
+const { MongoClient } = require("mongodb");
 const compression = require("compression");
 const express = require("express");
-const { MongoClient } = require("mongodb");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-// middleware
+/**
+ * General Logging, BEFORE routes
+ */
+app.disable("x-powered-by");
+
 app.use(cors());
-app.use(compression({ level: 6 }));
+
+// general securuty/cache releted headers + server header
+app.use((req, res, next) => {
+  let x_frame_options = "DENY";
+
+  if (
+    typeof process.env.X_FRAME_OPTIONS !== "undefined" &&
+    process.env.X_FRAME_OPTIONS
+  ) {
+    x_frame_options = process.env.X_FRAME_OPTIONS;
+  }
+
+  res.set({
+    "X-XSS-Protection": "1; mode=block",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": x_frame_options,
+    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    Pragma: "no-cache",
+    Expires: 0,
+  });
+
+  next();
+});
+
 app.use(bodyParser.json());
+
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
-app.use("/news", require("./components/news/newsAPI"));
+app.use("/news", compression(), require("./components/news/newsAPI"));
 app.use("/users", require("./components/users/usersAPI"));
 app.use("/auth", require("./components/auth/authAPI"));
 
