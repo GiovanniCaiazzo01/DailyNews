@@ -6,14 +6,16 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-// middleware
+/**
+ * General Logging, BEFORE routes
+ */
+app.disable("x-powered-by");
+
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://daily-news-vds8.onrender.com"],
   })
 );
-
-app.disable("x-powered-by");
 
 // general securuty/cache releted headers + server header
 app.use((req, res, next) => {
@@ -39,6 +41,7 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+
 // Endpoint Import
 app.use("/user/saved-news", require("./components/userNews/user_newsAPI"));
 app.use("/news", compression(), require("./components/news/newsAPI"));
