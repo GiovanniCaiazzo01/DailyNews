@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = {
+  SUCCESS: {
+    SAVED_NEWS: "We have saved your news",
+    DELETED_NEWS: "News deleted successfully",
+  },
   ERRORS: {
     MISSING_FIELD: (field) => {
       return `Please fill the ${field} field`;
@@ -11,6 +15,10 @@ module.exports = {
 
     UNRECOVERABLE_NEWS: "It was not possible to retrieve the latest news",
     MISSING_LANGUAGE: "Please fill the language field ",
+    SAVED_NEWS: "Your saved news could not be retrieved",
+    DUPLICATED_NEWS: (duplicated_item) => {
+      return `We can't save the news with title ${duplicated_item}, cause is already saved`;
+    },
   },
 
   JWT_ERRORS: {
@@ -31,9 +39,9 @@ module.exports = {
 
     return token;
   },
-  checkForMissingField: (credentials) => {
-    for (const field in credentials) {
-      if (!credentials[field] || credentials[field].length < 1) {
+  checkForMissingField: (fields) => {
+    for (const field in fields) {
+      if (!fields[field] || fields[field].length < 1) {
         return { result: true, field };
       }
     }

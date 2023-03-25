@@ -1,4 +1,5 @@
 const { uuid } = require("uuidv4");
+const { ERRORS, SUCCESS } = require("../../utils/utils");
 
 const insertNews = async (news, ucode, update) => {
   news.forEach((element) => {
@@ -14,7 +15,7 @@ const insertNews = async (news, ucode, update) => {
       .collection("user_news")
       .insertOne({ ...news_to_save });
     if (!save_news) {
-      throw new Error("Error occured");
+      throw new Error(ERRORS.GENERIC);
     }
     return true;
   }
@@ -23,7 +24,7 @@ const insertNews = async (news, ucode, update) => {
     .collection("user_news")
     .updateOne({ ucode }, { $set: { news: news } });
   if (!update_news) {
-    throw new Error("Error occured");
+    throw new Error(ERRORS.GENERIC);
   }
   return true;
 };
@@ -55,7 +56,7 @@ const checkForDuplicateNews = (user_news, incoming_news) => {
 module.exports = {
   list: async ({ ucode }) => {
     if (!ucode) {
-      return { result: false, message: "Error occurred" };
+      return { result: false, message: ERRORS.GENERIC };
     }
 
     try {
@@ -64,7 +65,7 @@ module.exports = {
         .findOne({ ucode });
 
       if (!user_news) {
-        throw new Error("Your saved news could not be retrieved");
+        throw new Error(ERRORS.SAVED_NEWS);
       }
 
       return { result: true, data: user_news };
@@ -89,7 +90,7 @@ module.exports = {
     try {
       if (!user_news) {
         await insertNews(news, ucode);
-        return { result: true, message: "We have saved your news" };
+        return { result: true, message: SUCCESS.NEWS_SAVED };
       }
     } catch (error) {
       return { result: false, message: error };
@@ -100,19 +101,19 @@ module.exports = {
       if (duplicateNews.have_duplicate) {
         return {
           result: false,
-          message: `We can't save the news with title ${duplicateNews.duplicated_value}, cause is already saved`,
+          message: ERRORS.DUPLICATED_NEWS(duplicateNews.duplicated_value),
         };
       }
       user_news.news.push(...news);
       await insertNews(user_news.news, ucode, true);
-      return { result: true, message: "We have saved your news" };
+      return { result: true, message: SUCCESS.SAVED_NEWS };
     } catch (error) {
       return { result: false, message: error };
     }
   },
   remove: async ({ ucode, titles }) => {
     if (!ucode) {
-      return { result: false, message: "Error Occurred" };
+      return { result: false, message: ERRORS.GENERIC };
     }
 
     try {
@@ -121,10 +122,10 @@ module.exports = {
         .updateOne({ ucode }, { $pull: { news: { title: { $in: titles } } } });
 
       if (!delete_news.acknowledged) {
-        throw new Error("Thee was a problem deleting your news");
+        throw new Error(ERRORS.GENERIC);
       }
 
-      return { result: true, message: "News deleted successfully" };
+      return { result: true, message: SUCCESS.DELETED_NEWS };
     } catch (error) {
       return { result: false, message: error };
     }
