@@ -1,5 +1,6 @@
 const { KEY_NEWSDATA } = require("./config/config");
 const { default: axios } = require("axios");
+const { ERRORS } = require("../../utils/utils");
 
 module.exports = {
   list: async () => {
@@ -18,7 +19,7 @@ module.exports = {
         }
       );
       if (news.status !== 200) {
-        throw new Error("It was not possible to retrieve the latest news");
+        throw new Error(ERRORS.UNRECOVERABLE_NEWS);
       }
 
       const to_return = news.data.results.map((n) => {
@@ -43,7 +44,7 @@ module.exports = {
   },
   filtered_list: async ({ language }) => {
     if (!language) {
-      return { result: false, message: "Error occurred" };
+      return { result: false, message: ERRORS.MISSING_LANGUAGE };
     }
 
     const languages = {
@@ -76,7 +77,7 @@ module.exports = {
         }
       );
       if (news.status !== 200) {
-        throw new Error("It was not possible to retrieve the latest news");
+        throw new Error(ERRORS.UNRECOVERABLE_NEWS);
       }
 
       const to_return = news.data.results.map((n) => {
