@@ -1,15 +1,19 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = {
-  MISSING_FIELD: (field) => {
-    return `Please fill the ${field} field `;
-  },
   ERRORS: {
+    MISSING_FIELD: (field) => {
+      return `Please fill the ${field} field `;
+    },
     GENERIC:
       "Something went wrong with an operation that you are trying to perform 👀, try it again or try later ",
     EMAIL_OR_PASSWORD: "Email or password are incorrect",
   },
 
+  JWT_ERRORS: {
+    TokenExpiredError,
+    JsonWebTokenError,
+  },
   createToken: (name, age, email) => {
     const payload = {
       name,

@@ -4,6 +4,7 @@ const {
   createToken,
   checkForMissingField,
   ERRORS,
+  JWT_ERRORS,
 } = require("../../utils/utils");
 
 const comparePassword = async (incomingPassword, storedPassword) => {
@@ -22,7 +23,7 @@ const verifyToken = async (token, name, email, age) => {
   return new Promise((resolve, reject) => {
     const { SECRET_KEY } = process.env;
     jwt.verify(token, SECRET_KEY, function (err, decoded) {
-      const expired = "TokenExpiredError";
+      const expired = JWT_ERRORS.TokenExpiredError;
 
       if (err?.name === expired) {
         const new_token = createToken(name, age, email);
@@ -93,8 +94,8 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const { SECRET_KEY } = process.env;
       jwt.verify(token, SECRET_KEY, function (err, decoded) {
-        const expired = "TokenExpiredError";
-        const jwtError = "JsonWebTokenError";
+        const expired = JWT_ERRORS.TokenExpiredError;
+        const jwtError = JWT_ERRORS.JsonWebTokenError;
         if (err?.name === expired) {
           resolve(false);
         }
