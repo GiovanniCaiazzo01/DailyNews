@@ -1,6 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-const { createToken, checkForMissingField } = require("../../utils/utils");
+const {
+  createToken,
+  checkForMissingField,
+  ERRORS,
+  SUCCESS,
+} = require("../../utils/utils");
 
 const checkEqualityPasswords = (password, repeatPassword) => {
   if (password !== repeatPassword) return false;
@@ -21,11 +26,11 @@ const cryptPassword = (password) => {
 
 const validateNameAndAge = (name, age) => {
   if (parseInt(age) <= 0 || parseInt(age) >= 200) {
-    return { result: false, message: "Please insert a valid age" };
+    return { result: false, message: ERRORS.INVALID_AGE };
   }
 
   if (name.length > 50) {
-    return { result: false, message: "The name seems to be to long!" };
+    return { result: false, message: ERRORS.NAME_TO_LONG };
   }
 };
 
@@ -34,14 +39,14 @@ module.exports = {
     if (!email) {
       return {
         result: false,
-        message: "The information could not be retrieved EMAIL",
+        message: ERRORS.USER_NOT_RETRIVABLE,
       };
     }
 
     try {
       const user = await global.db.collection("users").findOne({ email });
       if (!user) {
-        throw new Error("The information could not be retrieved LA MADONNA");
+        throw new Error(ERRORS.GENERIC);
       }
       const to_return = {
         ucode: user.ucode,
@@ -80,7 +85,7 @@ module.exports = {
     if (missingField) {
       return {
         result: false,
-        message: `Please fill the ${missingField.field} field `,
+        message: ERRORS.MISSING_FIELD(missingField.field),
       };
     }
 
@@ -88,8 +93,7 @@ module.exports = {
     if (!passwordEquality) {
       return {
         result: false,
-        message:
-          "The passwords entered do not match. Please re-enter your password in both fields and ensure that they are identical.",
+        message: ERRORS.PASSWORD_MISMATCH,
       };
     }
 
@@ -98,7 +102,7 @@ module.exports = {
         .collection("users")
         .findOne({ email }, { $project: { _id: 0, email: 1 } });
       if (checkEmail) {
-        return { result: false, message: "This e-mail already exists" };
+        return { result: false, message: ERRORS.EMAIL_ALREADY_EXISTS };
       }
     } catch (error) {
       return false;
@@ -118,8 +122,8 @@ module.exports = {
         token,
       });
 
-      if (!register.acknowledged) throw new Error("Error Occured re-try");
-      return { result: true, message: "User Created" };
+      if (!register.acknowledged) throw new Error(ERRORS.GENERIC);
+      return { result: true, message: SUCCESS.USER_CREATED };
     } catch (error) {
       return { result: false, message: error };
     }
@@ -135,7 +139,7 @@ module.exports = {
     if (missingField) {
       return {
         result: false,
-        message: `Please fill the ${missingField.field} field `,
+        message: ERRORS.MISSING_FIELD(missingField.field),
       };
     }
     const validate = validateNameAndAge(name, age);
@@ -150,9 +154,9 @@ module.exports = {
           { email },
           { $set: { name, surname, age, email, language } }
         );
-      if (!update_user.acknowledged) throw new Error("Error Occured re-try");
+      if (!update_user.acknowledged) throw new Error(ERRORS.GENERIC);
 
-      return { result: true, message: "User update successfully" };
+      return { result: true, message: SUCCESS.USER_UPDATED };
     } catch (error) {
       console.error(error);
       return false;
