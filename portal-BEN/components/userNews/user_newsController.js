@@ -1,9 +1,9 @@
-const { uuid } = require("uuidv4");
+const { v4: uuidv4 } = require("uuid");
 const { ERRORS, SUCCESS } = require("../../utils/utils");
 
 const insertNews = async (news, ucode, update) => {
   news.forEach((element) => {
-    element.ncode = uuid();
+    element.ncode = uuidv4();
   });
 
   const news_to_save = {
