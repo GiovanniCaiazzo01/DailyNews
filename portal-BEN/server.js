@@ -5,7 +5,6 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { job_add_news, job_delete_news } = require("./cronjobs/retrive_news.js");
 
 /**
  * General Logging, BEFORE routes
@@ -60,9 +59,6 @@ const start = async () => {
     console.error(e);
   }
 
-  job_add_news("59");
-  job_add_news("1");
-  job_delete_news();
   app.listen(PORT, () => {
     console.log(`Server up and running on port ${PORT}`);
   });
