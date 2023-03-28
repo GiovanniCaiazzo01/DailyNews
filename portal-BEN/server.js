@@ -14,7 +14,7 @@ app.disable("x-powered-by");
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
+      // "http://localhost:3000",
       "https://tubular-pithivier-e141a8.netlify.app",
     ],
   })
