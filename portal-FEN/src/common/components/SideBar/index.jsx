@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
@@ -22,12 +22,12 @@ const SideBar = () => {
   };
 
   return (
-    <div onClick={handleToggle} className={`sidebar ${open ? "open" : ""}`}>
+    <div className={`sidebar ${open ? "open" : ""}`}>
       <div className="toggle">
-        <i className="bx bx-chevron-right"></i>
+        <i className="bx bx-chevron-right" onClick={handleToggle}></i>
       </div>
 
-      <div className="logo" onClick={() => handleNavItemOnClick("/")}>
+      <div className="logo">
         <Logo />
         <h3>{user?.name}</h3>
       </div>

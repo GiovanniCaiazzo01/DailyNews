@@ -12,11 +12,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { HTTPClient } from "../../api/HTTPClients";
 
 const SavedNews = () => {
-  const { user } = useUser();
-  const { isLogged, verify_auth } = useAuth();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   let [selectedNews, setSelectedNews] = useState([]);
+  const { user } = useUser();
+  const { isLogged, verify_auth } = useAuth();
 
   const handleAlert = (result, message) => {
     result
