@@ -13,10 +13,7 @@ app.disable("x-powered-by");
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://daily-news-6l0boy3v0-giovannicaiazzo01.vercel.app/",
-    ],
+    origin: ["http://localhost:3000", "https://daily-news-tan.vercel.app/"],
   })
 );
 
