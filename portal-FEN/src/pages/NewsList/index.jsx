@@ -13,12 +13,13 @@ import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  let [selectedNews, setSelectedNews] = useState([]);
+
   const { isLogged, verify_auth } = useAuth();
   const { user } = useUser();
 
-  const [news, setNews] = useState([]);
-  let [selectedNews, setSelectedNews] = useState([]);
-  const [loading, setLoading] = useState(false);
   const handleAlert = (result, message) => {
     result
       ? toast.success(message, {
@@ -75,7 +76,6 @@ const NewsList = () => {
         : await HTTPClient.get("/news/");
     const retrived_news = response?.data ?? [];
     setNews(() => retrived_news);
-
     setLoading(() => false);
   };
 

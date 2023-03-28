@@ -100,4 +100,13 @@ module.exports = {
       return { result: false, message: error };
     }
   },
+  // saved_list: async () => {
+  //   try {
+  //     const news = await global.db.collection("news").findOne({});
+  //     return { result: true, data: news };
+  //   } catch (error) {
+  //     console.log("News => ", error);
+  //     return false;
+  //   }
+  // },
 };
