@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Logo = () => {
+  const navigate = useNavigate();
   return (
     <svg
+      onClick={() => navigate("/")}
       width="81.19999999999999px"
       height="122px"
       xmlns="http://www.w3.org/2000/svg"

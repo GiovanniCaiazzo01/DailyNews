@@ -12,11 +12,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { HTTPClient } from "../../api/HTTPClients";
 
 const SavedNews = () => {
-  const { user } = useUser();
-  const { isLogged, verify_auth } = useAuth();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
   let [selectedNews, setSelectedNews] = useState([]);
+  const { user } = useUser();
+  const { isLogged, verify_auth } = useAuth();
 
   const handleAlert = (result, message) => {
     result
@@ -81,10 +81,14 @@ const SavedNews = () => {
       <PageHeader />
       {selectedNews?.length ? (
         <>
-          <Modal
-            label={`You have selected ${selectedNews.length} element, click the button to delete this news!`}
-          />
-          <Button label={"Save"} type="submit" onClick={() => onDeleteNews()} />
+          <Modal label={`You have selected ${selectedNews.length} News`} />
+          <div style={{ marginLeft: "40px" }}>
+            <Button
+              label={"Delete"}
+              type="submit"
+              onClick={() => onDeleteNews()}
+            />
+          </div>
         </>
       ) : (
         ""

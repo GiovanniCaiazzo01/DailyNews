@@ -1,6 +1,11 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { createToken, checkForMissingField } = require("../../utils/utils");
+const {
+  createToken,
+  checkForMissingField,
+  ERRORS,
+  JWT_ERRORS,
+} = require("../../utils/utils");
 
 const comparePassword = async (incomingPassword, storedPassword) => {
   return new Promise((resolve, reject) => {
@@ -18,11 +23,11 @@ const verifyToken = async (token, name, email, age) => {
   return new Promise((resolve, reject) => {
     const { SECRET_KEY } = process.env;
     jwt.verify(token, SECRET_KEY, function (err, decoded) {
-      const expired = "TokenExpiredError";
+      const expired = JWT_ERRORS.TokenExpiredError;
 
       if (err?.name === expired) {
         const new_token = createToken(name, age, email);
-        new_token ? resolve(new_token) : reject("Error occurred");
+        new_token ? resolve(new_token) : reject(ERRORS.GENERIC);
       }
 
       if (err) {
@@ -40,7 +45,7 @@ module.exports = {
     if (missingField.result) {
       return {
         result: false,
-        message: `Please fill the ${missingField.field} field `,
+        message: ERRORS.MISSING_FIELD(missingField.field),
       };
     }
 
@@ -59,12 +64,12 @@ module.exports = {
         }
       );
       if (!user) {
-        return { result: false, message: "Email or password are incorrect" };
+        return { result: false, message: ERRORS.EMAIL_OR_PASSWORD };
       }
 
       const comparedPassword = await comparePassword(password, user.password);
       if (!comparedPassword) {
-        return { result: false, message: "Email or password are incorrect" };
+        return { result: false, message: ERRORS.EMAIL_OR_PASSWORD };
       }
 
       const validToken = await verifyToken(
@@ -89,8 +94,8 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const { SECRET_KEY } = process.env;
       jwt.verify(token, SECRET_KEY, function (err, decoded) {
-        const expired = "TokenExpiredError";
-        const jwtError = "JsonWebTokenError";
+        const expired = JWT_ERRORS.TokenExpiredError;
+        const jwtError = JWT_ERRORS.JsonWebTokenError;
         if (err?.name === expired) {
           resolve(false);
         }

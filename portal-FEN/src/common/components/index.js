@@ -2,7 +2,6 @@ export { Loader } from "./Loader";
 export { Logo } from "./Logo";
 export { Modal } from "./Modal";
 export { PageHeader } from "./PageHeader";
-export { Alert } from "./Alert";
 export { BackGround } from "./Background";
 export { Form } from "react-router-dom";
 export { Input } from "./Input";

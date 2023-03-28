@@ -1,6 +1,6 @@
 .post {
   position: relative;
-  width: 22em;
+  max-width: 350px;
   height: 30em;
   border-radius: 0.7em;
   margin-bottom: 30px;

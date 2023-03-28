@@ -9,7 +9,7 @@ const PublicRoute = ({ component: Component }) => {
   return (
     <>
       <SideBar />
-      <div style={{ marginTop: "50px", marginLeft: " 75px", width: "100%" }}>
+      <div style={{ marginTop: "50px", width: "100%" }}>
         <Component />
       </div>
     </>
