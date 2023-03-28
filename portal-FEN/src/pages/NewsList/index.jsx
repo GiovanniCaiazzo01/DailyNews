@@ -87,10 +87,10 @@ const NewsList = () => {
       <PageHeader />
       {selectedNews.length ? (
         <>
-          <Modal
-            label={`You have selected ${selectedNews.length} element, Click the button to save it`}
-          />
-          <Button label={"Save"} type="submit" onClick={() => onSaveNews()} />
+          <Modal label={`You have selected ${selectedNews.length} News`} />
+          <div style={{ marginLeft: "40px" }}>
+            <Button label={"Save"} type="submit" onClick={() => onSaveNews()} />
+          </div>
         </>
       ) : (
         ""

@@ -81,10 +81,14 @@ const SavedNews = () => {
       <PageHeader />
       {selectedNews?.length ? (
         <>
-          <Modal
-            label={`You have selected ${selectedNews.length} element, click the button to delete this news!`}
-          />
-          <Button label={"Save"} type="submit" onClick={() => onDeleteNews()} />
+          <Modal label={`You have selected ${selectedNews.length} News`} />
+          <div style={{ marginLeft: "40px" }}>
+            <Button
+              label={"Delete"}
+              type="submit"
+              onClick={() => onDeleteNews()}
+            />
+          </div>
         </>
       ) : (
         ""
