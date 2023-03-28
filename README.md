@@ -5,7 +5,7 @@
 
 
 ## Demo
-https://daily-news-vds8.onrender.com/
+https://tubular-pithivier-e141a8.netlify.app/
 
 
 # Daily News
