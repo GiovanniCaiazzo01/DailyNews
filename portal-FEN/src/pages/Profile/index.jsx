@@ -100,7 +100,7 @@ const Profile = () => {
   }, [isLogged]);
 
   return (
-    <div>
+    <>
       <PageHeader />
       <Form
         loading={loading}
@@ -116,7 +116,7 @@ const Profile = () => {
         upperSelect="Chose your news language"
       />
       <ToastContainer />
-    </div>
+    </>
   );
 };
 
