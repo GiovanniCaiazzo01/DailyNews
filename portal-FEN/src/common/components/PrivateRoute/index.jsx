@@ -14,7 +14,10 @@ const PrivateRoute = ({ component: Component }) => {
       <div
         style={{
           marginTop: "50px",
-          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          margin: "0 auto",
         }}
       >
         <Component />

@@ -14,7 +14,7 @@ import { HTTPClient } from "../../api/HTTPClients";
 const SavedNews = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
-  let [selectedNews, setSelectedNews] = useState([]);
+  // let [selectedNews, setSelectedNews] = useState([]);
   const { user } = useUser();
   const { isLogged, verify_auth } = useAuth();
 
@@ -38,61 +38,62 @@ const SavedNews = () => {
       console.log(error);
     }
   };
-  const onSelectedNews = (checked, item) => {
-    if (!checked) {
-      setSelectedNews((selectedNews) =>
-        selectedNews.filter((element) => element.id !== item.title)
-      );
-    } else {
-      const to_insert = {
-        checked: checked,
-        id: item.title,
-        news: item,
-      };
-      setSelectedNews((current) => [...current, to_insert]);
-    }
-  };
+  // const onSelectedNews = (checked, item) => {
+  //   if (!checked) {
+  //     setSelectedNews((selectedNews) =>
+  //       selectedNews.filter((element) => element.id !== item.title)
+  //     );
+  //   } else {
+  //     const to_insert = {
+  //       checked: checked,
+  //       id: item.title,
+  //       news: item,
+  //     };
+  //     setSelectedNews((current) => [...current, to_insert]);
+  //   }
+  // };
 
-  const onDeleteNews = async () => {
+  // const onDeleteNews = async () => {
+  //   const { ucode } = user;
+
+  //   const titles = [];
+  //   selectedNews.forEach((news) => {
+  //     const title = news.news.title;
+  //     titles.push(title);
+  //   });
+  //   const delete_news = await HTTPClient.delete(
+  //     "/user/saved-news/delete/",
+  //     ucode,
+  //     { titles }
+  //   );
+
+  //   handleAlert(delete_news.result, delete_news.message);
+  //   setSelectedNews(() => []);
+  // };
+
+  const onDelete = async (news) => {
+    setLoading(() => true);
+    verify_auth();
     const { ucode } = user;
+    const title = news.title;
 
-    const titles = [];
-    selectedNews.forEach((news) => {
-      const title = news.news.title;
-      titles.push(title);
-    });
     const delete_news = await HTTPClient.delete(
       "/user/saved-news/delete/",
       ucode,
-      { titles }
+      { title }
     );
-
     handleAlert(delete_news.result, delete_news.message);
-    setSelectedNews(() => []);
+    setLoading(() => false);
   };
 
   useEffect(() => {
     fetchSavedNews();
-  }, [selectedNews]);
+  }, [loading]);
 
   verify_auth();
   return (
     <>
       <PageHeader />
-      {selectedNews?.length ? (
-        <>
-          <Modal label={`You have selected ${selectedNews.length} News`} />
-          <div style={{ marginLeft: "40px" }}>
-            <Button
-              label={"Delete"}
-              type="submit"
-              onClick={() => onDeleteNews()}
-            />
-          </div>
-        </>
-      ) : (
-        ""
-      )}
       <div
         style={{
           display: "flex",
@@ -102,7 +103,7 @@ const SavedNews = () => {
           justifyContent: "space-around",
         }}
       >
-        <Card onSelectedNews={onSelectedNews} news={news} isLogged={isLogged} />
+        <Card onDelete={onDelete} news={news} isLogged={isLogged} />
         <ToastContainer />
       </div>
     </>

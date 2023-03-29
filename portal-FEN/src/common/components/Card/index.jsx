@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./style.css";
-const Card = ({ onSelectedNews, news, isLogged }) => {
+const Card = ({ onDelete, onSave, news, isLogged }) => {
   const { pathname } = useLocation();
   const truncateWords = (string, limit) => {
     const words = string ? string.split(" ") : "";
@@ -14,71 +14,65 @@ const Card = ({ onSelectedNews, news, isLogged }) => {
     <>
       {news
         ? news.map((item) => (
-            <Link to={item.link} target="_blank" key={item.title}>
-              <div
-                key={item.title}
-                className="post"
-                style={{
-                  backgroundImage: `url(${
-                    item.image_url
-                      ? item.image_url
-                      : `https://picsum.photos/id/${
-                          Math.floor(Math.random() * 100) + 1
-                        }/1920/1080`
-                  })`,
-                }}
-              >
-                <div className="title-box">
-                  <h3>{truncateWords(item?.title, 6)}</h3>
-                  <hr />
-                  <div className="intro">
-                    {item.creator
-                      ? truncateWords(item?.creator[0], 10)
-                      : truncateWords(item?.source_id, 10)}
-                  </div>
+            <div id="card-container">
+              <div id="card-header">
+                <div id="card-header-text">
+                  <h3>{truncateWords(item.title, 20)}</h3>
                 </div>
-                <div className="info">
-                  <span>{truncateWords(item.description, 20)}</span>
-                </div>
-                <div className="footer">
-                  <div className="icon-holder">
-                    <span>
-                      <i className="fa fa-comment-o"></i>
-                      {isLogged && pathname === "/" && (
-                        <span>
-                          Save{" "}
-                          <input
-                            type="checkbox"
-                            id={item.title}
-                            name={item.title}
-                            onClick={(e) =>
-                              onSelectedNews(e.target.checked, item)
-                            }
-                          />
-                        </span>
-                      )}
-                      {isLogged && pathname === "/saved" && (
-                        <span>
-                          Delete{" "}
-                          <input
-                            type="checkbox"
-                            id={item.title}
-                            name={item.title}
-                            onClick={(e) =>
-                              onSelectedNews(e.target.checked, item)
-                            }
-                          />
-                        </span>
-                      )}
-                      <span className="space"></span>
-                      <i className="fa fa-calendar"></i>
-                      <span>{item.pubication_date}</span>
-                    </span>
-                  </div>
-                </div>
-                <div className="color-overlay"></div>
+                <div id="card-date">{item.pubication_date}</div>
               </div>
-            </Link>
+              <Link to={item.link} target="_blank" key={item.title}>
+                <div id="card-image">
+                  <img
+                    src={
+                      item.image_url
+                        ? item.image_url
+                        : `https://picsum.photos/id/${
+                            Math.floor(Math.random() * 100) + 1
+                          }/1920/1080`
+                    }
+                  />
+                </div>
+              </Link>
+              {isLogged && pathname === "/" && (
+                <div id="card-footer">
+                  <div id="icon-container">
+                    <i
+                      id="save"
+                      class="bx bx-save"
+                      onClick={() => onSave(item)}
+                    ></i>
+                  </div>
+                </div>
+              )}
+
+              {isLogged && pathname === "/saved" && (
+                <div id="card-footer">
+                  <div id="icon-container">
+                    <i
+                      id="delete"
+                      class="bx bx-trash"
+                      onClick={() => onDelete(item)}
+                    ></i>
+                  </div>
+                </div>
+              )}
+
+              {/* TODO: 
+                    - fare in modo che l'iconasi trasformi in una call tu action
+                    - bisogna salvare le news una alla volta 
+                    - bisogna utilizzare i messagi di toast */}
+              {/* <i
+                      type="checkbox"
+                      id={item.title}
+                      name={item.title}
+                      onClick={(e) => onSelectedNews(e.target.checked, item)}
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      className="bx bxs-save"
+                    ></i> */}
+            </div>
           ))
         : ""}
     </>
