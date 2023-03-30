@@ -5,12 +5,18 @@ const SideBar = loadable(() => import("../"), {
   resolveComponent: (components) => components.SideBar,
 });
 
+const BottomBar = loadable(() => import("../"), {
+  resolveComponent: (components) => components.BottomBar,
+});
+
+import useWindowDimension from "../../../hooks/getWindowDimension";
+
 const PrivateRoute = ({ component: Component }) => {
   const token = localStorage.getItem("token");
 
   return token ? (
     <>
-      <SideBar />
+      {width <= 540 ? <BottomBar /> : <SideBar />}
       <div
         style={{
           marginTop: "50px",

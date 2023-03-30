@@ -12,8 +12,6 @@ const BottomBar = loadable(() => import("../"), {
 const PublicRoute = ({ component: Component }) => {
   const { height, width } = useWindowDimension();
 
-  console.log("height", height, "width", width);
-
   return (
     <>
       {width <= 540 ? <BottomBar /> : <SideBar />}
