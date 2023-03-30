@@ -1,11 +1,5 @@
 const express = require("express");
-const {
-  list,
-  save,
-  save_list,
-  remove_list,
-  remove,
-} = require("./user_newsController");
+const { list, save, remove } = require("./user_newsController");
 const router = express.Router();
 
 router.get("/:ucode", async (req, res) => {
