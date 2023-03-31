@@ -78,7 +78,9 @@ module.exports = {
     if (!news) return { result: false, message: ERRORS.GENERIC };
 
     let user_news;
-    const { ucode } = news;
+    const ucode = news.ucode;
+    if (!ucode) return { result: false, message: ERRORS.GENERIC };
+
     try {
       user_news = await global.db.collection("user_news").findOne({ ucode });
       if (!user_news) {
@@ -158,7 +160,7 @@ module.exports = {
     }
   },
   remove: async ({ ucode, title }) => {
-    if (!ucode) {
+    if (!(ucode && title)) {
       return { result: false, message: ERRORS.GENERIC };
     }
 

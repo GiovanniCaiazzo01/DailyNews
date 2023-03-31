@@ -17,7 +17,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
             <div id="card-container">
               <div id="card-header">
                 <div id="card-header-text">
-                  <h3>{truncateWords(item.title, 20)}</h3>
+                  <h3>{truncateWords(item.title, 10)}</h3>
                 </div>
                 <div id="card-date">{item.pubication_date}</div>
               </div>

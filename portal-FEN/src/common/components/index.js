@@ -1,9 +1,10 @@
+export { BottomBar } from "./BottomBar";
 export { Loader } from "./Loader";
 export { Logo } from "./Logo";
 export { Modal } from "./Modal";
 export { PageHeader } from "./PageHeader";
 export { BackGround } from "./Background";
-export { Form } from "react-router-dom";
+export { Form } from "./Form";
 export { Input } from "./Input";
 export { Card } from "./Card";
 export { Button } from "./Button";
