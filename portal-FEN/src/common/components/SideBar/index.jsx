@@ -22,9 +22,9 @@ const SideBar = () => {
   };
 
   return (
-    <div className={`sidebar ${open ? "open" : ""}`}>
+    <div className={`sidebar ${open ? "open" : ""}`} onClick={handleToggle}>
       <div className="toggle">
-        <i className="bx bx-chevron-right" onClick={handleToggle}></i>
+        <i className="bx bx-chevron-right"></i>
       </div>
 
       <div className="logo">
