@@ -13,67 +13,49 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
   return (
     <>
       {news
-        ? news.map((item) => (
-            <div id="card-container">
-              <div id="card-header">
-                <div id="card-header-text">
-                  <h3>{truncateWords(item.title, 10)}</h3>
+        ? news.map((item) => {
+            const bg = `https://picsum.photos/id/${
+              Math.floor(Math.random() * 100) + 1
+            }/1920/1080`;
+            return (
+              <div id="card-container">
+                <div id="card-header">
+                  <div id="card-header-text">
+                    <h3>{truncateWords(item.title, 10)}</h3>
+                  </div>
+                  <div id="card-date">{item.pubication_date}</div>
                 </div>
-                <div id="card-date">{item.pubication_date}</div>
+                <Link to={item.link} target="_blank" key={item.title}>
+                  <div id="card-image">
+                    <img src={item.image_url ? item.image_url : bg} />
+                  </div>
+                </Link>
+                {isLogged && pathname === "/" && (
+                  <div id="card-footer">
+                    <div id="icon-container">
+                      <i
+                        id="save"
+                        class="bx bx-save"
+                        onClick={() => onSave(item)}
+                      ></i>
+                    </div>
+                  </div>
+                )}
+
+                {isLogged && pathname === "/saved" && (
+                  <div id="card-footer">
+                    <div id="icon-container">
+                      <i
+                        id="delete"
+                        class="bx bx-trash"
+                        onClick={() => onDelete(item)}
+                      ></i>
+                    </div>
+                  </div>
+                )}
               </div>
-              <Link to={item.link} target="_blank" key={item.title}>
-                <div id="card-image">
-                  <img
-                    src={
-                      item.image_url
-                        ? item.image_url
-                        : `https://picsum.photos/id/${
-                            Math.floor(Math.random() * 100) + 1
-                          }/1920/1080`
-                    }
-                  />
-                </div>
-              </Link>
-              {isLogged && pathname === "/" && (
-                <div id="card-footer">
-                  <div id="icon-container">
-                    <i
-                      id="save"
-                      class="bx bx-save"
-                      onClick={() => onSave(item)}
-                    ></i>
-                  </div>
-                </div>
-              )}
-
-              {isLogged && pathname === "/saved" && (
-                <div id="card-footer">
-                  <div id="icon-container">
-                    <i
-                      id="delete"
-                      class="bx bx-trash"
-                      onClick={() => onDelete(item)}
-                    ></i>
-                  </div>
-                </div>
-              )}
-
-              {/* TODO: 
-                    - fare in modo che l'iconasi trasformi in una call tu action
-                    - bisogna salvare le news una alla volta 
-                    - bisogna utilizzare i messagi di toast */}
-              {/* <i
-                      type="checkbox"
-                      id={item.title}
-                      name={item.title}
-                      onClick={(e) => onSelectedNews(e.target.checked, item)}
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      className="bx bxs-save"
-                    ></i> */}
-            </div>
-          ))
+            );
+          })
         : ""}
     </>
   );
