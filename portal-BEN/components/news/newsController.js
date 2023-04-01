@@ -30,7 +30,11 @@ module.exports = {
           creator: n?.creator,
           source_id: n.source_id,
           link: n.link,
-          image_url: n.image_url,
+          image_url: n.image_url
+            ? n.image_url
+            : `https://picsum.photos/id/${
+                Math.floor(Math.random() * 100) + 1
+              }/1920/1080`,
           category: n.category,
           country: n.country,
           language: n.language,

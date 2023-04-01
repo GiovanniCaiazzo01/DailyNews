@@ -14,9 +14,6 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
     <>
       {news
         ? news.map((item) => {
-            const bg = `https://picsum.photos/id/${
-              Math.floor(Math.random() * 100) + 1
-            }/1920/1080`;
             return (
               <div id="card-container">
                 <div id="card-header">
@@ -27,7 +24,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                 </div>
                 <Link to={item.link} target="_blank" key={item.title}>
                   <div id="card-image">
-                    <img src={item.image_url ? item.image_url : bg} />
+                    <img src={item.image_url} />
                   </div>
                 </Link>
                 {isLogged && pathname === "/" && (
