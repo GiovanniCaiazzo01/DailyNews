@@ -100,7 +100,7 @@ const SavedNews = () => {
           flexWrap: "wrap",
           width: "100%",
           alignContent: "center",
-          justifyContent: "space-around",
+          justifyContent: "center",
         }}
       >
         <Card onDelete={onDelete} news={news} isLogged={isLogged} />
