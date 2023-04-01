@@ -1,0 +1,1 @@
+import{u as s,c as u,b as r,r as c}from"./index-34a4ff17.js";const f=()=>{const{verify_auth:t}=s(),{pathname:o}=u(),a=r(),e=()=>(localStorage.clear(),t());c.useEffect(()=>{e(),o==="/logout"&&a("/")},[])};export{f as default};
