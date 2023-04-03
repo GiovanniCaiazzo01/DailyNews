@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import { ToastContainer, toast } from "react-toastify";
 
-import {
-  Button,
-  Card,
-  Loader,
-  Modal,
-  PageHeader,
-} from "../../common/components";
+import { Card, Loader, PageHeader } from "../../common/components";
 import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 

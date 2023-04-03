@@ -23,6 +23,10 @@ module.exports = {
       }
 
       const to_return = news.data.results.map((n) => {
+        const bg = `https://picsum.photos/id/${
+          Math.floor(Math.random() * 100) + 1
+        }/1920/1080`;
+
         return {
           title: n.title,
           description: n.description,
@@ -30,14 +34,8 @@ module.exports = {
           creator: n?.creator,
           source_id: n.source_id,
           link: n.link,
-          image_url: n.image_url
-            ? n.image_url
-            : `https://picsum.photos/id/${
-                Math.floor(Math.random() * 100) + 1
-              }/1920/1080`,
+          image_url: n.image_url ? n.image_url : bg,
           category: n.category,
-          country: n.country,
-          language: n.language,
         };
       });
 
