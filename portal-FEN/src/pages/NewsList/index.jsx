@@ -8,7 +8,7 @@ import useUser from "../../hooks/useUser";
 
 const NewsList = () => {
   const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [nextPage, setNextPage] = useState("");
   const { isLogged, verify_auth } = useAuth();
   const { user } = useUser();
@@ -24,40 +24,33 @@ const NewsList = () => {
         });
   };
 
-  const onSave = async (news) => {
-    verify_auth();
-    setLoading(true);
-    news.ucode = user.ucode;
-    const save_news = await HTTPClient.post("/user/saved-news/save", { news });
-    handleAlert(save_news.result, save_news.message);
-    setLoading(false);
-  };
-
-  const fetchNews = async () => {
+  const fetchNews = async (page) => {
     setLoading(true);
 
     const response = await HTTPClient.post("/news/", {
-      nextPage: nextPageRef.current,
+      nextPage: page,
       language: isLogged ? user?.language : "",
     });
-    const retrived_news = response?.data.news ?? [];
-    setNews((prevNews) => [...prevNews, ...retrived_news]);
+    const retrieved_news = response?.data.news ?? [];
+    setNews((prevNews) => [...prevNews, ...retrieved_news]);
     setNextPage(response.data.nextPage);
     nextPageRef.current = response.data.nextPage;
     setLoading(false);
   };
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
-      fetchNews();
-    }
-  };
-
   useEffect(() => {
-    fetchNews();
+    fetchNews("");
+
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        if (nextPageRef.current !== "") {
+          fetchNews(nextPageRef.current);
+        }
+      }
+    };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -74,7 +67,7 @@ const NewsList = () => {
           justifyContent: "center",
         }}
       >
-        <Card onSave={onSave} news={news} isLogged={isLogged} />
+        <Card news={news} />
         <ToastContainer />
       </div>
     </>
