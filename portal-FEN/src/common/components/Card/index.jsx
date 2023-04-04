@@ -20,11 +20,16 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                   <div id="card-header-text">
                     <h3>{truncateWords(item.title, 10)}</h3>
                   </div>
-                  <div id="card-date">{item.pubication_date}</div>
+                  <div id="card-info">
+                    <div>{item.pubication_date}</div>
+                    <div>
+                      {item.creator ? truncateWords(...item.creator, 1) : ""}
+                    </div>
+                  </div>
                 </div>
                 <Link to={item.link} target="_blank" key={item.title}>
                   <div id="card-image">
-                    <img src={item.image_url} />
+                    <img src={item.image_url} loading="lazy" />
                   </div>
                 </Link>
                 {isLogged && pathname === "/" && (
