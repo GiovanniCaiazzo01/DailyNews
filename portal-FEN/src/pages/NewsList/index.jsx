@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -9,10 +9,10 @@ import useUser from "../../hooks/useUser";
 const NewsList = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
-  // let [selectedNews, setSelectedNews] = useState([]);
-
+  const [nextPage, setNextPage] = useState("");
   const { isLogged, verify_auth } = useAuth();
   const { user } = useUser();
+  const nextPageRef = useRef(nextPage);
 
   const handleAlert = (result, message) => {
     result
@@ -24,68 +24,43 @@ const NewsList = () => {
         });
   };
 
-  // WARN: OLD CALLBACK FOR SAVING MULTIPLE NEWS IN A TIME
-  // const onSelectedNews = (checked, item) => {
-  //   if (!checked) {
-  //     setSelectedNews((selectedNews) =>
-  //       selectedNews.filter((element) => element.id !== item.title)
-  //     );
-  //   } else {
-  //     const to_insert = {
-  //       checked: checked,
-  //       id: item.title,
-  //       news: item,
-  //     };
-  //     setSelectedNews((current) => [...current, to_insert]);
-  //   }
-  // };
-
-  // const onSaveNews = async () => {
-  //   verify_auth();
-  //   const news_to_send = [];
-  //   let tmp = {};
-  //   selectedNews.forEach((news) => {
-  //     news.news.ucode = user.ucode;
-  //     delete news.checked;
-  //     delete news.id;
-  //     tmp = news.news;
-  //     news_to_send.push(tmp);
-  //     tmp = {};
-  //   });
-
-  //   const response = await HTTPClient.post(
-  //     "/user/saved-news/save",
-  //     news_to_send
-  //   );
-
-  //   handleAlert(response.result, response.message);
-
-  //   setSelectedNews(() => []);
-  // };
-
   const onSave = async (news) => {
     verify_auth();
-    setLoading(() => true);
+    setLoading(true);
     news.ucode = user.ucode;
     const save_news = await HTTPClient.post("/user/saved-news/save", { news });
     handleAlert(save_news.result, save_news.message);
-    setLoading(() => false);
+    setLoading(false);
   };
 
-  const fetchNews = async (nextPage) => {
-    setLoading(() => true);
+  const fetchNews = async () => {
+    setLoading(true);
 
     const response = await HTTPClient.post("/news/", {
-      nextPage,
+      nextPage: nextPageRef.current,
       language: isLogged ? user?.language : "",
     });
     const retrived_news = response?.data.news ?? [];
-    setNews(() => retrived_news);
-    setLoading(() => false);
+    setNews((prevNews) => [...prevNews, ...retrived_news]);
+    setNextPage(response.data.nextPage);
+    nextPageRef.current = response.data.nextPage;
+    setLoading(false);
+  };
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      fetchNews();
+    }
   };
 
   useEffect(() => {
     fetchNews();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
