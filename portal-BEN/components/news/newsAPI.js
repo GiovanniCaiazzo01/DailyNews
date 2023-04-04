@@ -1,25 +1,11 @@
 const express = require("express");
-const { list, filtered_list, saved_list } = require("./newsController");
+const { list } = require("./newsController");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const news = await list();
-  return res.send(news);
-});
-
-// router.get("/delayed", async (req, res) => {
-//   const news = await saved_list();
-//   return res.send(news);
-// });
-
-router.get("/:language", async (req, res) => {
-  const { language } = req.params;
-
-  const payload = {
-    language,
-  };
-
-  const news = await filtered_list(payload);
+router.post("/", async (req, res) => {
+  const { nextPage, language } = req.body;
+  const payload = { nextPage, language };
+  const news = await list(payload);
   return res.send(news);
 });
 
