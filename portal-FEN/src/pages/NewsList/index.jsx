@@ -72,13 +72,14 @@ const NewsList = () => {
     setLoading(() => false);
   };
 
-  const fetchNews = async () => {
+  const fetchNews = async (nextPage) => {
     setLoading(() => true);
-    const response =
-      isLogged && user?.language
-        ? await HTTPClient.get("/news", user.language)
-        : await HTTPClient.get("/news/");
-    const retrived_news = response?.data ?? [];
+
+    const response = await HTTPClient.post("/news/", {
+      nextPage,
+      language: isLogged ? user?.language : "",
+    });
+    const retrived_news = response?.data.news ?? [];
     setNews(() => retrived_news);
     setLoading(() => false);
   };

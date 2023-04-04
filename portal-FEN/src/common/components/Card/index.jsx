@@ -22,7 +22,9 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                   </div>
                   <div id="card-info">
                     <div>{item.pubication_date}</div>
-                    <div>{item.creator ? item.creator : ""}</div>
+                    <div>
+                      {item.creator ? truncateWords(...item.creator, 1) : ""}
+                    </div>
                   </div>
                 </div>
                 <Link to={item.link} target="_blank" key={item.title}>
