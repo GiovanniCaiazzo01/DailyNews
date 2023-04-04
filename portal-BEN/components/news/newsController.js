@@ -11,7 +11,7 @@ module.exports = {
       };
       const queryOptions = {
         language: language ? `language=${languages[language]}` : "language=en",
-        nextPage: nextPage ? nextPage : "",
+        nextPage: nextPage ? `page=${nextPage}` : "",
       };
       const query = Object.values(queryOptions)
         .map((q) => q && (q[0] = "&" + q))

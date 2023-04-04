@@ -23,7 +23,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                   <div id="card-info">
                     <div>{item.pubication_date}</div>
                     <div>
-                      {item.creator ? truncateWords(...item.creator, 3) : ""}
+                      {item.creator ? truncateWords(...item.creator, 1) : ""}
                     </div>
                   </div>
                 </div>

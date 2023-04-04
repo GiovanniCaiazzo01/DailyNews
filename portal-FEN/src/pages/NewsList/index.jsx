@@ -72,36 +72,20 @@ const NewsList = () => {
     setLoading(() => false);
   };
 
-  const fetchNews = async () => {
+  const fetchNews = async (nextPage) => {
     setLoading(() => true);
 
-    const nextPage = news.nextPage;
-    const language = user?.language;
-
-    const response = await HTTPClient.post("/news/", { nextPage, language });
-    console.log(response.data);
+    const response = await HTTPClient.post("/news/", {
+      nextPage,
+      language: isLogged ? user?.language : "",
+    });
     const retrived_news = response?.data.news ?? [];
     setNews(() => retrived_news);
     setLoading(() => false);
   };
 
-  // const handleScroll = () => {
-  //   if (
-  //     window.innerHeight + document.documentElement.scrollTop ===
-  //     document.documentElement.offsetHeight
-  //   ) {
-  //     fetchNews();
-  //   }
-  // };
-
   useEffect(() => {
     fetchNews();
-
-    // window.addEventListener("scroll", handleScroll);
-
-    // return () => {
-    //   window.removeEventListener("scroll", handleScroll);
-    // };
   }, []);
 
   return (
