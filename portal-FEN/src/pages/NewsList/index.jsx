@@ -31,15 +31,42 @@ const NewsList = () => {
       nextPage: page,
       language: isLogged ? user?.language : "",
     });
+
     const retrieved_news = response?.data.news ?? [];
-    setNews((prevNews) => [...prevNews, ...retrieved_news]);
-    setNextPage(response.data.nextPage);
-    nextPageRef.current = response.data.nextPage;
+
+    if (!areNewsEqual(news, retrieved_news)) {
+      setNews((prevNews) => [...prevNews, ...retrieved_news]);
+      setNextPage(response.data.nextPage);
+      nextPageRef.current = response.data.nextPage;
+    }
+
     setLoading(false);
   };
 
+  const areNewsEqual = (newsA, newsB) => {
+    if (newsA.length !== newsB.length) {
+      return false;
+    }
+
+    for (let i = 0; i < newsA.length; i++) {
+      if (JSON.stringify(newsA[i]) !== JSON.stringify(newsB[i])) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const onSave = async (news) => {
+    verify_auth();
+    setLoading(() => true);
+    news.ucode = user.ucode;
+    const save_news = await HTTPClient.post("/user/saved-news/save", { news });
+    handleAlert(save_news.result, save_news.message);
+    setLoading(() => false);
+  };
   useEffect(() => {
-    fetchNews("");
+    fetchNews();
 
     const handleScroll = () => {
       if (
@@ -67,10 +94,11 @@ const NewsList = () => {
           justifyContent: "center",
         }}
       >
-        <Card news={news} />
+        <Card news={news} onSave={onSave} isLogged={isLogged} />
         <ToastContainer />
       </div>
     </>
   );
 };
+
 export { NewsList };

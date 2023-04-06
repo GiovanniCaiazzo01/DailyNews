@@ -37,7 +37,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                     <div id="icon-container">
                       <i
                         id="save"
-                        class="bx bx-save"
+                        className="bx bx-save"
                         onClick={() => onSave(item)}
                       ></i>
                     </div>
@@ -49,7 +49,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                     <div id="icon-container">
                       <i
                         id="delete"
-                        class="bx bx-trash"
+                        className="bx bx-trash"
                         onClick={() => onDelete(item)}
                       ></i>
                     </div>

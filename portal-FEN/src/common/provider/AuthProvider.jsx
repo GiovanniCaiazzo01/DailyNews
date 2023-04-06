@@ -1,21 +1,22 @@
-import React, { createContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { createContext, useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { HTTPClient } from "../../api/HTTPClients";
 const AuthContext = createContext();
+
+const verify_auth = async () => {
+  return await HTTPClient.checkToken();
+};
+
 const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
 
-  const navigate = useNavigate();
   const { pathname } = useLocation();
-  const verify_auth = async () => {
-    return await HTTPClient.checkToken().then((result) =>
-      setIsLogged(() => result)
-    );
-  };
+
+  const memoizedVerifyAuth = useMemo(() => verify_auth, []);
 
   useEffect(() => {
-    verify_auth();
-  }, [pathname]);
+    memoizedVerifyAuth().then((isLogged) => setIsLogged(() => isLogged));
+  }, [pathname, memoizedVerifyAuth]);
 
   return (
     <AuthContext.Provider value={{ isLogged, verify_auth }}>
