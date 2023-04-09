@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { HTTPClient } from "../../api/HTTPClients";
 const AuthContext = createContext();
@@ -12,11 +12,15 @@ const AuthProvider = ({ children }) => {
 
   const { pathname } = useLocation();
 
-  const memoizedVerifyAuth = useMemo(() => verify_auth, []);
+  const memoizedVerifyAuth = useCallback(async () => verify_auth(), [pathname]);
 
   useEffect(() => {
-    memoizedVerifyAuth().then((isLogged) => setIsLogged(() => isLogged));
-  }, [pathname, memoizedVerifyAuth]);
+    memoizedVerifyAuth().then((response) => {
+      if (response !== isLogged) {
+        setIsLogged(() => response);
+      }
+    });
+  }, [memoizedVerifyAuth]);
 
   return (
     <AuthContext.Provider value={{ isLogged, verify_auth }}>
