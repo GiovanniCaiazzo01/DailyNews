@@ -34,27 +34,11 @@ const NewsList = () => {
 
     const retrieved_news = response?.data.news ?? [];
 
-    if (!areNewsEqual(news, retrieved_news)) {
-      setNews((prevNews) => [...prevNews, ...retrieved_news]);
-      setNextPage(response.data.nextPage);
-      nextPageRef.current = response.data.nextPage;
-    }
+    setNews((prevNews) => [...prevNews, ...retrieved_news]);
+    setNextPage(response.data.nextPage);
+    nextPageRef.current = response.data.nextPage;
 
     setLoading(false);
-  };
-
-  const areNewsEqual = (newsA, newsB) => {
-    if (newsA.length !== newsB.length) {
-      return false;
-    }
-
-    for (let i = 0; i < newsA.length; i++) {
-      if (JSON.stringify(newsA[i]) !== JSON.stringify(newsB[i])) {
-        return false;
-      }
-    }
-
-    return true;
   };
 
   const onSave = async (news) => {
@@ -74,6 +58,7 @@ const NewsList = () => {
         document.documentElement.offsetHeight
       ) {
         if (nextPageRef.current !== "") {
+          console.log("re-rendered news");
           fetchNews(nextPageRef.current);
         }
       }
