@@ -15,7 +15,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
       {news
         ? news.map((item) => {
             return (
-              <div id="card-container">
+              <div id="card-container" key={item.title}>
                 <div id="card-header">
                   <div id="card-header-text">
                     <h3>{truncateWords(item.title, 10)}</h3>
