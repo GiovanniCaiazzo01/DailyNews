@@ -91,6 +91,7 @@ module.exports = {
   },
   verify_token: async (token) => {
     token = token.split(" ")[1];
+
     return new Promise((resolve, reject) => {
       const { SECRET_KEY } = process.env;
       jwt.verify(token, SECRET_KEY, function (err, decoded) {
