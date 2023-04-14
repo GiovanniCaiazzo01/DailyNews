@@ -1,3 +1,4 @@
+export { Logout } from "./Logout/Logout";
 export { SavedNews } from "./SavedNews";
 export { Profile } from "./Profile";
 export { Register } from "./Register";

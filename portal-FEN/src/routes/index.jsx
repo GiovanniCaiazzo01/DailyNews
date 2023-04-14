@@ -21,8 +21,8 @@ const Profile = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.Profile,
 });
 
-const Logout = loadable(() => import("../hooks/useLogout"), {
-  resolveComponent: (components) => components.default,
+const Logout = loadable(() => import("../pages"), {
+  resolveComponent: (components) => components.Logout,
 });
 
 const MainRoutes = () => {
