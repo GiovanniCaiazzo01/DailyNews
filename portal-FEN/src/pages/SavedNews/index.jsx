@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  // Alert,
-  Button,
-  Card,
-  Modal,
-  PageHeader,
-} from "../../common/components";
+import { Card, PageHeader } from "../../common/components";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,7 +8,6 @@ import { HTTPClient } from "../../api/HTTPClients";
 const SavedNews = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
-  // let [selectedNews, setSelectedNews] = useState([]);
   const { user } = useUser();
   const { isLogged, verify_auth } = useAuth();
 
@@ -38,38 +31,6 @@ const SavedNews = () => {
       console.log(error);
     }
   };
-  // const onSelectedNews = (checked, item) => {
-  //   if (!checked) {
-  //     setSelectedNews((selectedNews) =>
-  //       selectedNews.filter((element) => element.id !== item.title)
-  //     );
-  //   } else {
-  //     const to_insert = {
-  //       checked: checked,
-  //       id: item.title,
-  //       news: item,
-  //     };
-  //     setSelectedNews((current) => [...current, to_insert]);
-  //   }
-  // };
-
-  // const onDeleteNews = async () => {
-  //   const { ucode } = user;
-
-  //   const titles = [];
-  //   selectedNews.forEach((news) => {
-  //     const title = news.news.title;
-  //     titles.push(title);
-  //   });
-  //   const delete_news = await HTTPClient.delete(
-  //     "/user/saved-news/delete/",
-  //     ucode,
-  //     { titles }
-  //   );
-
-  //   handleAlert(delete_news.result, delete_news.message);
-  //   setSelectedNews(() => []);
-  // };
 
   const onDelete = async (news) => {
     setLoading(() => true);
@@ -90,7 +51,6 @@ const SavedNews = () => {
     fetchSavedNews();
   }, [loading]);
 
-  verify_auth();
   return (
     <>
       <PageHeader />
