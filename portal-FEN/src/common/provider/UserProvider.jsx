@@ -2,34 +2,37 @@ import React, { createContext, useCallback, useEffect, useState } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
 import useAuth from "../../hooks/useAuth";
 import jwtDecode from "jwt-decode";
+
 const UserContext = createContext();
 
-const fetch_user = async () => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    const { email } = await jwtDecode(token);
+const UserProvider = ({ children }) => {
+  const { isLogged } = useAuth();
+  const [user, setUser] = useState(null);
+
+  const fetchUser = async (email) => {
     const response = await HTTPClient.get(`/users`, email);
     const user = response.data;
     return user;
-  }
-};
-const UserProvider = ({ children }) => {
-  const [user, setUser] = useState();
-  const { isLogged } = useAuth();
-
-  const memorizedFetchUser = useCallback(
-    async () => await fetch_user(),
-    [isLogged]
-  );
+  };
+  const memoizedFetchUser = useCallback(async () => {
+    if (isLogged) {
+      const token = localStorage.getItem("token");
+      const { email } = jwtDecode(token);
+      const user = await fetchUser(email);
+      setUser(user);
+    }
+  }, [isLogged]);
 
   useEffect(() => {
     if (isLogged) {
-      memorizedFetchUser().then((user) => setUser(() => user));
+      memoizedFetchUser();
+    } else {
+      setUser(null);
     }
-  }, [memorizedFetchUser]);
+  }, [memoizedFetchUser]);
 
   return (
-    <UserContext.Provider value={{ user, fetch_user }}>
+    <UserContext.Provider value={{ user, fetchUser: memoizedFetchUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -10,9 +10,7 @@ import "./style.css";
 
 const Profile = () => {
   const userInfo = useUser();
-  const { isLogged, verify_auth } = useAuth();
-  const navigate = useNavigate();
-
+  const { verify_auth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     name: userInfo.user?.name,
@@ -37,14 +35,14 @@ const Profile = () => {
   };
 
   const onSubmit = async (event) => {
-    setLoading(() => true);
     event.preventDefault();
+    setLoading(() => true);
 
-    const updateUser = await HTTPClient.put("/users/update", user);
     verify_auth();
+    const updateUser = await HTTPClient.put("/users/update", user);
     handleAlert(updateUser.result, updateUser.message);
 
-    userInfo.fetch_user();
+    userInfo.fetchUser();
     setLoading(() => false);
   };
 
@@ -94,10 +92,6 @@ const Profile = () => {
     { value: "se", label: "Swedish" },
     { value: "zh", label: "Chinese" },
   ];
-
-  useEffect(() => {
-    !isLogged && navigate("/login");
-  }, [isLogged]);
 
   return (
     <>
