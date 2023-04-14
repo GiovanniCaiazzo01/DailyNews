@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, PageHeader } from "../../common/components";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import { HTTPClient } from "../../api/HTTPClients";
+import useUserNews from "../../hooks/useUserNews";
 
 const SavedNews = () => {
-  const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [deleted, setDeleted] = useState(0);
   const { user } = useUser();
   const { isLogged, verify_auth } = useAuth();
+  const savedNews = useUserNews(user, deleted);
 
   const handleAlert = (result, message) => {
     result
@@ -21,35 +23,20 @@ const SavedNews = () => {
         });
   };
 
-  const fetchSavedNews = async () => {
-    try {
-      if (!user?.ucode) return;
-      const response = await HTTPClient.get(`/user/saved-news`, user.ucode);
-      const saved_news = response.data.news;
-      setNews(() => saved_news);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const onDelete = async (news) => {
     setLoading(() => true);
     verify_auth();
     const { ucode } = user;
     const title = news.title;
-
     const delete_news = await HTTPClient.delete(
       "/user/saved-news/delete/",
       ucode,
       { title }
     );
     handleAlert(delete_news.result, delete_news.message);
+    setDeleted((prev) => prev + 1);
     setLoading(() => false);
   };
-
-  useEffect(() => {
-    fetchSavedNews();
-  }, [loading]);
 
   return (
     <>
@@ -63,7 +50,7 @@ const SavedNews = () => {
           justifyContent: "center",
         }}
       >
-        <Card onDelete={onDelete} news={news} isLogged={isLogged} />
+        <Card onDelete={onDelete} news={savedNews} isLogged={isLogged} />
         <ToastContainer />
       </div>
     </>
