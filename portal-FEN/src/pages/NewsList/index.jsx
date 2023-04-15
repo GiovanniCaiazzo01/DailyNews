@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+
 import { HTTPClient } from "../../api/HTTPClients";
 import { ToastContainer, toast } from "react-toastify";
-
 import { Card, Loader, PageHeader } from "../../common/components";
+
 import useAuth from "../../hooks/useAuth";
-import useUser from "../../hooks/useUser";
+import useNews from "../../hooks/useNews";
 
 const NewsList = () => {
-  const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [nextPage, setNextPage] = useState("");
-  const { isLogged, verify_auth } = useAuth();
-  const { user } = useUser();
-  const nextPageRef = useRef(nextPage);
+  const { verify_auth } = useAuth();
+  const news = useNews();
 
   const handleAlert = (result, message) => {
     result
@@ -24,23 +22,6 @@ const NewsList = () => {
         });
   };
 
-  const fetchNews = async (page) => {
-    setLoading(true);
-
-    const response = await HTTPClient.post("/news/", {
-      nextPage: page,
-      language: isLogged ? user?.language : "",
-    });
-
-    const retrieved_news = response?.data.news ?? [];
-
-    setNews((prevNews) => [...prevNews, ...retrieved_news]);
-    setNextPage(response.data.nextPage);
-    nextPageRef.current = response.data.nextPage;
-
-    setLoading(false);
-  };
-
   const onSave = async (news) => {
     verify_auth();
     setLoading(() => true);
@@ -49,24 +30,6 @@ const NewsList = () => {
     handleAlert(save_news.result, save_news.message);
     setLoading(() => false);
   };
-  useEffect(() => {
-    fetchNews();
-
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
-      ) {
-        if (nextPageRef.current !== "") {
-          console.log("re-rendered news");
-          fetchNews(nextPageRef.current);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <>
@@ -79,7 +42,7 @@ const NewsList = () => {
           justifyContent: "center",
         }}
       >
-        <Card news={news} onSave={onSave} isLogged={isLogged} />
+        <Card news={news} onSave={onSave} isLogged />
         <ToastContainer />
       </div>
     </>
