@@ -7,11 +7,10 @@ import { HTTPClient } from "../../api/HTTPClients";
 import useUserNews from "../../hooks/useUserNews";
 
 const SavedNews = () => {
-  const [loading, setLoading] = useState(false);
   const [deleted, setDeleted] = useState(0);
   const { user } = useUser();
   const { isLogged, verify_auth } = useAuth();
-  const savedNews = useUserNews(user, deleted);
+  const { savedNews, loading } = useUserNews(user, deleted);
 
   const handleAlert = (result, message) => {
     result
@@ -24,7 +23,6 @@ const SavedNews = () => {
   };
 
   const onDelete = async (news) => {
-    setLoading(() => true);
     verify_auth();
     const { ucode } = user;
     const title = news.title;
@@ -35,7 +33,6 @@ const SavedNews = () => {
     );
     handleAlert(delete_news.result, delete_news.message);
     setDeleted((prev) => prev + 1);
-    setLoading(() => false);
   };
 
   return (
