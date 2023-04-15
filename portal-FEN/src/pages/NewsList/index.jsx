@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
 import { HTTPClient } from "../../api/HTTPClients";
 import { ToastContainer, toast } from "react-toastify";
-
 import { Card, Loader, PageHeader } from "../../common/components";
+
 import useAuth from "../../hooks/useAuth";
-import useUser from "../../hooks/useUser";
+import useNews from "../../hooks/useNews";
 
 const NewsList = () => {
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(false);
-  // let [selectedNews, setSelectedNews] = useState([]);
-
-  const { isLogged, verify_auth } = useAuth();
-  const { user } = useUser();
+  const { verify_auth } = useAuth();
+  const { news, loading } = useNews();
 
   const handleAlert = (result, message) => {
     result
@@ -24,73 +21,16 @@ const NewsList = () => {
         });
   };
 
-  // WARN: OLD CALLBACK FOR SAVING MULTIPLE NEWS IN A TIME
-  // const onSelectedNews = (checked, item) => {
-  //   if (!checked) {
-  //     setSelectedNews((selectedNews) =>
-  //       selectedNews.filter((element) => element.id !== item.title)
-  //     );
-  //   } else {
-  //     const to_insert = {
-  //       checked: checked,
-  //       id: item.title,
-  //       news: item,
-  //     };
-  //     setSelectedNews((current) => [...current, to_insert]);
-  //   }
-  // };
-
-  // const onSaveNews = async () => {
-  //   verify_auth();
-  //   const news_to_send = [];
-  //   let tmp = {};
-  //   selectedNews.forEach((news) => {
-  //     news.news.ucode = user.ucode;
-  //     delete news.checked;
-  //     delete news.id;
-  //     tmp = news.news;
-  //     news_to_send.push(tmp);
-  //     tmp = {};
-  //   });
-
-  //   const response = await HTTPClient.post(
-  //     "/user/saved-news/save",
-  //     news_to_send
-  //   );
-
-  //   handleAlert(response.result, response.message);
-
-  //   setSelectedNews(() => []);
-  // };
-
   const onSave = async (news) => {
     verify_auth();
-    setLoading(() => true);
     news.ucode = user.ucode;
     const save_news = await HTTPClient.post("/user/saved-news/save", { news });
     handleAlert(save_news.result, save_news.message);
-    setLoading(() => false);
   };
-
-  const fetchNews = async (nextPage) => {
-    setLoading(() => true);
-
-    const response = await HTTPClient.post("/news/", {
-      nextPage,
-      language: isLogged ? user?.language : "",
-    });
-    const retrived_news = response?.data.news ?? [];
-    setNews(() => retrived_news);
-    setLoading(() => false);
-  };
-
-  useEffect(() => {
-    fetchNews();
-  }, []);
 
   return (
     <>
-      {loading && <Loader />}
+      <Loader loading={loading} />
       <PageHeader />
       <div
         style={{
@@ -99,10 +39,11 @@ const NewsList = () => {
           justifyContent: "center",
         }}
       >
-        <Card onSave={onSave} news={news} isLogged={isLogged} />
+        <Card news={news} onSave={onSave} isLogged />
         <ToastContainer />
       </div>
     </>
   );
 };
+
 export { NewsList };

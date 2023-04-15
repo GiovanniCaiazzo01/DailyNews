@@ -1,6 +1,7 @@
 import React from "react";
 import loadable from "@loadable/component";
 import useWindowDimension from "../../../hooks/getWindowDimension";
+
 const SideBar = loadable(() => import("../"), {
   resolveComponent: (components) => components.SideBar,
 });
@@ -10,7 +11,7 @@ const BottomBar = loadable(() => import("../"), {
 });
 
 const PublicRoute = ({ component: Component }) => {
-  const { height, width } = useWindowDimension();
+  const { width } = useWindowDimension();
 
   return (
     <>

@@ -21,20 +21,26 @@ const Profile = loadable(() => import("../pages/"), {
   resolveComponent: (components) => components.Profile,
 });
 
-const Logout = loadable(() => import("../hooks/useLogout"), {
-  resolveComponent: (components) => components.default,
+const Logout = loadable(() => import("../pages"), {
+  resolveComponent: (components) => components.Logout,
 });
 
 const MainRoutes = () => {
   return (
     <Routes>
+      {/* PUBLIC ROUTE  */}
       <Route exact path="/" element={<PublicRoute component={NewsList} />} />
+      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/register" element={<Register />} />
+
+      {/* END PUBLIC ROUTE */}
+
+      {/* PRIVATE ROUTE */}
       <Route
         exact
         path="/profile"
         element={<PrivateRoute component={Profile} />}
       />
-
       <Route
         exact
         path="/logout"
@@ -45,9 +51,7 @@ const MainRoutes = () => {
         path="/saved"
         element={<PrivateRoute component={SavedNews} />}
       />
-
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/register" element={<Register />} />
+      {/* END PRIVATE ROUTE */}
     </Routes>
   );
 };

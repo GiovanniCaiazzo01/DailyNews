@@ -13,9 +13,9 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
   return (
     <>
       {news
-        ? news.map((item) => {
+        ? news.map((item, i) => {
             return (
-              <div id="card-container">
+              <div id="card-container" key={item.title + i}>
                 <div id="card-header">
                   <div id="card-header-text">
                     <h3>{truncateWords(item.title, 10)}</h3>
@@ -37,7 +37,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                     <div id="icon-container">
                       <i
                         id="save"
-                        class="bx bx-save"
+                        className="bx bx-save"
                         onClick={() => onSave(item)}
                       ></i>
                     </div>
@@ -49,7 +49,7 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                     <div id="icon-container">
                       <i
                         id="delete"
-                        class="bx bx-trash"
+                        className="bx bx-trash"
                         onClick={() => onDelete(item)}
                       ></i>
                     </div>

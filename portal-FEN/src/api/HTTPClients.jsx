@@ -1,13 +1,18 @@
 const BASE_URL = "https://daily-news-ben.onrender.com";
 
 const HTTPClient = {
+  logout: async () => {
+    localStorage.removeItem("token");
+  },
   checkToken: async () => {
     const token = localStorage.getItem("token");
     const url = `${BASE_URL}/auth/verify-token`;
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
+    const headers = token
+      ? {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }
+      : { Authorization: "" };
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -17,7 +22,10 @@ const HTTPClient = {
         .then((response) => response.json())
         .catch((error) => new Error(`HTTP error! status: ${error}`));
 
-      return response ? response : localStorage.clear();
+      if (!response) {
+        localStorage.clear();
+      }
+      return response;
     } catch (error) {
       console.error(error);
       throw error;

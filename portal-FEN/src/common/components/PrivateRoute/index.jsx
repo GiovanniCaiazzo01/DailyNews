@@ -1,6 +1,7 @@
 import React from "react";
 import loadable from "@loadable/component";
 import useWindowDimension from "../../../hooks/getWindowDimension";
+import useAuth from "../../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
 const SideBar = loadable(() => import("../"), {
@@ -12,10 +13,9 @@ const BottomBar = loadable(() => import("../"), {
 });
 
 const PrivateRoute = ({ component: Component }) => {
-  const token = localStorage.getItem("token");
   const { width } = useWindowDimension();
-
-  return token ? (
+  const { isLogged } = useAuth();
+  return isLogged ? (
     <>
       {width <= 540 ? <BottomBar /> : <SideBar />}
       <div
@@ -31,7 +31,7 @@ const PrivateRoute = ({ component: Component }) => {
       </div>
     </>
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/" />
   );
 };
 export { PrivateRoute };
