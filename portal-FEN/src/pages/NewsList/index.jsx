@@ -8,9 +8,8 @@ import useAuth from "../../hooks/useAuth";
 import useNews from "../../hooks/useNews";
 
 const NewsList = () => {
-  const [loading, setLoading] = useState(true);
   const { verify_auth } = useAuth();
-  const news = useNews();
+  const { news, loading } = useNews();
 
   const handleAlert = (result, message) => {
     result
@@ -24,16 +23,14 @@ const NewsList = () => {
 
   const onSave = async (news) => {
     verify_auth();
-    setLoading(() => true);
     news.ucode = user.ucode;
     const save_news = await HTTPClient.post("/user/saved-news/save", { news });
     handleAlert(save_news.result, save_news.message);
-    setLoading(() => false);
   };
 
   return (
     <>
-      <Loader loading={!news ? true : false} />
+      <Loader loading={loading} />
       <PageHeader />
       <div
         style={{
