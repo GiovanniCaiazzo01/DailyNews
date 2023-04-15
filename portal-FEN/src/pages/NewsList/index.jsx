@@ -6,10 +6,11 @@ import { Card, Loader, PageHeader } from "../../common/components";
 
 import useAuth from "../../hooks/useAuth";
 import useNews from "../../hooks/useNews";
-
+import useUser from "../../hooks/useUser";
 const NewsList = () => {
-  const { verify_auth } = useAuth();
+  const { isLogged, verify_auth } = useAuth();
   const { news, loading } = useNews();
+  const { user } = useUser();
 
   const handleAlert = (result, message) => {
     result
@@ -39,7 +40,7 @@ const NewsList = () => {
           justifyContent: "center",
         }}
       >
-        <Card news={news} onSave={onSave} isLogged />
+        <Card news={news} onSave={onSave} isLogged={isLogged} />
         <ToastContainer />
       </div>
     </>
