@@ -1,10 +1,12 @@
 import React from "react";
 import "./style.css";
-const Loader = () => {
+const Loader = ({ loading }) => {
   return (
-    <div className="loader-container">
-      <div id="loader"></div>
-    </div>
+    loading && (
+      <div className="loader-container">
+        <div id="loader"></div>
+      </div>
+    )
   );
 };
 

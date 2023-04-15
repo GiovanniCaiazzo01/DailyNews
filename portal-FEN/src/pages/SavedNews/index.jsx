@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Card, PageHeader } from "../../common/components";
+import React, { useState } from "react";
+import { Card, Loader, PageHeader } from "../../common/components";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
@@ -40,6 +40,7 @@ const SavedNews = () => {
 
   return (
     <>
+      <Loader loading={loading} />
       <PageHeader />
       <div
         style={{

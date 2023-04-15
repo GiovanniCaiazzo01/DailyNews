@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { HTTPClient } from "../../api/HTTPClients";
 import { ToastContainer, toast } from "react-toastify";
@@ -33,7 +33,7 @@ const NewsList = () => {
 
   return (
     <>
-      {loading && <Loader />}
+      <Loader loading={!news ? true : false} />
       <PageHeader />
       <div
         style={{
