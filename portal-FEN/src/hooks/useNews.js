@@ -2,17 +2,17 @@ import { useState, useEffect, useCallback } from "react";
 import { HTTPClient } from "../api/HTTPClients";
 import useUser from "./useUser";
 import useAuth from "./useAuth";
+import { useLocation } from "react-router-dom";
 
-const fetchNews = async (language) => {
-  const response = await HTTPClient.post("/news/", {
-    language,
-  });
-  const retrievedNews = response?.data.news ?? [];
+const fetchNews = async (nextPage, language) => {
+  const response = await HTTPClient.post("/news/", { nextPage, language });
+  const retrievedNews = response.data.news ?? [];
   const nextPageId = response.data.nextPage ?? "";
+
   return { retrievedNews, nextPageId };
 };
 
-const useNews = () => {
+const useNews = (page) => {
   const [news, setNews] = useState([]);
   const [nextPage, setNextPage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,17 +23,15 @@ const useNews = () => {
   const memorizedFetchNews = useCallback(async () => {
     setLoading(() => true);
     const language = isLogged ? user.language : "";
-    const { retrievedNews, nextPageId } = await fetchNews(language);
+    const { retrievedNews, nextPageId } = await fetchNews(nextPage, language);
     setNews((prevNews) => [...prevNews, ...retrievedNews]);
-    !nextPage && setNextPage(() => nextPageId);
+    setNextPage(() => nextPageId);
     setLoading(() => false);
-  }, [isLogged, user?.language]);
+  }, [page, user?.language]);
 
   useEffect(() => {
     memorizedFetchNews();
-
-    console.count(news);
-  }, [memorizedFetchNews]);
+  }, [memorizedFetchNews, location]);
   return { news, loading };
 };
 

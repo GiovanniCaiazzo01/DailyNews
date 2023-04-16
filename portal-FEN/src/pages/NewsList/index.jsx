@@ -2,14 +2,15 @@ import React, { useState } from "react";
 
 import { HTTPClient } from "../../api/HTTPClients";
 import { ToastContainer, toast } from "react-toastify";
-import { Card, Loader, PageHeader } from "../../common/components";
+import { Arrow, Card, Loader, PageHeader } from "../../common/components";
 
 import useAuth from "../../hooks/useAuth";
 import useNews from "../../hooks/useNews";
 import useUser from "../../hooks/useUser";
 const NewsList = () => {
+  const [page, setPage] = useState(0);
   const { isLogged, verify_auth } = useAuth();
-  const { news, loading } = useNews();
+  const { news, loading } = useNews(page);
   const { user } = useUser();
 
   const handleAlert = (result, message) => {
@@ -29,9 +30,12 @@ const NewsList = () => {
     handleAlert(save_news.result, save_news.message);
   };
 
+  const handleArrowClick = (value) => {
+    setPage((prev) => prev + value);
+  };
+
   return (
     <>
-      <Loader loading={loading} />
       <PageHeader />
       <div
         style={{
@@ -43,6 +47,11 @@ const NewsList = () => {
         <Card news={news} onSave={onSave} isLogged={isLogged} />
         <ToastContainer />
       </div>
+      {loading ? (
+        <Loader loading={loading} />
+      ) : (
+        <Arrow direction="down" onClick={handleArrowClick} />
+      )}
     </>
   );
 };
