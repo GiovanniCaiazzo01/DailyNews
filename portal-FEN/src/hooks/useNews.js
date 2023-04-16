@@ -1,24 +1,21 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { HTTPClient } from "../api/HTTPClients";
 import useUser from "./useUser";
 import useAuth from "./useAuth";
 
-const fetchNews = async (page, language) => {
+const fetchNews = async (language) => {
   const response = await HTTPClient.post("/news/", {
-    nextPage: page,
     language,
   });
   const retrievedNews = response?.data.news ?? [];
-  const nextPageId = response.data.nextPage;
+  const nextPageId = response.data.nextPage ?? "";
   return { retrievedNews, nextPageId };
 };
 
 const useNews = () => {
   const [news, setNews] = useState([]);
-  const [nextPageId, setNextPageId] = useState("");
-  const [page, setPage] = useState(1);
+  const [nextPage, setNextPage] = useState("");
   const [loading, setLoading] = useState(false);
-  const nextPageRef = useRef(nextPageId);
 
   const { user } = useUser();
   const { isLogged } = useAuth();
@@ -26,33 +23,17 @@ const useNews = () => {
   const memorizedFetchNews = useCallback(async () => {
     setLoading(() => true);
     const language = isLogged ? user.language : "";
-    const { retrievedNews, nextPageId } = await fetchNews(
-      nextPageRef.current,
-      language
-    );
+    const { retrievedNews, nextPageId } = await fetchNews(language);
     setNews((prevNews) => [...prevNews, ...retrievedNews]);
-    setNextPageId(nextPageId);
-    nextPageRef.current = nextPageId;
+    !nextPage && setNextPage(() => nextPageId);
     setLoading(() => false);
-  }, [isLogged, user?.language, page]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const bottom =
-        Math.ceil(window.innerHeight + window.scrollY) >=
-        document.documentElement.scrollHeight;
-      if (bottom) {
-        setPage((prevPage) => prevPage + 1);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isLogged, user?.language]);
 
   useEffect(() => {
     memorizedFetchNews();
-  }, [memorizedFetchNews]);
 
+    console.count(news);
+  }, [memorizedFetchNews]);
   return { news, loading };
 };
 

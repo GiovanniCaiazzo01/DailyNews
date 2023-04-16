@@ -28,7 +28,7 @@ module.exports = {
         nextPage: news.data.nextPage,
         news: [],
       };
-      to_return.news = news.data.results.map((n) => {
+      to_return.news = await news.data.results.map((n) => {
         const bg = `https://picsum.photos/id/${
           Math.floor(Math.random() * 100) + 1
         }/1920/1080`;
@@ -45,7 +45,7 @@ module.exports = {
         };
       });
 
-      return { result: true, data: to_return, length: news.data.length };
+      return { result: true, data: to_return, length: to_return.length };
     } catch (error) {
       return { result: false, message: error };
     }
