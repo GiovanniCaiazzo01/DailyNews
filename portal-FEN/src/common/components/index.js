@@ -1,3 +1,4 @@
+export { Arrow } from "./Arrow";
 export { BottomBar } from "./BottomBar";
 export { Loader } from "./Loader";
 export { Logo } from "./Logo";
