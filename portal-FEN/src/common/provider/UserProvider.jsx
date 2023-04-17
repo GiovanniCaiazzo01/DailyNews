@@ -1,13 +1,13 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { HTTPClient } from "../../api/HTTPClients";
-import useAuth from "../../hooks/useAuth";
 import jwtDecode from "jwt-decode";
+import { useLocation } from "react-router-dom";
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const { isLogged } = useAuth();
   const [user, setUser] = useState(null);
+  const { pathname } = useLocation();
 
   const fetchUser = async (email) => {
     const response = await HTTPClient.get(`/users`, email);
@@ -15,21 +15,15 @@ const UserProvider = ({ children }) => {
     return user;
   };
   const memoizedFetchUser = useCallback(async () => {
-    if (isLogged) {
-      const token = localStorage.getItem("token");
-      const { email } = jwtDecode(token);
-      const user = await fetchUser(email);
-      setUser(user);
-    }
-  }, [isLogged]);
+    const token = localStorage.getItem("token");
+    const { email } = jwtDecode(token);
+    const user = await fetchUser(email);
+    setUser(user);
+  }, []);
 
   useEffect(() => {
-    if (isLogged) {
-      memoizedFetchUser();
-    } else {
-      setUser(null);
-    }
-  }, [memoizedFetchUser]);
+    memoizedFetchUser();
+  }, [memoizedFetchUser, pathname]);
 
   return (
     <UserContext.Provider value={{ user, fetchUser: memoizedFetchUser }}>
