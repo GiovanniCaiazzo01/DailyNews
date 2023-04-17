@@ -10,8 +10,8 @@ import useUser from "../../hooks/useUser";
 const NewsList = () => {
   const [page, setPage] = useState(0);
   const { isLogged, verify_auth } = useAuth();
-  const { news, loading } = useNews(page);
   const { user } = useUser();
+  const { news, loading } = useNews(page, user, isLogged);
 
   const handleAlert = (result, message) => {
     result

@@ -28,9 +28,13 @@ const Card = ({ onDelete, onSave, news, isLogged }) => {
                   </div>
                 </div>
                 <Link to={item.link} target="_blank" key={item.title}>
-                  <div id="card-image">
-                    <img src={item.image_url} loading="lazy" />
-                  </div>
+                  {item.image_url ? (
+                    <div id="card-image">
+                      <img src={item.image_url} loading="lazy" />
+                    </div>
+                  ) : (
+                    <div id="card-image-gradient"></div>
+                  )}
                 </Link>
                 {isLogged && pathname === "/" && (
                   <div id="card-footer">

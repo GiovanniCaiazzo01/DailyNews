@@ -52,6 +52,19 @@
   width: 100%;
   height: 200px;
 }
+#card-image-gradient {
+  overflow: hidden;
+  object-fit: fill;
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 15px;
+  margin-top: 10px;
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(90deg, #5d60a7, #8d8ebb, #8d8ebb);
+  animation: GradientAnimation 19s ease infinite;
+}
 
 #card-footer {
   display: flex;
@@ -80,4 +93,16 @@
   background-color: rgb(255, 0, 0);
   border-radius: 20px;
   box-shadow: 0px 0px 26px 0px rgb(199, 15, 15);
+}
+
+@keyframes GradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

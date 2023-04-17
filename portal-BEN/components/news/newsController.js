@@ -30,7 +30,7 @@ module.exports = {
       };
       to_return.news = await news.data.results.map((n) => {
         const bg = `https://picsum.photos/id/${
-          Math.floor(Math.random() * 100) + 1
+          Math.floor(Math.random() * 200) + 1
         }/1920/1080`;
 
         return {
