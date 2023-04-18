@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "../../common/components/Form";
 import { BackGround } from "../../common/components";
 import { HTTPClient } from "../../api/HTTPClients";
@@ -21,8 +21,6 @@ const Register = () => {
 
   const { isLogged } = useAuth();
   const navigate = useNavigate();
-
-  isLogged === true && navigate("/");
 
   const handleAlert = (result, message) => {
     return result
@@ -93,6 +91,10 @@ const Register = () => {
       name: "Repeat Password",
     },
   ];
+
+  useEffect(() => {
+    isLogged === true && navigate("/");
+  }, []);
   return (
     <BackGround about="Background for a register page">
       <Form
