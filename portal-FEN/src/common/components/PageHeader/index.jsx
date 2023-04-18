@@ -1,15 +1,15 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import "./style.css";
-const PageHeader = () => {
+const PageHeader = ({ label }) => {
   const { pathname } = useLocation();
 
-  const label = {
+  const header = {
     "/": "Latest News",
     "/profile": "Your Profile",
     "/saved": "Your Saved News",
   };
-  return <div id="page-header">{label[pathname]}</div>;
+  return <div id="page-header">{label ? label : header[pathname]}</div>;
 };
 
 export { PageHeader };

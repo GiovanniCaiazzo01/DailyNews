@@ -36,23 +36,24 @@ const Form = ({
       <div className="form-header">{header}</div>
       <form onSubmit={handleSubmit}>
         <div className="form-inputs-container">
-          {field.map((f) => {
-            return (
-              <>
-                <div className="form-input-upper-label" key={f.upperLabel}>
-                  {f.upperLabel}
-                </div>
-                <Input
-                  label={f.label}
-                  type={f.type}
-                  name={f.name}
-                  onUserInput={handleUserInput}
-                  value={f.value}
-                  loading={loading}
-                />
-              </>
-            );
-          })}
+          {field &&
+            field.map((f) => {
+              return (
+                <>
+                  <div className="form-input-upper-label" key={f.upperLabel}>
+                    {f.upperLabel}
+                  </div>
+                  <Input
+                    label={f.label}
+                    type={f.type}
+                    name={f.name}
+                    onUserInput={handleUserInput}
+                    value={f.value}
+                    loading={loading}
+                  />
+                </>
+              );
+            })}
           {haveSelect && (
             <>
               <div className="form-input-upper-label">{upperSelect}</div>
