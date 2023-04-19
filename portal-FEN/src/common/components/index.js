@@ -1,4 +1,3 @@
-export { CustomSelect } from "./CustomSelect";
 export { NewsPreferencies } from "./NewsPreferencies";
 export { UserInfoForm } from "./UserInfoForm";
 export { Arrow } from "./Arrow";

@@ -16,13 +16,12 @@ const NewsPreferencies = ({ onSave, userInfo }) => {
   };
 
   languages.defaultValue = user.language || "es: Italian";
-  const selectData = [languages, newsCategory];
 
   return (
     <Form
       header="News Filter"
       haveSelect
-      selectData={selectData}
+      selectData={languages}
       onUserInput={onUserInput}
       onSubmit={onSubmit}
       btnLabel={"Save"}

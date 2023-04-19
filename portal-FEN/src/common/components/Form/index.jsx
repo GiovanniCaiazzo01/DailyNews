@@ -1,9 +1,8 @@
 import React from "react";
 import { Button } from "../Button";
 import { Input } from "../Input";
-import { CustomSelect } from "../CustomSelect";
+import Select from "react-select";
 import "./style.css";
-
 const Form = ({
   header,
   field,
@@ -16,7 +15,8 @@ const Form = ({
   haveSecondBtn,
   secondBtnLabel,
   selectData,
-
+  upperSelect,
+  defaultSelectValue,
   loading,
 }) => {
   const handleSubmit = (e) => {
@@ -27,7 +27,6 @@ const Form = ({
   };
 
   const handleUserSelect = (e) => {
-    console.log(e);
     onUserInput("language", e.label);
   };
 
@@ -37,36 +36,37 @@ const Form = ({
       <div className="form-header">{header}</div>
       <form onSubmit={handleSubmit}>
         <div className="form-inputs-container">
-          {field &&
-            field.map((f) => {
-              return (
-                <>
-                  <div className="form-input-upper-label" key={f.upperLabel}>
-                    {f.upperLabel}
-                  </div>
-                  <Input
-                    label={f.label}
-                    type={f.type}
-                    name={f.name}
-                    onUserInput={handleUserInput}
-                    value={f.value}
-                    loading={loading}
-                  />
-                </>
-              );
-            })}
-          {haveSelect &&
-            selectData &&
-            selectData.map((data) => {
-              return (
-                <CustomSelect
-                  data={data[`${data.objName}`]}
-                  label={data.label}
-                  defaultValue={data.defaultValue}
-                  onChange={(e) => handleUserSelect(e)}
+          {field?.map((f) => {
+            return (
+              <>
+                <div className="form-input-upper-label" key={f.upperLabel}>
+                  {f.upperLabel}
+                </div>
+                <Input
+                  label={f.label}
+                  type={f.type}
+                  name={f.name}
+                  onUserInput={handleUserInput}
+                  value={f.value}
+                  loading={loading}
                 />
-              );
-            })}
+              </>
+            );
+          })}
+          {haveSelect && (
+            <>
+              <div className="form-input-upper-label">{selectData.label}</div>
+              <div style={{ color: "black" }}>
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  options={selectData}
+                  onChange={handleUserSelect}
+                  defaultInputValue={defaultSelectValue}
+                />
+              </div>
+            </>
+          )}
           <div className="form-footer">
             <Button
               label={btnLabel}
