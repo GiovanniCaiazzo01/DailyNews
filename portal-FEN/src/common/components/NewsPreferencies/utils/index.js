@@ -1,0 +1,40 @@
+export const newsCategory = {
+  newsCategory: [
+    { business: "business" },
+    { entertainment: "entertainment" },
+    { environment: "environment" },
+    { food: "food" },
+    { health: "health" },
+    { politics: "politics" },
+    { science: "science" },
+    { sports: "sports" },
+    { technology: "technology" },
+    { top: "top" },
+    { tourism: "tourism" },
+    { world: "world" },
+  ],
+  objName: "newsCategory",
+  defaultValue: "",
+  label: "Ocaz",
+};
+
+export const languages = {
+  languages: [
+    { value: "ar", label: "Arabic" },
+    { value: "de", label: "German" },
+    { value: "en", label: "English" },
+    { value: "es", label: "Spanish" },
+    { value: "fr", label: "French" },
+    { value: "he", label: "Hebrew" },
+    { value: "it", label: "Italian" },
+    { value: "nl", label: "Dutch" },
+    { value: "no", label: "Norwegian" },
+    { value: "pt", label: "Portuguese" },
+    { value: "ru", label: "Russian" },
+    { value: "se", label: "Swedish" },
+    { value: "zh", label: "Chinese" },
+  ],
+  objName: "languages",
+  defaultValue: "",
+  label: "News Language",
+};

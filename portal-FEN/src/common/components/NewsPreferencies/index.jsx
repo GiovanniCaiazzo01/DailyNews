@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form } from "../Form";
+import { newsCategory, languages } from "./utils";
 
 const NewsPreferencies = ({ onSave, userInfo }) => {
   const [user, setUser] = useState({
@@ -14,31 +15,16 @@ const NewsPreferencies = ({ onSave, userInfo }) => {
     onSave(event, user);
   };
 
-  const languages = [
-    { value: "ar", label: "Arabic" },
-    { value: "de", label: "German" },
-    { value: "en", label: "English" },
-    { value: "es", label: "Spanish" },
-    { value: "fr", label: "French" },
-    { value: "he", label: "Hebrew" },
-    { value: "it", label: "Italian" },
-    { value: "nl", label: "Dutch" },
-    { value: "no", label: "Norwegian" },
-    { value: "pt", label: "Portuguese" },
-    { value: "ru", label: "Russian" },
-    { value: "se", label: "Swedish" },
-    { value: "zh", label: "Chinese" },
-  ];
+  languages.defaultValue = user.language || "es: Italian";
+  const selectData = [languages, newsCategory];
 
   return (
     <Form
       header="News Filter"
       haveSelect
-      selectData={languages}
+      selectData={selectData}
       onUserInput={onUserInput}
       onSubmit={onSubmit}
-      defaultSelectValue={user.language || "es: Italian"}
-      upperSelect="Chose your news language"
       btnLabel={"Save"}
     />
   );

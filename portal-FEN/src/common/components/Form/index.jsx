@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "../Button";
 import { Input } from "../Input";
-import Select from "react-select";
+import { CustomSelect } from "../CustomSelect";
 import "./style.css";
+
 const Form = ({
   header,
   field,
@@ -15,8 +16,7 @@ const Form = ({
   haveSecondBtn,
   secondBtnLabel,
   selectData,
-  upperSelect,
-  defaultSelectValue,
+
   loading,
 }) => {
   const handleSubmit = (e) => {
@@ -27,6 +27,7 @@ const Form = ({
   };
 
   const handleUserSelect = (e) => {
+    console.log(e);
     onUserInput("language", e.label);
   };
 
@@ -54,20 +55,18 @@ const Form = ({
                 </>
               );
             })}
-          {haveSelect && (
-            <>
-              <div className="form-input-upper-label">{upperSelect}</div>
-              <div style={{ color: "black" }}>
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  options={selectData}
-                  onChange={handleUserSelect}
-                  defaultInputValue={defaultSelectValue}
+          {haveSelect &&
+            selectData &&
+            selectData.map((data) => {
+              return (
+                <CustomSelect
+                  data={data[`${data.objName}`]}
+                  label={data.label}
+                  defaultValue={data.defaultValue}
+                  onChange={(e) => handleUserSelect(e)}
                 />
-              </div>
-            </>
-          )}
+              );
+            })}
           <div className="form-footer">
             <Button
               label={btnLabel}
